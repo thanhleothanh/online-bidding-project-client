@@ -7,7 +7,7 @@ import {
   AUCTION_GET_TOP_TRENDING_SUCCESS,
 } from '../constants/auctionConstants';
 import axios from 'axios';
-import { API_URL } from '../utils/config';
+import { API_URL } from '../../utils/config';
 
 export const auctionGetOpenings =
   (page = 0) =>
@@ -17,6 +17,7 @@ export const auctionGetOpenings =
         type: AUCTION_GET_OPENINGS_REQUEST,
       });
       const { data } = await axios.get(`${API_URL}/api/v1/auctions`, {
+        withCredentials: true,
         headers: {
           page,
           page_size: 4,
@@ -42,7 +43,9 @@ export const auctionGetTopTrending = () => async (dispatch) => {
       type: AUCTION_GET_TOP_TRENDING_REQUEST,
     });
 
-    const { data } = await axios.get(`${API_URL}/api/v1/auctions/topTrending`);
+    const { data } = await axios.get(`${API_URL}/api/v1/auctions/topTrending`, {
+      withCredentials: true,
+    });
     dispatch({
       type: AUCTION_GET_TOP_TRENDING_SUCCESS,
       payload: data.data,

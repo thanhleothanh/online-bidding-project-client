@@ -8,7 +8,7 @@ import {
   USER_SIGNUP_RESET,
 } from '../constants/userConstants';
 import axios from 'axios';
-import { API_URL } from '../utils/config';
+import { API_URL } from '../../utils/config';
 
 export const login = (username, password) => async (dispatch) => {
   try {
@@ -16,28 +16,24 @@ export const login = (username, password) => async (dispatch) => {
       type: USER_LOGIN_REQUEST,
     });
     const config = {
+      withCredentials: true,
       headers: {
         'Content-Type': 'application/json',
       },
     };
-    const { data } = await axios.post(
-      `${API_URL}/api/auth/login`,
+    const data = await axios.post(
+      `${API_URL}/api/v1/auth/login`,
       { username, password },
       config
     );
-
     dispatch({
       type: USER_LOGIN_SUCCESS,
-      payload: data,
+      payload: data.data.data,
     });
-
-    localStorage.setItem('userInfo', JSON.stringify(data));
+    localStorage.setItem('userInfo', JSON.stringify(data.data.data));
   } catch (error) {
-    const errorMessage = error.response
-      ? error.response.data.message
-      : error.response.message
-      ? error.message
-      : "There's a problem";
+    const errorMessage =
+      error.response.data.message + error.response.data.errors.toString();
     dispatch({
       type: USER_LOGIN_FAIL,
       payload: errorMessage,
@@ -51,16 +47,16 @@ export const signup = (username, name, password) => async (dispatch) => {
       type: USER_SIGNUP_REQUEST,
     });
     const config = {
+      withCredentials: true,
       headers: {
         'Content-Type': 'application/json',
       },
     };
     const { data } = await axios.post(
-      `${API_URL}/api/auth/signup`,
+      `${API_URL}/api/v1/auth/signup`,
       { username, name, password },
       config
     );
-
     dispatch({
       type: USER_SIGNUP_SUCCESS,
       payload: data,
@@ -72,14 +68,10 @@ export const signup = (username, name, password) => async (dispatch) => {
     dispatch({
       type: USER_SIGNUP_RESET,
     });
-
     localStorage.setItem('userInfo', JSON.stringify(data));
   } catch (error) {
-    let errorMessage = error.response
-      ? error.response.data.message
-      : error.response.message
-      ? error.message
-      : "There's a problem";
+    const errorMessage =
+      error.response.data.message + error.response.data.errors.toString();
     dispatch({
       type: USER_SIGNUP_FAIL,
       payload: errorMessage,

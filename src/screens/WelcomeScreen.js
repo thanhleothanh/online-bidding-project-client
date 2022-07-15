@@ -9,10 +9,10 @@ import Loader from './../components/Loader';
 import {
   auctionGetOpenings,
   auctionGetTopTrending,
-} from '../actions/auctionActions';
+} from '../redux/actions/auctionActions';
 import PagingButtons from '../components/PagingButtons';
 
-const WelcomeScreen = ({ history }) => {
+const WelcomeScreen = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const dispatch = useDispatch();
   // const { userInfo } = useSelector((state) => state.userLogin);
@@ -114,6 +114,7 @@ const WelcomeScreen = ({ history }) => {
                       return (
                         <AuctionCard
                           key={auction.id}
+                          id={auction.id}
                           name={auction.item.name}
                           timeEnd={auction.timeEnd}
                           username={auction.user.profile.username}
@@ -131,7 +132,7 @@ const WelcomeScreen = ({ history }) => {
           <Header />
         </div>
         {/* top trending section */}
-        <div className='w-full py-10 space-y-5 bg-gray-800 rounded-md xl:mt-5'>
+        <div className='sticky w-full py-10 space-y-5 bg-gray-800 rounded-md top-5 xl:mt-5'>
           <h1 className='text-2xl font-bold text-center text-gray-200'>
             TOP TRENDING
           </h1>

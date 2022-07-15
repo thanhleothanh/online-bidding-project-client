@@ -1,8 +1,23 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { login } from '../../redux/actions/userActions';
 import * as Components from '../../components/Components';
 
-export const Entry = (props) => {
+export const Entry = ({ history }) => {
   const [signIn, setSignIn] = React.useState(true);
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const { userInfo } = useSelector((state) => state.userLogin);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (userInfo) history.push('/');
+  }, [userInfo]);
+
+  const loginHandler = (e) => {
+    e.preventDefault();
+    dispatch(login(username, password));
+  };
 
   return (
     <div
@@ -17,21 +32,31 @@ export const Entry = (props) => {
     >
       <Components.Container>
         <Components.SignUpContainer signingIn={signIn}>
-          <Components.Form>
+          <Components.Form onSubmit={(e) => loginHandler(e)}>
             <Components.Title>Create Account</Components.Title>
             <Components.Input type='text' placeholder='Name' />
             <Components.Input type='email' placeholder='Email' />
             <Components.Input type='password' placeholder='Password' />
-            <Components.Input type='date' placeholder='DOB' />
-            <Components.Input type='text' placeholder='Address' />
+            <Components.Input
+              type='password'
+              placeholder='Confirm your password'
+            />
             <Components.Button>Sign Up</Components.Button>
           </Components.Form>
         </Components.SignUpContainer>
         <Components.SignInContainer signingIn={signIn}>
-          <Components.Form>
+          <Components.Form onSubmit={(e) => loginHandler(e)}>
             <Components.Title>Sign in</Components.Title>
-            <Components.Input type='email' placeholder='Email' />
-            <Components.Input type='password' placeholder='Password' />
+            <Components.Input
+              onChange={(e) => setUsername(e.target.value)}
+              type='text'
+              placeholder='Username'
+            />
+            <Components.Input
+              onChange={(e) => setPassword(e.target.value)}
+              type='password'
+              placeholder='Password'
+            />
             <Components.Anchor href='#'>
               Forgot your password?
             </Components.Anchor>

@@ -2,6 +2,7 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import NavigationBar from './components/NavigationBar';
 import WelcomeScreen from './screens/WelcomeScreen';
 import AuctionScreen from './screens/AuctionScreen';
+import { Entry } from './screens/Entry';
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
         <NavigationBar />
         <Route path='/' component={WelcomeScreen} exact />
         <Route path='/auctions/:id' component={AuctionScreen} />
+        <Route path='/login' component={Entry} />
       </main>
     </BrowserRouter>
   );

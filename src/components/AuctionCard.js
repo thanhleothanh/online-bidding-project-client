@@ -1,13 +1,15 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const AuctionCard = ({
+  id,
   name = 'Bidding Item',
   username,
   timeEnd,
   image = '/images/auction_img.jpg',
 }) => {
   return (
-    <div className='flex w-full text-gray-200 bg-gray-800 rounded-md h-80'>
+    <div className='flex w-full text-gray-200 bg-gray-800 rounded-md h-96'>
       <div className='w-2/5 h-full'>
         <img
           src={image}
@@ -23,9 +25,11 @@ const AuctionCard = ({
           <i className='fas fa-clock' /> {timeEnd.split('T').join(' ')}
         </h3>
         <div className='flex justify-around'>
-          <button className='bg-orange-600 1 hover:bg-orange-700 genericButton'>
-            Join
-          </button>
+          <Link to={`/auctions/${id}`}>
+            <button className='bg-orange-600 1 hover:bg-orange-700 genericButton'>
+              Join
+            </button>
+          </Link>
         </div>
       </div>
     </div>

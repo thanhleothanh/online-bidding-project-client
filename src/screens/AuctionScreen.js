@@ -7,17 +7,17 @@ import Header from '../components/Header';
 import Alert from './../components/Alert';
 import Message from './../components/Message';
 import Loader from './../components/Loader';
-import {
-  auctionGetOpenings,
-  auctionGetTopTrending,
-} from '../actions/auctionActions';
 import PagingButtons from '../components/PagingButtons';
 
-const AuctionScreen = () => {
+const AuctionScreen = ({ history }) => {
   const location = useLocation();
   const auctionId = location.pathname
     ? location.pathname.split('/auctions/')[1]
     : undefined;
+
+  useEffect(() => {
+    if (auctionId == undefined) history.push('/');
+  }, [auctionId]);
 
   return (
     <div className='flex flex-col w-full h-auto min-h-screen p-5'>
