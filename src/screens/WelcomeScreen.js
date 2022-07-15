@@ -1,9 +1,168 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import AuctionCard from '../components/AuctionCard';
+import AuctionTopTrendingCard from '../components/AuctionTopTrendingCard';
+import Header from '../components/Header';
+import Alert from './../components/Alert';
+import Message from './../components/Message';
+import Loader from './../components/Loader';
+import {
+  auctionGetOpenings,
+  auctionGetTopTrending,
+} from '../actions/auctionActions';
+import PagingButtons from '../components/PagingButtons';
 
-const WelcomeScreen = () => {
+const WelcomeScreen = ({ history }) => {
+  const [currentPage, setCurrentPage] = useState(0);
+  const dispatch = useDispatch();
+  // const { userInfo } = useSelector((state) => state.userLogin);
+  const {
+    auctions: openingAuctions,
+    page: pageOpeningAuctions,
+    pageTotal: pageTotalOpeningAuctions,
+    loading: loadingOpeningAuctions,
+    error: errorOpeningAuctions,
+  } = useSelector((state) => state.auctionGetOpenings);
+
+  const {
+    auctions: topTrendingAuctions,
+    loading: loadingTopTrendingAuctions,
+    error: errorTopTrendingAuctions,
+  } = useSelector((state) => state.auctionGetTopTrending);
+
+  // useEffect(() => {
+  //   if (!userInfo) history.push('/login');
+  // }, [userInfo]);
+
+  useEffect(() => {
+    dispatch(auctionGetOpenings(currentPage));
+  }, [currentPage]);
+  useEffect(() => {
+    dispatch(auctionGetTopTrending());
+  }, []);
+
   return (
-    <div className='h-screen w-full bg-yellow-100'>
-      <div className='text-center'>Hello World</div>
+    <div className='relative flex flex-col w-full h-auto min-h-screen p-5 space-y-5 xl:space-y-0 xl:space-x-5 xl:flex-row'>
+      <div className='w-full h-full xl:w-2/3'>
+        <div className='flex invisible xl:visible'>
+          <input
+            type='search'
+            id='search'
+            name='search'
+            placeholder='Search'
+            className=' inputField'
+          />
+          <button className='w-24 bg-orange-600 rounded-l-none genericButton hover:bg-orange-700'>
+            Search
+          </button>
+        </div>
+        {/* buttons section */}
+        <div className='flex justify-between pt-5'>
+          <div className='inline xl:hidden genericButton'>
+            <i className='fas fa-align-justify fa-xl' />
+          </div>
+          <div className='hidden space-x-2 xl:inline'>
+            <button className='genericButton'>
+              <i className='fas fa-calendar' /> Date
+            </button>
+            <button className='genericButton'>
+              <i className='fas fa-money-bill' /> Price
+            </button>
+            <button className='genericButton'>
+              <i className='fas fa-filter' /> Category
+            </button>
+          </div>
+          <div className='space-x-2'>
+            <button className='font-bold bg-orange-600 genericButton hover:bg-orange-700'>
+              Filter
+            </button>
+            <button className='genericButton'>
+              <i className='fas fa-redo' />
+            </button>
+          </div>
+        </div>
+        {/* paging buttons */}
+        <div className='mt-5'>
+          {currentPage != null && (
+            <PagingButtons
+              setCurrentPage={setCurrentPage}
+              page={pageOpeningAuctions}
+              pageTotal={pageTotalOpeningAuctions}
+            />
+          )}
+        </div>
+        {/* auction cards section */}
+        <div className='w-full my-5'>
+          {loadingOpeningAuctions ? (
+            <Loader
+              className='mt-3'
+              loader={Math.floor(Math.random() * 10 + 1)}
+              color={Math.floor(Math.random() * 10 + 1)}
+            />
+          ) : errorOpeningAuctions ? (
+            <Alert className='mt-3'>{errorOpeningAuctions}</Alert>
+          ) : (
+            <>
+              {openingAuctions && openingAuctions.length === 0 ? (
+                <Message type='info' className='mt-3'>
+                  There is no auction opening!
+                </Message>
+              ) : (
+                <div className='w-full space-y-5 col lg:columns-2 columns-1'>
+                  {openingAuctions &&
+                    openingAuctions.map((auction) => {
+                      return (
+                        <AuctionCard
+                          key={auction.id}
+                          name={auction.item.name}
+                          timeEnd={auction.timeEnd}
+                          username={auction.user.profile.username}
+                        />
+                      );
+                    })}
+                </div>
+              )}
+            </>
+          )}
+        </div>
+      </div>
+      <div className='w-full xl:w-1/3'>
+        <div className='absolute top-0 right-0 flex justify-end p-5 xl:static xl:p-0'>
+          <Header />
+        </div>
+        {/* top trending section */}
+        <div className='w-full py-10 space-y-5 bg-gray-800 rounded-md xl:mt-5'>
+          <h1 className='text-2xl font-bold text-center text-gray-200'>
+            TOP TRENDING
+          </h1>
+          <div className='mx-24 border-2 border-orange-500' />
+
+          {loadingTopTrendingAuctions ? (
+            <Loader
+              className='mt-3'
+              loader={Math.floor(Math.random() * 10 + 1)}
+              color={Math.floor(Math.random() * 10 + 1)}
+            />
+          ) : errorTopTrendingAuctions ? (
+            <Alert className='mt-3'>{errorTopTrendingAuctions}</Alert>
+          ) : (
+            <>
+              {topTrendingAuctions && topTrendingAuctions.length === 0 ? (
+                <Message type='info' className='mt-3'>
+                  There is no auction opening!
+                </Message>
+              ) : (
+                <>
+                  {topTrendingAuctions &&
+                    topTrendingAuctions.map((auction) => {
+                      return <AuctionTopTrendingCard name={auction.itemName} />;
+                    })}
+                </>
+              )}
+            </>
+          )}
+        </div>
+      </div>
     </div>
   );
 };
