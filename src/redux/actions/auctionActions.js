@@ -5,6 +5,12 @@ import {
   AUCTION_GET_TOP_TRENDING_FAIL,
   AUCTION_GET_TOP_TRENDING_REQUEST,
   AUCTION_GET_TOP_TRENDING_SUCCESS,
+  AUCTION_GET_BY_ID_FAIL,
+  AUCTION_GET_BY_ID_REQUEST,
+  AUCTION_GET_BY_ID_SUCCESS,
+  BID_GET_BY_AUCTION_ID_FAIL,
+  BID_GET_BY_AUCTION_ID_REQUEST,
+  BID_GET_BY_AUCTION_ID_SUCCESS,
 } from '../constants/auctionConstants';
 import axios from 'axios';
 import { API_URL } from '../../utils/config';
@@ -55,6 +61,58 @@ export const auctionGetTopTrending = () => async (dispatch) => {
       error.response.data.message + error.response.data.errors.join(', ');
     dispatch({
       type: AUCTION_GET_TOP_TRENDING_FAIL,
+      payload: errorMessage,
+    });
+  }
+};
+
+export const auctionGetById = (auctionId) => async (dispatch) => {
+  try {
+    dispatch({
+      type: AUCTION_GET_BY_ID_REQUEST,
+    });
+
+    const { data } = await axios.get(
+      `${API_URL}/api/v1/auctions/${auctionId}`,
+      {
+        withCredentials: true,
+      }
+    );
+    dispatch({
+      type: AUCTION_GET_BY_ID_SUCCESS,
+      payload: data.data,
+    });
+  } catch (error) {
+    const errorMessage =
+      error.response.data.message + error.response.data.errors.join(', ');
+    dispatch({
+      type: AUCTION_GET_BY_ID_FAIL,
+      payload: errorMessage,
+    });
+  }
+};
+
+export const bidGetByAuctionId = (auctionId) => async (dispatch) => {
+  try {
+    dispatch({
+      type: BID_GET_BY_AUCTION_ID_REQUEST,
+    });
+
+    const { data } = await axios.get(
+      `${API_URL}/api/v1/auctions/${auctionId}/bids`,
+      {
+        withCredentials: true,
+      }
+    );
+    dispatch({
+      type: BID_GET_BY_AUCTION_ID_SUCCESS,
+      payload: data.data,
+    });
+  } catch (error) {
+    const errorMessage =
+      error.response.data.message + error.response.data.errors.join(', ');
+    dispatch({
+      type: BID_GET_BY_AUCTION_ID_FAIL,
       payload: errorMessage,
     });
   }

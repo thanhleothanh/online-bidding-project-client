@@ -5,11 +5,17 @@ const renderButton = (page, pageTotal, setCurrentPage) => {
   for (let i = 0; i < pageTotal; i++) {
     if (page === i) {
       buttons.push(
-        <button className='genericButton hover:bg-gray-800'>{i + 1}</button>
+        <button key={i} className='genericButton hover:bg-gray-800'>
+          {i + 1}
+        </button>
       );
     } else
       buttons.push(
-        <button onClick={() => setCurrentPage(i)} className='genericButton'>
+        <button
+          key={i}
+          onClick={() => setCurrentPage(i)}
+          className='genericButton'
+        >
           {i + 1}
         </button>
       );

@@ -1,16 +1,20 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const AuctionTopTrendingCard = ({
+  auctionId,
   name = 'Bidding Item',
   image = '/images/auction_img.jpg',
 }) => {
   return (
-    <div className='flex items-center justify-start mx-16 space-x-2 text-white xl:mx-10'>
+    <div className='flex items-center justify-center mx-5 space-x-2 text-white'>
       <img
         src={image}
         className='object-cover bg-gray-600 rounded-full w-14 h-14'
       ></img>
-      <h2 className='text-lg font-medium'>{name}</h2>
+      <Link to={`/auctions/${auctionId}`}>
+        <h2 className='text-lg font-semibold uppercase'>{name}</h2>
+      </Link>
     </div>
   );
 };

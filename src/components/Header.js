@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import DropdownMenu from './DropdownMenu';
 
 const Header = ({ postAuctionButton = false }) => {
-  const { userInfo, loading, error } = useSelector((state) => state.userLogin);
+  const { userInfo } = useSelector((state) => state.userLogin);
 
   return (
     <div className='space-x-2 text-gray-200'>
@@ -17,12 +18,13 @@ const Header = ({ postAuctionButton = false }) => {
       </button>
       {!userInfo ? (
         <Link to='/login'>
-          <button className='genericButton'>
+          <button className='font-bold genericButton'>
             Sign in <i className='fas fa-smile animate-bounce' />
           </button>
         </Link>
       ) : (
-        <button className='genericButton'>{userInfo.username}</button>
+        <DropdownMenu />
+        // <button className='genericButton'>{userInfo.username}</button>
       )}
     </div>
   );

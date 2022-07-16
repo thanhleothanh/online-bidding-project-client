@@ -13,9 +13,8 @@ import {
 import PagingButtons from '../components/PagingButtons';
 
 const WelcomeScreen = () => {
-  const [currentPage, setCurrentPage] = useState(0);
   const dispatch = useDispatch();
-  // const { userInfo } = useSelector((state) => state.userLogin);
+  const [currentPage, setCurrentPage] = useState(0);
   const {
     auctions: openingAuctions,
     page: pageOpeningAuctions,
@@ -29,10 +28,6 @@ const WelcomeScreen = () => {
     loading: loadingTopTrendingAuctions,
     error: errorTopTrendingAuctions,
   } = useSelector((state) => state.auctionGetTopTrending);
-
-  // useEffect(() => {
-  //   if (!userInfo) history.push('/login');
-  // }, [userInfo]);
 
   useEffect(() => {
     dispatch(auctionGetOpenings(currentPage));
@@ -49,10 +44,10 @@ const WelcomeScreen = () => {
             type='search'
             id='search'
             name='search'
-            placeholder='Search'
-            className=' inputField'
+            placeholder='Search...'
+            className='font-bold inputField'
           />
-          <button className='w-24 bg-orange-600 rounded-l-none genericButton hover:bg-orange-700'>
+          <button className='w-24 font-bold bg-orange-600 rounded-l-none genericButton hover:bg-orange-700'>
             Search
           </button>
         </div>
@@ -113,9 +108,16 @@ const WelcomeScreen = () => {
                     openingAuctions.map((auction) => {
                       return (
                         <AuctionCard
+                          image={
+                            auction.item.itemImages == null ||
+                            auction.item.itemImages.length === 0
+                              ? '/images/auction_img.jpg'
+                              : auction.item.itemImages[0].imageUrl
+                          }
                           key={auction.id}
                           id={auction.id}
                           name={auction.item.name}
+                          timeStart={auction.timeStart}
                           timeEnd={auction.timeEnd}
                           username={auction.user.profile.username}
                         />
@@ -134,7 +136,7 @@ const WelcomeScreen = () => {
         {/* top trending section */}
         <div className='sticky w-full py-10 space-y-5 bg-gray-800 rounded-md top-5 xl:mt-5'>
           <h1 className='text-2xl font-bold text-center text-gray-200'>
-            TOP TRENDING
+            <i className='fas fa-chart-line' /> TOP TRENDING
           </h1>
           <div className='mx-24 border-2 border-orange-500' />
 
@@ -149,14 +151,20 @@ const WelcomeScreen = () => {
           ) : (
             <>
               {topTrendingAuctions && topTrendingAuctions.length === 0 ? (
-                <Message type='info' className='mt-3'>
+                <Message type='info' className='mx-10 mt-10'>
                   There is no auction opening!
                 </Message>
               ) : (
                 <>
                   {topTrendingAuctions &&
                     topTrendingAuctions.map((auction) => {
-                      return <AuctionTopTrendingCard name={auction.itemName} />;
+                      return (
+                        <AuctionTopTrendingCard
+                          key={auction.id}
+                          auctionId={auction.id}
+                          name={auction.itemName}
+                        />
+                      );
                     })}
                 </>
               )}
