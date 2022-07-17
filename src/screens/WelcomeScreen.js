@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import AuctionCard from '../components/AuctionCard';
-import AuctionTopTrendingCard from '../components/AuctionTopTrendingCard';
+import AuctionCard from '../components/WelcomeScreen/AuctionCard';
+import AuctionTopTrendingCard from '../components/WelcomeScreen/AuctionTopTrendingCard';
 import Header from '../components/Header';
 import Alert from './../components/Alert';
 import Message from './../components/Message';
@@ -22,7 +22,6 @@ const WelcomeScreen = () => {
     loading: loadingOpeningAuctions,
     error: errorOpeningAuctions,
   } = useSelector((state) => state.auctionGetOpenings);
-
   const {
     auctions: topTrendingAuctions,
     loading: loadingTopTrendingAuctions,
@@ -57,9 +56,6 @@ const WelcomeScreen = () => {
             <i className='fas fa-align-justify fa-xl' />
           </div>
           <div className='hidden space-x-2 xl:inline'>
-            <button className='genericButton'>
-              <i className='fas fa-calendar' /> Date
-            </button>
             <button className='genericButton'>
               <i className='fas fa-money-bill' /> Price
             </button>
@@ -136,7 +132,7 @@ const WelcomeScreen = () => {
         {/* top trending section */}
         <div className='sticky w-full py-10 space-y-5 bg-gray-800 rounded-md top-5 xl:mt-5'>
           <h1 className='text-2xl font-bold text-center text-gray-200'>
-            <i className='fas fa-chart-line' /> TOP TRENDING
+            <i className='fas fa-fire' /> TOP TRENDING
           </h1>
           <div className='mx-24 border-2 border-orange-500' />
 
@@ -152,7 +148,7 @@ const WelcomeScreen = () => {
             <>
               {topTrendingAuctions && topTrendingAuctions.length === 0 ? (
                 <Message type='info' className='mx-10 mt-10'>
-                  There is no auction opening!
+                  There is no auction on trending!
                 </Message>
               ) : (
                 <>

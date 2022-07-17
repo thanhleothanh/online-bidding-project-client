@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import DateToTimer from '../utils/DateToTimer';
+import CountdownTimer from '../CountdownTimer';
 
 const AuctionCard = ({
   id,
@@ -22,13 +22,13 @@ const AuctionCard = ({
           className='flex object-cover w-full h-full bg-gray-600 rounded-l-md'
         ></img>
       </div>
-      <div className='flex flex-col justify-around w-7/12 px-3 py-5 space-y-3 text-center'>
-        <h2 className='text-xl font-semibold uppercase'>{name}</h2>
+      <div className='flex flex-col justify-around w-7/12 p-5 space-y-3 text-center'>
+        <h2 className='text-lg font-semibold uppercase'>{name}</h2>
         <h3>
-          <i className='fas fa-user' /> {username}
+          <i className='fas fa-user-circle' /> {username}
         </h3>
         <h3 className='w-full px-5'>
-          <DateToTimer timeStart={timeStart} timeEnd={timeEnd} />
+          <CountdownTimer timeStart={timeStart} timeEnd={timeEnd} />
         </h3>
         <div className='flex justify-around'>
           <Link to={`/auctions/${id}`}>

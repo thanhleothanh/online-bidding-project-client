@@ -33,7 +33,7 @@ export const login = (username, password) => async (dispatch) => {
     localStorage.setItem('userInfo', JSON.stringify(data.data));
   } catch (error) {
     const errorMessage =
-      error.response.data.message + error.response.data.errors.toString();
+      error.response.data.message + ' ' + error.response.data.errors.toString();
     dispatch({
       type: USER_LOGIN_FAIL,
       payload: errorMessage,
@@ -63,7 +63,7 @@ export const signup = (username, name, password) => async (dispatch) => {
     });
   } catch (error) {
     const errorMessage =
-      error.response.data.message + error.response.data.errors.toString();
+      error.response.data.message + ' ' + error.response.data.errors.toString();
     dispatch({
       type: USER_SIGNUP_FAIL,
       payload: errorMessage,
@@ -80,14 +80,13 @@ export const logOut = () => async (dispatch) => {
       },
     };
     const { data } = await axios.post(`${API_URL}/api/v1/auth/logout`, config);
-    console.log(data.data);
+    localStorage.removeItem('userInfo');
     dispatch({
       type: USER_LOGOUT,
     });
-    localStorage.removeItem('userInfo');
   } catch (error) {
     const errorMessage =
-      error.response.data.message + error.response.data.errors.toString();
+      error.response.data.message + ' ' + error.response.data.errors.toString();
     console.log(errorMessage);
   }
 };

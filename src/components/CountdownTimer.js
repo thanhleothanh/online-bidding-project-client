@@ -15,7 +15,7 @@ function duration(timeStart, timeEnd) {
   };
 }
 
-const DateToTimer = ({ showingTimer, timeStart, timeEnd }) => {
+const CountdownTimer = ({ timeStart, timeEnd }) => {
   const totalDuration = duration(timeStart, timeEnd);
   const durationLeft = duration(new Date().toString(), timeEnd);
 
@@ -56,10 +56,10 @@ const DateToTimer = ({ showingTimer, timeStart, timeEnd }) => {
       <div className='flex items-center justify-between mb-1'>
         <div>
           <span
-            className={`text-sm font-semibold inline-block py-1 px-2 uppercase rounded-full 
+            className={`text-sm font-semibold inline-block py-1 px-3 uppercase rounded-full 
             text-orange-50 bg-orange-800`}
           >
-            <i className='fas fa-hourglass' /> Timer
+            <i className='fas fa-hourglass' />
           </span>
         </div>
         <div className='text-right'>
@@ -92,4 +92,4 @@ const DateToTimer = ({ showingTimer, timeStart, timeEnd }) => {
   );
 };
 
-export default DateToTimer;
+export default CountdownTimer;

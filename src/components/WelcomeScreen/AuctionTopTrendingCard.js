@@ -13,7 +13,7 @@ const AuctionTopTrendingCard = ({
         className='object-cover bg-gray-600 rounded-full w-14 h-14'
       ></img>
       <Link to={`/auctions/${auctionId}`}>
-        <h2 className='text-lg font-semibold uppercase'>{name}</h2>
+        <h2 className='text-xs font-semibold uppercase'>{name}</h2>
       </Link>
     </div>
   );

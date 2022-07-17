@@ -72,7 +72,7 @@ const DropdownMenu = () => {
           )}
           <button
             className='w-full font-bold text-right rounded-t-none genericButton'
-            onClick={logoutHandler}
+            onClick={() => logoutHandler()}
           >
             Log Out <i className='fas fa-sign-out-alt' />
           </button>
