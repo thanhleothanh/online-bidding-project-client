@@ -28,20 +28,6 @@ const BiddingPriceTable = ({ auctionId }) => {
   return (
     <div className='overflow-auto rounded-md max-h-80 scrollbar-thin'>
       <table className='w-full h-full table-auto'>
-        <thead className='text-gray-100 bg-gray-700'>
-          <tr>
-            <th className='w-4/12 py-5'>
-              <i className='fas fa-users fa-lg' />
-            </th>
-            <th className='w-4/12 py-5'>
-              <i className='fas fa-dollar-sign fa-lg' />
-            </th>
-            <th className='w-4/12 py-5'>
-              <i className='fas fa-stopwatch' />
-            </th>
-          </tr>
-        </thead>
-
         {userInfo && loadingCurrentAuctionBids ? (
           <Loader
             className='mt-3'
@@ -52,6 +38,19 @@ const BiddingPriceTable = ({ auctionId }) => {
           <Alert className='mt-3'>{errorCurrentAuctionBids}</Alert>
         ) : (
           <>
+            <thead className='text-gray-100 bg-gray-700'>
+              <tr>
+                <th className='w-4/12 py-5'>
+                  <i className='fas fa-users fa-lg' />
+                </th>
+                <th className='w-4/12 py-5'>
+                  <i className='fas fa-dollar-sign fa-lg' />
+                </th>
+                <th className='w-4/12 py-5'>
+                  <i className='fas fa-stopwatch' />
+                </th>
+              </tr>
+            </thead>
             <tbody>
               {auctionBids &&
                 auctionBids.length !== 0 &&

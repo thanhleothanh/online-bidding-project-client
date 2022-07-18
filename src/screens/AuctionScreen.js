@@ -188,12 +188,18 @@ const AuctionScreen = ({ history }) => {
                       className='w-1/2 appearance-none inputField'
                       placeholder='Name your price!'
                     />
-                    <button
-                      onClick={postBidHandler}
-                      className='w-1/2 font-bold bg-orange-600 rounded-l-none genericButton hover:bg-orange-700'
-                    >
-                      Go with {toPrice(biddingPrice * 1)}
-                    </button>
+                    {loadingPostBid ? (
+                      <button className='w-1/2 font-bold bg-orange-600 rounded-l-none opacity-50 genericButton hover:bg-orange-600'>
+                        Loading...
+                      </button>
+                    ) : (
+                      <button
+                        onClick={postBidHandler}
+                        className='w-1/2 font-bold bg-orange-600 rounded-l-none genericButton hover:bg-orange-700'
+                      >
+                        Go with {toPrice(biddingPrice * 1)}
+                      </button>
+                    )}
                   </div>
                   {/* bids table */}
                   {auctionId && <BiddingPriceTable auctionId={auctionId} />}

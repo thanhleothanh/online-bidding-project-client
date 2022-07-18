@@ -11,14 +11,17 @@ import Message from './../components/Message';
 import Loader from './../components/Loader';
 import StatusChooser from '../components/MyAuctionsScreen/StatusChooser';
 import ModalPostAuction from '../components/MyAuctionsScreen/ModalPostAuction';
+import ModalEditAuction from '../components/MyAuctionsScreen/ModalEditAuction';
 import ItemInfoSection from '../components/MyAuctionsScreen/ItemInfoSection';
 import AuctionInfoSection from '../components/MyAuctionsScreen/AuctionInfoSection';
+import { auctionGetById } from '../redux/actions/auctionActions';
 import notify from '../utils/notify';
 
 const WelcomeScreen = ({ history }) => {
   const dispatch = useDispatch();
   const currentAuctionId = useRef(null);
   const [modalPostAuction, setModalPostAuction] = useState(false);
+  const [modalEditAuction, setModalEditAuction] = useState(false);
   const [choosenStatus, setChoosenStatus] = useState(null);
   const { userInfo } = useSelector((state) => state.userLogin);
   const {
@@ -77,7 +80,8 @@ const WelcomeScreen = ({ history }) => {
 
   const editButtonClickedHandler = (auctionId) => {
     currentAuctionId.current = auctionId;
-    // setModalPostAuction(true);
+    dispatch(auctionGetById(auctionId));
+    setModalEditAuction(true);
   };
 
   const submitButtonClickedHandler = (auctionId) => {
@@ -127,9 +131,9 @@ const WelcomeScreen = ({ history }) => {
               <i className='fas fa-plus fa-lg' />
             </button>
           </div>
+          {/* auctions table section */}
           <div className='w-full overflow-auto rounded-md scrollbar-thin'>
             <table className='w-full table-fixed overflow-x-scoll'>
-              {/* auctions section */}
               {userInfo && loadingMyAuctions ? (
                 <Loader
                   className='mt-3'
@@ -244,9 +248,13 @@ const WelcomeScreen = ({ history }) => {
         </div>
       </div>
       <ModalPostAuction
-        auctionId={currentAuctionId.current}
         isShow={modalPostAuction}
         closeModal={() => setModalPostAuction(false)}
+      />
+      <ModalEditAuction
+        auctionId={currentAuctionId.current}
+        isShow={modalEditAuction}
+        closeModal={() => setModalEditAuction(false)}
       />
     </>
   );

@@ -15,6 +15,10 @@ import {
   AUCTION_POST_REQUEST,
   AUCTION_POST_SUCCESS,
   AUCTION_POST_RESET,
+  AUCTION_PUT_FAIL,
+  AUCTION_PUT_REQUEST,
+  AUCTION_PUT_SUCCESS,
+  AUCTION_PUT_RESET,
   AUCTION_DELETE_FAIL,
   AUCTION_DELETE_REQUEST,
   AUCTION_DELETE_SUCCESS,
@@ -94,6 +98,21 @@ export const auctionPostReducer = (state = { auction: null }, action) => {
     case AUCTION_POST_FAIL:
       return { loading: false, error: action.payload };
     case AUCTION_POST_RESET:
+      return { auction: null };
+    default:
+      return state;
+  }
+};
+
+export const auctionPutReducer = (state = { auction: null }, action) => {
+  switch (action.type) {
+    case AUCTION_PUT_REQUEST:
+      return { loading: true };
+    case AUCTION_PUT_SUCCESS:
+      return { loading: false, auction: action.payload };
+    case AUCTION_PUT_FAIL:
+      return { loading: false, error: action.payload };
+    case AUCTION_PUT_RESET:
       return { auction: null };
     default:
       return state;

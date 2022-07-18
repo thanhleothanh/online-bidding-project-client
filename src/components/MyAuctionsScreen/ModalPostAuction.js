@@ -1,11 +1,14 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Modal from '../Modal';
 import { useForm } from 'react-hook-form';
 import notify from '../../utils/notify';
 import { auctionPost } from '../../redux/actions/auctionActions';
+import Loader from '../../components/Loader';
+import { itemUploadImage } from '../../redux/actions/itemActions';
 
 const ModalPostAuction = ({ isShow, closeModal }) => {
+  const [itemImages, setItemImages] = useState([]);
   const category = useRef(null);
   const dispatch = useDispatch();
   const { register, handleSubmit, reset } = useForm();
@@ -19,13 +22,36 @@ const ModalPostAuction = ({ isShow, closeModal }) => {
     if (!loadingPostAuction && (postAuction !== null || errorPostAuction)) {
       if (postAuction) {
         notify(false, 'Tạo bài đấu giá thành công!');
+        closeModal();
         reset();
+        setItemImages([]);
+        setTimeout(() => {
+          window.location.reload();
+        }, 1500);
       } else notify(true, errorPostAuction);
       dispatch({ type: 'AUCTION_POST_RESET' });
     }
   }, [loadingPostAuction]);
 
-  const postNewTestHandler = (data) => {
+  const {
+    image: imageUpload,
+    loading: loadingImageUpload,
+    error: errorImageUpload,
+  } = useSelector((state) => state.itemUploadImage);
+  useEffect(() => {
+    if (!loadingImageUpload && (imageUpload !== null || errorImageUpload)) {
+      if (imageUpload) {
+        notify(false, 'Upload image thành công!');
+        setItemImages((itemImages) => [
+          { imageUrl: imageUpload.secure_url, publicId: imageUpload.public_id },
+          ...itemImages,
+        ]);
+      } else notify(true, errorImageUpload);
+      dispatch({ type: 'ITEM_UPLOAD_IMAGE_RESET' });
+    }
+  }, [loadingImageUpload]);
+
+  const postAuctionHandler = (data) => {
     const payload = {
       description: data.description,
       timeStart: data.timeStart + ':00',
@@ -39,6 +65,7 @@ const ModalPostAuction = ({ isShow, closeModal }) => {
         name: data.itemName,
         description: data.itemDescription,
         amount: data.itemAmount,
+        itemImages: [...itemImages],
       },
     };
     if (
@@ -47,16 +74,21 @@ const ModalPostAuction = ({ isShow, closeModal }) => {
       dispatch(auctionPost(payload));
   };
 
+  const uploadImage = async (e) => {
+    console.log(itemImages);
+    dispatch(itemUploadImage(e.target.files));
+  };
+
   return (
     <Modal show={isShow} onClose={closeModal}>
       <div className='w-full pb-10 h-7/10'>
-        <div className='text-xl font-bold text-left text-gray-200 lg:text-2xl'>
-          Auction Info
-        </div>
         <form
           className='flex flex-col w-full bg-gray-700'
-          onSubmit={handleSubmit(postNewTestHandler)}
+          onSubmit={handleSubmit(postAuctionHandler)}
         >
+          <div className='text-xl font-bold text-left text-gray-200 lg:text-2xl'>
+            Auction Info
+          </div>
           <label className='modalFormLabel'>Auction Description</label>
           <input
             className='modalFormField'
@@ -167,9 +199,65 @@ const ModalPostAuction = ({ isShow, closeModal }) => {
             {...register('itemAmount')}
           />
 
-          <button className='mt-5 modalFormButton' type='submit'>
-            Post Auction
-          </button>
+          <label className='mt-2 modalFormLabel'>
+            Item Images (Tối đa 5 ảnh)
+          </label>
+          {loadingImageUpload || itemImages.length >= 5 ? (
+            <input
+              className='modalFormField'
+              disabled
+              type='file'
+              autoComplete='off'
+              onChange={uploadImage}
+              required
+            />
+          ) : (
+            <input
+              className='modalFormField'
+              type='file'
+              autoComplete='off'
+              onChange={uploadImage}
+              required
+            />
+          )}
+
+          {loadingImageUpload ? (
+            <Loader
+              className='mt-5'
+              loader={Math.floor(Math.random() * 10 + 1)}
+              color={Math.floor(Math.random() * 10 + 1)}
+            />
+          ) : (
+            <div className='flex mt-2 space-x-3 overflow-x-auto text-gray-200 scrollbar-thin'>
+              {itemImages
+                ? itemImages.length !== 0 &&
+                  itemImages.map((itemImage) => {
+                    return (
+                      <>
+                        <img
+                          src={itemImage.imageUrl}
+                          className='object-cover rounded-md w-44 h-44'
+                        />
+                      </>
+                    );
+                  })
+                : 'You havent added an item to this auction!'}
+              {itemImages && itemImages.length === 0 && 'No item images added!'}
+            </div>
+          )}
+
+          {loadingPostAuction ? (
+            <button
+              className='mt-5 opacity-50 modalFormButton hover:bg-orange-600'
+              disabled
+            >
+              Loading...
+            </button>
+          ) : (
+            <button className='mt-5 modalFormButton' type='submit'>
+              Post Auction
+            </button>
+          )}
         </form>
       </div>
     </Modal>

@@ -14,6 +14,9 @@ import {
   AUCTION_POST_FAIL,
   AUCTION_POST_REQUEST,
   AUCTION_POST_SUCCESS,
+  AUCTION_PUT_FAIL,
+  AUCTION_PUT_REQUEST,
+  AUCTION_PUT_SUCCESS,
   AUCTION_DELETE_FAIL,
   AUCTION_DELETE_REQUEST,
   AUCTION_DELETE_SUCCESS,
@@ -165,6 +168,36 @@ export const auctionPost = (payload) => async (dispatch) => {
       error.response.data.message + ' ' + error.response.data.errors.toString();
     dispatch({
       type: AUCTION_POST_FAIL,
+      payload: errorMessage,
+    });
+  }
+};
+
+export const auctionPut = (auctionId, payload) => async (dispatch) => {
+  try {
+    dispatch({
+      type: AUCTION_PUT_REQUEST,
+    });
+    const config = {
+      withCredentials: true,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    const { data } = await axios.put(
+      `${API_URL}/api/v1/auctions/${auctionId}`,
+      payload,
+      config
+    );
+    dispatch({
+      type: AUCTION_PUT_SUCCESS,
+      payload: data.data,
+    });
+  } catch (error) {
+    const errorMessage =
+      error.response.data.message + ' ' + error.response.data.errors.toString();
+    dispatch({
+      type: AUCTION_PUT_FAIL,
       payload: errorMessage,
     });
   }
