@@ -10,6 +10,10 @@ const AuctionTopTrendingCard = ({
     <div className='flex items-center justify-center mx-5 space-x-2 text-white'>
       <img
         src={image}
+        onError={({ currentTarget }) => {
+          currentTarget.onerror = null;
+          currentTarget.src = '/images/auction_img.jpg';
+        }}
         className='object-cover bg-gray-600 rounded-full w-14 h-14'
       ></img>
       <Link to={`/auctions/${auctionId}`}>

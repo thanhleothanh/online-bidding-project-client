@@ -24,7 +24,7 @@ export const userLoginReducer = (state = {}, action) => {
   }
 };
 
-export const userSignupReducer = (state = {}, action) => {
+export const userSignupReducer = (state = { userSignup: null }, action) => {
   switch (action.type) {
     case USER_SIGNUP_REQUEST:
       return { loading: true };
@@ -33,7 +33,7 @@ export const userSignupReducer = (state = {}, action) => {
     case USER_SIGNUP_FAIL:
       return { loading: false, error: action.payload };
     case USER_SIGNUP_RESET:
-      return {};
+      return { userSignup: null };
     default:
       return state;
   }

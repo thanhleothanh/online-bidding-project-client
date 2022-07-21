@@ -2,6 +2,12 @@ import {
   ITEM_PUT_FAIL,
   ITEM_PUT_REQUEST,
   ITEM_PUT_SUCCESS,
+  ITEM_POST_IMAGE_FAIL,
+  ITEM_POST_IMAGE_REQUEST,
+  ITEM_POST_IMAGE_SUCCESS,
+  ITEM_DELETE_IMAGE_FAIL,
+  ITEM_DELETE_IMAGE_REQUEST,
+  ITEM_DELETE_IMAGE_SUCCESS,
   ITEM_UPLOAD_IMAGE_FAIL,
   ITEM_UPLOAD_IMAGE_REQUEST,
   ITEM_UPLOAD_IMAGE_SUCCESS,
@@ -34,6 +40,65 @@ export const itemPut = (itemId, payload) => async (dispatch) => {
       error.response.data.message + ' ' + error.response.data.errors.toString();
     dispatch({
       type: ITEM_PUT_FAIL,
+      payload: errorMessage,
+    });
+  }
+};
+
+export const itemPostImage = (itemId, payload) => async (dispatch) => {
+  try {
+    dispatch({
+      type: ITEM_POST_IMAGE_REQUEST,
+    });
+    const config = {
+      withCredentials: true,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    const { data } = await axios.post(
+      `${API_URL}/api/v1/items/${itemId}/itemImages`,
+      payload,
+      config
+    );
+    dispatch({
+      type: ITEM_POST_IMAGE_SUCCESS,
+      payload: data.data,
+    });
+  } catch (error) {
+    const errorMessage =
+      error.response.data.message + ' ' + error.response.data.errors.toString();
+    dispatch({
+      type: ITEM_POST_IMAGE_FAIL,
+      payload: errorMessage,
+    });
+  }
+};
+
+export const itemDeleteImage = (itemId, imageId) => async (dispatch) => {
+  try {
+    dispatch({
+      type: ITEM_DELETE_IMAGE_REQUEST,
+    });
+    const config = {
+      withCredentials: true,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    await axios.delete(
+      `${API_URL}/api/v1/items/${itemId}/itemImages/${imageId}`,
+      config
+    );
+    dispatch({
+      type: ITEM_DELETE_IMAGE_SUCCESS,
+      payload: true,
+    });
+  } catch (error) {
+    const errorMessage =
+      error.response.data.message + ' ' + error.response.data.errors.toString();
+    dispatch({
+      type: ITEM_DELETE_IMAGE_FAIL,
       payload: errorMessage,
     });
   }

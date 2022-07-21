@@ -4,7 +4,7 @@ export default (isError, message = 'Thao tác đã được ghi nhận!') => {
   if (!isError)
     toast.success(message, {
       position: 'bottom-right',
-      autoClose: 1000,
+      autoClose: 2000,
       hideProgressBar: true,
       closeOnClick: true,
       pauseOnHover: false,
@@ -14,7 +14,7 @@ export default (isError, message = 'Thao tác đã được ghi nhận!') => {
   else
     toast.error(message, {
       position: 'bottom-right',
-      autoClose: 1000,
+      autoClose: 2000,
       hideProgressBar: true,
       closeOnClick: true,
       pauseOnHover: false,

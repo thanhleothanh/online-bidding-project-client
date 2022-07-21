@@ -23,6 +23,17 @@ import {
   AUCTION_SUBMIT_FAIL,
   AUCTION_SUBMIT_REQUEST,
   AUCTION_SUBMIT_SUCCESS,
+  //admin
+  AUCTION_ADMIN_GET_ALL_FAIL,
+  AUCTION_ADMIN_GET_ALL_REQUEST,
+  AUCTION_ADMIN_GET_ALL_SUCCESS,
+  AUCTION_ADMIN_APPROVE_FAIL,
+  AUCTION_ADMIN_APPROVE_REQUEST,
+  AUCTION_ADMIN_APPROVE_SUCCESS,
+  //auction phase 2
+  AUCTION_GET_USERS_AUCTIONS_FAIL,
+  AUCTION_GET_USERS_AUCTIONS_REQUEST,
+  AUCTION_GET_USERS_AUCTIONS_SUCCESS,
 } from '../constants/auctionConstants';
 import axios from 'axios';
 import { API_URL } from '../../utils/config';
@@ -254,6 +265,101 @@ export const auctionSubmit = (auctionId) => async (dispatch) => {
       error.response.data.message + ' ' + error.response.data.errors.toString();
     dispatch({
       type: AUCTION_SUBMIT_FAIL,
+      payload: errorMessage,
+    });
+  }
+};
+
+//admin
+
+export const auctionAdminGetAll =
+  (page = 0, status = null) =>
+  async (dispatch) => {
+    try {
+      dispatch({
+        type: AUCTION_ADMIN_GET_ALL_REQUEST,
+      });
+      const config = {
+        withCredentials: true,
+        headers: {
+          page,
+          page_size: 5,
+        },
+      };
+      const { data } = await axios.get(
+        `${API_URL}/api/v1/admin/auctions?status=${status ?? ''}`,
+        config
+      );
+      dispatch({
+        type: AUCTION_ADMIN_GET_ALL_SUCCESS,
+        payload: data.data,
+      });
+    } catch (error) {
+      const errorMessage =
+        error.response.data.message + error.response.data.errors.toString();
+      dispatch({
+        type: AUCTION_ADMIN_GET_ALL_FAIL,
+        payload: errorMessage,
+      });
+    }
+  };
+
+export const auctionAdminApprove = (auctionId, payload) => async (dispatch) => {
+  try {
+    dispatch({
+      type: AUCTION_ADMIN_APPROVE_REQUEST,
+    });
+    const config = {
+      withCredentials: true,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    const { data } = await axios.put(
+      `${API_URL}/api/v1/admin/auctions/${auctionId}/approve`,
+      payload,
+      config
+    );
+    dispatch({
+      type: AUCTION_ADMIN_APPROVE_SUCCESS,
+      payload: data.data,
+    });
+  } catch (error) {
+    const errorMessage =
+      error.response.data.message + ' ' + error.response.data.errors.toString();
+    dispatch({
+      type: AUCTION_ADMIN_APPROVE_FAIL,
+      payload: errorMessage,
+    });
+  }
+};
+
+//auction phase 2
+
+export const auctionGetUsersAuctions = (userId) => async (dispatch) => {
+  try {
+    dispatch({
+      type: AUCTION_GET_USERS_AUCTIONS_REQUEST,
+    });
+    const config = {
+      withCredentials: true,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    const { data } = await axios.get(
+      `${API_URL}/api/v1/profiles/${userId}/auctions`,
+      config
+    );
+    dispatch({
+      type: AUCTION_GET_USERS_AUCTIONS_SUCCESS,
+      payload: data.data,
+    });
+  } catch (error) {
+    const errorMessage =
+      error.response.data.message + ' ' + error.response.data.errors.toString();
+    dispatch({
+      type: AUCTION_GET_USERS_AUCTIONS_FAIL,
       payload: errorMessage,
     });
   }

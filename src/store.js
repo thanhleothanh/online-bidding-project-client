@@ -14,15 +14,26 @@ import {
   auctionPutReducer,
   auctionDeleteReducer,
   auctionSubmitReducer,
+  //admin
+  auctionAdminGetAllReducer,
+  auctionAdminApproveReducer,
+  //auction phase 2
+  auctionGetUsersAuctionsReducer,
 } from './redux/reducers/auctionReducers';
 import {
   bidGetByAuctionIdReducer,
   bidPostByAuctionIdReducer,
 } from './redux/reducers/bidReducers';
 import {
-  itemUploadImageReducer,
   itemPutReducer,
+  itemPostImageReducer,
+  itemDeleteImageReducer,
+  itemUploadImageReducer,
 } from './redux/reducers/itemReducers';
+import {
+  profileGetByIdReducer,
+  profileChangePasswordReducer,
+} from './redux/reducers/profileReducers';
 
 const reducer = combineReducers({
   //user related
@@ -38,6 +49,11 @@ const reducer = combineReducers({
   auctionPut: auctionPutReducer,
   auctionDelete: auctionDeleteReducer,
   auctionSubmit: auctionSubmitReducer,
+  //////////auction admin
+  auctionAdminGetAll: auctionAdminGetAllReducer,
+  auctionAdminApprove: auctionAdminApproveReducer,
+  //////////auction phase 2
+  auctionGetUsersAuctions: auctionGetUsersAuctionsReducer,
 
   //bid related
   bidGetByAuctionId: bidGetByAuctionIdReducer,
@@ -45,7 +61,13 @@ const reducer = combineReducers({
 
   //item related
   itemPut: itemPutReducer,
+  itemPostImage: itemPostImageReducer,
+  itemDeleteImage: itemDeleteImageReducer,
   itemUploadImage: itemUploadImageReducer,
+
+  //profile related
+  profileGetById: profileGetByIdReducer,
+  profileChangePassword: profileChangePasswordReducer,
 });
 
 const userInfoFromLocalStorage =

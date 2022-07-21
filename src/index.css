@@ -3,10 +3,13 @@
 
 @layer components {
   .genericButton {
-    @apply px-3 py-2 text-gray-200 bg-gray-800 rounded-md xl:py-3 xl:px-5 hover:bg-gray-700;
+    @apply px-3 py-2 text-sm text-gray-200 bg-gray-800 rounded-md xl:py-3 xl:px-5 hover:bg-gray-700 xl:text-base;
   }
   .inputField {
     @apply w-full px-6 py-3 text-sm text-gray-200 bg-gray-700 shadow-md appearance-none rounded-l-md md:text-base focus:ring-4 focus:ring-opacity-75 focus:ring-orange-600 focus:outline-none;
+  }
+  .labelField {
+    @apply block mb-2 text-sm font-bold text-gray-200 xl:text-base;
   }
   .modalFormField {
     @apply w-full px-6 py-3 text-sm text-gray-800 bg-gray-200 rounded-md shadow-md appearance-none md:text-base focus:ring-4 focus:ring-opacity-75 focus:ring-orange-600 focus:outline-none;
@@ -18,5 +21,26 @@
     @apply w-full px-6 py-2 text-sm font-bold text-gray-200 bg-orange-600 rounded-md shadow-md md:text-base focus:outline-none hover:bg-orange-700;
   }
 }
-
 @tailwind utilities;
+
+@layer utilities {
+  .customScrollbar::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  .customScrollbar::-webkit-scrollbar-track {
+    border-radius: 100vh;
+    background: #f7f4ed;
+  }
+
+  .customScrollbar::-webkit-scrollbar-thumb {
+    background: #f97316;
+    border-radius: 100vh;
+    border: 2px solid #f6f7ed;
+  }
+
+  .customScrollbar::-webkit-scrollbar-thumb:hover {
+    background: #ea580c;
+  }
+}

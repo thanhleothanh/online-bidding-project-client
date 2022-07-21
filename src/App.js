@@ -4,21 +4,30 @@ import 'react-toastify/dist/ReactToastify.css';
 import NavigationBar from './components/NavigationBar';
 import WelcomeScreen from './screens/WelcomeScreen';
 import AuctionScreen from './screens/AuctionScreen';
+import LoginScreen from './screens/LoginScreen';
+import SignupScreen from './screens/SignupScreen';
 import MyAuctionsScreen from './screens/MyAuctionsScreen';
-import { Entry } from './screens/Entry';
+import AdminAuctionScreen from './screens/AdminAuctionScreen';
+import './index.css';
+import ProfileScreen from './screens/ProfileScreen';
+import MyProfileScreen from './screens/MyProfileScreen';
 
 function App() {
   return (
-    <BrowserRouter basename='/'>
-      <main className='flex flex-row h-auto min-h-screen bg-gray-900 scrollbar-none'>
+    <BrowserRouter>
+      <main className='flex flex-row h-auto min-h-screen bg-gray-900 customScrollbar'>
         <NavigationBar />
-        <Route path='/' component={WelcomeScreen} exact />
         <Route path='/myAuctions' component={MyAuctionsScreen} />
+        <Route path='/myProfile' component={MyProfileScreen} />
+        <Route path='/login' component={LoginScreen} />
+        <Route path='/signup' component={SignupScreen} />
+        <Route path='/admin/auctions' component={AdminAuctionScreen} />
         <Route path='/auctions/:id' component={AuctionScreen} />
-        <Route path='/entry' component={Entry} />
+        <Route path='/profiles/:id' component={ProfileScreen} />
+        <Route path='/' component={WelcomeScreen} exact />
         <ToastContainer
           position='bottom-right'
-          autoClose={1000}
+          autoClose={2000}
           hideProgressBar
           newestOnTop={false}
           closeOnClick

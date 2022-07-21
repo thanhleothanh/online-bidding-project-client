@@ -17,12 +17,13 @@ import AuctionInfoSection from '../components/MyAuctionsScreen/AuctionInfoSectio
 import { auctionGetById } from '../redux/actions/auctionActions';
 import notify from '../utils/notify';
 
-const WelcomeScreen = ({ history }) => {
+const MyAuctionScreen = ({ history }) => {
   const dispatch = useDispatch();
   const currentAuctionId = useRef(null);
   const [modalPostAuction, setModalPostAuction] = useState(false);
   const [modalEditAuction, setModalEditAuction] = useState(false);
   const [choosenStatus, setChoosenStatus] = useState(null);
+
   const { userInfo } = useSelector((state) => state.userLogin);
   const {
     auctions: myAuctions,
@@ -71,11 +72,11 @@ const WelcomeScreen = ({ history }) => {
   }, [loadingSubmitAuction]);
 
   useEffect(() => {
-    if (!userInfo) history.push('/entry');
+    if (!userInfo) history.push('/login');
   }, [userInfo]);
 
   useEffect(() => {
-    dispatch(auctionGetMyAuctions());
+    if (userInfo) dispatch(auctionGetMyAuctions());
   }, []);
 
   const editButtonClickedHandler = (auctionId) => {
@@ -113,7 +114,7 @@ const WelcomeScreen = ({ history }) => {
           </div>
           <div className='w-full xl:w-1/3'>
             <div className='absolute top-0 right-0 flex justify-end p-5 xl:static xl:p-0'>
-              <Header postAuctionButton={true} />
+              <Header />
             </div>
           </div>
         </div>
@@ -125,10 +126,10 @@ const WelcomeScreen = ({ history }) => {
               setChoosenStatus={setChoosenStatus}
             />
             <button
-              className='genericButton'
+              className='font-semibold genericButton'
               onClick={() => setModalPostAuction(true)}
             >
-              <i className='fas fa-plus fa-lg' />
+              <i className='mr-3 fas fa-plus fa-lg' /> Post a new auction!
             </button>
           </div>
           {/* auctions table section */}
@@ -163,34 +164,39 @@ const WelcomeScreen = ({ history }) => {
                               <td className='py-10 pr-5'>
                                 <AuctionInfoSection auction={auction} />
                               </td>
-                              <td className='px-5 py-10'>
+                              <td className='py-10 pl-5'>
                                 <ItemInfoSection auction={auction} />
                               </td>
                               <td className='py-10 space-x-1'>
-                                <button>
-                                  <i
-                                    onClick={() =>
-                                      editButtonClickedHandler(auction.id)
-                                    }
-                                    className='fas fa-edit fa-lg hover:text-orange-500'
-                                  />
-                                </button>
-                                <button>
-                                  <i
-                                    className='fas fa-cloud-upload fa-lg hover:text-orange-500'
-                                    onClick={() =>
-                                      submitButtonClickedHandler(auction.id)
-                                    }
-                                  />
-                                </button>
-                                <button>
-                                  <i
-                                    className='fas fa-trash fa-lg hover:text-orange-500'
-                                    onClick={() =>
-                                      deleteButtonClickedHandler(auction.id)
-                                    }
-                                  />
-                                </button>
+                                {(auction.status === 'PENDING' ||
+                                  auction.status === 'DRAFT') && (
+                                  <>
+                                    <button>
+                                      <i
+                                        onClick={() =>
+                                          editButtonClickedHandler(auction.id)
+                                        }
+                                        className='fas fa-edit fa-lg hover:text-orange-500'
+                                      />
+                                    </button>
+                                    <button>
+                                      <i
+                                        className='fas fa-cloud-upload fa-lg hover:text-orange-500'
+                                        onClick={() =>
+                                          submitButtonClickedHandler(auction.id)
+                                        }
+                                      />
+                                    </button>
+                                    <button>
+                                      <i
+                                        className='fas fa-trash fa-lg hover:text-orange-500'
+                                        onClick={() =>
+                                          deleteButtonClickedHandler(auction.id)
+                                        }
+                                      />
+                                    </button>
+                                  </>
+                                )}
                               </td>
                             </tr>
                           );
@@ -202,34 +208,43 @@ const WelcomeScreen = ({ history }) => {
                                 <td className='py-10 pr-5'>
                                   <AuctionInfoSection auction={auction} />
                                 </td>
-                                <td className='px-5 py-10'>
+                                <td className='py-10 pl-5'>
                                   <ItemInfoSection auction={auction} />
                                 </td>
                                 <td className='py-10 space-x-1'>
-                                  <button>
-                                    <i
-                                      onClick={() =>
-                                        editButtonClickedHandler(auction.id)
-                                      }
-                                      className='fas fa-edit fa-lg hover:text-orange-500'
-                                    />
-                                  </button>
-                                  <button>
-                                    <i
-                                      className='fas fa-cloud-upload fa-lg hover:text-orange-500'
-                                      onClick={() =>
-                                        submitButtonClickedHandler(auction.id)
-                                      }
-                                    />
-                                  </button>
-                                  <button>
-                                    <i
-                                      className='fas fa-trash fa-lg hover:text-orange-500'
-                                      onClick={() =>
-                                        deleteButtonClickedHandler(auction.id)
-                                      }
-                                    />
-                                  </button>
+                                  {(auction.status === 'PENDING' ||
+                                    auction.status === 'DRAFT') && (
+                                    <>
+                                      <button>
+                                        <i
+                                          onClick={() =>
+                                            editButtonClickedHandler(auction.id)
+                                          }
+                                          className='fas fa-edit fa-lg hover:text-orange-500'
+                                        />
+                                      </button>
+                                      <button>
+                                        <i
+                                          className='fas fa-cloud-upload fa-lg hover:text-orange-500'
+                                          onClick={() =>
+                                            submitButtonClickedHandler(
+                                              auction.id
+                                            )
+                                          }
+                                        />
+                                      </button>
+                                      <button>
+                                        <i
+                                          className='fas fa-trash fa-lg hover:text-orange-500'
+                                          onClick={() =>
+                                            deleteButtonClickedHandler(
+                                              auction.id
+                                            )
+                                          }
+                                        />
+                                      </button>
+                                    </>
+                                  )}
                                 </td>
                               </tr>
                             );
@@ -260,4 +275,4 @@ const WelcomeScreen = ({ history }) => {
   );
 };
 
-export default WelcomeScreen;
+export default MyAuctionScreen;

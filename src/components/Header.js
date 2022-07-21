@@ -7,12 +7,12 @@ const Header = () => {
   const { userInfo } = useSelector((state) => state.userLogin);
 
   return (
-    <div className='space-x-2 text-gray-200'>
+    <div className='flex justify-end space-x-2 text-gray-200'>
       <button className='genericButton'>
         <i className='fas fa-bell fa-lg'></i>
       </button>
       {!userInfo ? (
-        <Link to='/entry'>
+        <Link to='/login'>
           <button className='font-bold genericButton'>
             Sign in <i className='fas fa-smile animate-bounce' />
           </button>

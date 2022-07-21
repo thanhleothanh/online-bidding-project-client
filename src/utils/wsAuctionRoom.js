@@ -1,11 +1,12 @@
 import SockJS from 'sockjs-client';
 import { Stomp } from '@stomp/stompjs';
+import { API_URL } from './config';
 
 var stompClient = null;
 export const connect = (auctionId, auctionBids, setAuctionBids) => {
-  const socket = new SockJS('http://localhost:8080/ws');
+  const socket = new SockJS(`${API_URL}/ws`);
   stompClient = Stomp.over(socket);
-  stompClient.connect({}, (frame) => {
+  stompClient.connect({}, () => {
     stompClient.subscribe(`/topic/auctions/${auctionId}/bids`, (payload) => {
       const message = JSON.parse(payload.body);
       console.log(message.data);

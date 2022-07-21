@@ -27,6 +27,18 @@ import {
   AUCTION_SUBMIT_REQUEST,
   AUCTION_SUBMIT_SUCCESS,
   AUCTION_SUBMIT_RESET,
+  //admin
+  AUCTION_ADMIN_GET_ALL_FAIL,
+  AUCTION_ADMIN_GET_ALL_REQUEST,
+  AUCTION_ADMIN_GET_ALL_SUCCESS,
+  AUCTION_ADMIN_APPROVE_FAIL,
+  AUCTION_ADMIN_APPROVE_REQUEST,
+  AUCTION_ADMIN_APPROVE_SUCCESS,
+  AUCTION_ADMIN_APPROVE_RESET,
+  //auction phase 2
+  AUCTION_GET_USERS_AUCTIONS_FAIL,
+  AUCTION_GET_USERS_AUCTIONS_REQUEST,
+  AUCTION_GET_USERS_AUCTIONS_SUCCESS,
 } from '../constants/auctionConstants';
 
 export const auctionGetOpeningsReducer = (state = {}, action) => {
@@ -144,6 +156,62 @@ export const auctionSubmitReducer = (state = { auction: null }, action) => {
       return { loading: false, error: action.payload };
     case AUCTION_SUBMIT_RESET:
       return { auction: null };
+    default:
+      return state;
+  }
+};
+
+//admin
+
+export const auctionAdminGetAllReducer = (state = {}, action) => {
+  switch (action.type) {
+    case AUCTION_ADMIN_GET_ALL_REQUEST:
+      return { loading: true };
+    case AUCTION_ADMIN_GET_ALL_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        auctions: action.payload.auctions,
+        page: action.payload.page,
+        count: action.payload.count,
+        pageSize: action.payload.pageSize,
+        pageTotal: action.payload.pageTotal,
+      };
+    case AUCTION_ADMIN_GET_ALL_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const auctionAdminApproveReducer = (
+  state = { auction: null },
+  action
+) => {
+  switch (action.type) {
+    case AUCTION_ADMIN_APPROVE_REQUEST:
+      return { loading: true };
+    case AUCTION_ADMIN_APPROVE_SUCCESS:
+      return { loading: false, auction: action.payload };
+    case AUCTION_ADMIN_APPROVE_FAIL:
+      return { loading: false, error: action.payload };
+    case AUCTION_ADMIN_APPROVE_RESET:
+      return { auction: null };
+    default:
+      return state;
+  }
+};
+
+//auction phase 2
+
+export const auctionGetUsersAuctionsReducer = (state = {}, action) => {
+  switch (action.type) {
+    case AUCTION_GET_USERS_AUCTIONS_REQUEST:
+      return { loading: true };
+    case AUCTION_GET_USERS_AUCTIONS_SUCCESS:
+      return { loading: false, auctions: action.payload };
+    case AUCTION_GET_USERS_AUCTIONS_FAIL:
+      return { loading: false, error: action.payload };
     default:
       return state;
   }

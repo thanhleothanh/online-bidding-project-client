@@ -45,7 +45,8 @@ const AuctionScreen = ({ history }) => {
     : undefined;
 
   useEffect(() => {
-    if (!userInfo) history.push('/entry');
+    if (!userInfo) history.push('/login');
+    if (userInfo && userInfo.role === 'ADMIN') history.push('/admin/auctions');
   }, [userInfo]);
 
   useEffect(() => {
@@ -74,7 +75,7 @@ const AuctionScreen = ({ history }) => {
   return (
     <div className='flex flex-col w-full h-auto min-h-screen p-5'>
       {/* header section */}
-      <div className='flex w-full'>
+      <div className='flex justify-between w-full'>
         <div className='w-full h-full xl:w-2/3'>
           <Link to='/'>
             <button className='genericButton'>
@@ -83,40 +84,26 @@ const AuctionScreen = ({ history }) => {
           </Link>
         </div>
         <div className='w-full xl:w-1/3'>
-          <div className='flex justify-end'>
-            <Header />
-          </div>
+          <Header />
         </div>
       </div>
-      <div className='flex flex-col w-full h-full mt-5 lg:space-x-10 lg:flex-row'>
-        {loadingCurrentAuction ? (
-          <Loader
-            className='mt-3'
-            loader={Math.floor(Math.random() * 10 + 1)}
-            color={Math.floor(Math.random() * 10 + 1)}
-          />
-        ) : errorCurrentAuction ? (
-          <Alert className='mt-3'>{errorCurrentAuction}</Alert>
-        ) : (
-          userInfo &&
-          currentAuction && (
-            <>
+      {loadingCurrentAuction ? (
+        <Loader
+          className='mt-3'
+          loader={Math.floor(Math.random() * 10 + 1)}
+          color={Math.floor(Math.random() * 10 + 1)}
+        />
+      ) : errorCurrentAuction ? (
+        <Alert className='mt-3'>{errorCurrentAuction}</Alert>
+      ) : (
+        userInfo &&
+        currentAuction && (
+          <>
+            <div className='flex flex-col w-full h-full mt-5 lg:space-x-10 lg:flex-row'>
               {/* item images section*/}
               <div className='flex flex-col w-full h-auto space-y-5 lg:w-2/5'>
                 {currentAuction.item.itemImages.length === 0 ? (
                   <>
-                    <img
-                      className='object-cover rounded-md'
-                      src='/images/auction_img.jpg'
-                    />
-                    <img
-                      className='object-cover rounded-md'
-                      src='/images/auction_img.jpg'
-                    />
-                    <img
-                      className='object-cover rounded-md'
-                      src='/images/auction_img.jpg'
-                    />
                     <img
                       className='object-cover rounded-md'
                       src='/images/auction_img.jpg'
@@ -153,24 +140,24 @@ const AuctionScreen = ({ history }) => {
                     )}
                   </div>
                   {/* item and user info */}
-                  <h3 className='text-xl italic font-medium text-gray-200'>
+                  <h3 className='italic font-medium text-gray-200 xl:text-xl'>
                     <i className='fas fa-user-circle' />{' '}
                     {currentAuction.user.profile.id === userInfo.id
                       ? 'Your Auction'
                       : currentAuction.user.profile.username}
                   </h3>
-                  <h1 className='text-xl font-bold text-gray-200 uppercase'>
+                  <h1 className='font-bold text-gray-200 uppercase xl:text-xl'>
                     <i className='fab fa-product-hunt' />{' '}
                     {currentAuction.item.name}
                   </h1>
-                  <h2 className='text-xl font-medium text-gray-200'>
+                  <h2 className='font-medium text-gray-200 xl:text-xl'>
                     <i className='fas fa-comment' />{' '}
                     {currentAuction.item.description}
                   </h2>
-                  <h3 className='italic font-medium text-right text-gray-200'>
+                  <h3 className='text-sm italic font-medium text-right text-gray-200 xl:text-base'>
                     Start price: {toPrice(currentAuction.priceStart)}
                   </h3>
-                  <h3 className='italic font-medium text-right text-gray-200'>
+                  <h3 className='text-sm italic font-medium text-right text-gray-200 xl:text-base'>
                     Price step: {toPrice(currentAuction.priceStep)}
                   </h3>
                   {/* raise bids */}
@@ -205,10 +192,10 @@ const AuctionScreen = ({ history }) => {
                   {auctionId && <BiddingPriceTable auctionId={auctionId} />}
                 </div>
               </div>
-            </>
-          )
-        )}
-      </div>
+            </div>
+          </>
+        )
+      )}
     </div>
   );
 };

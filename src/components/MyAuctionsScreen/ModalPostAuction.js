@@ -39,7 +39,11 @@ const ModalPostAuction = ({ isShow, closeModal }) => {
     error: errorImageUpload,
   } = useSelector((state) => state.itemUploadImage);
   useEffect(() => {
-    if (!loadingImageUpload && (imageUpload !== null || errorImageUpload)) {
+    if (
+      isShow &&
+      !loadingImageUpload &&
+      (imageUpload !== null || errorImageUpload)
+    ) {
       if (imageUpload) {
         notify(false, 'Upload image thành công!');
         setItemImages((itemImages) => [
@@ -49,7 +53,7 @@ const ModalPostAuction = ({ isShow, closeModal }) => {
       } else notify(true, errorImageUpload);
       dispatch({ type: 'ITEM_UPLOAD_IMAGE_RESET' });
     }
-  }, [loadingImageUpload]);
+  }, [loadingImageUpload, isShow]);
 
   const postAuctionHandler = (data) => {
     const payload = {
@@ -59,7 +63,7 @@ const ModalPostAuction = ({ isShow, closeModal }) => {
       priceStart: data.priceStart,
       priceStep: data.priceStep,
       category: {
-        id: category.current,
+        id: category.current || 1,
       },
       item: {
         name: data.itemName,
@@ -75,7 +79,6 @@ const ModalPostAuction = ({ isShow, closeModal }) => {
   };
 
   const uploadImage = async (e) => {
-    console.log(itemImages);
     dispatch(itemUploadImage(e.target.files));
   };
 
@@ -209,7 +212,6 @@ const ModalPostAuction = ({ isShow, closeModal }) => {
               type='file'
               autoComplete='off'
               onChange={uploadImage}
-              required
             />
           ) : (
             <input
@@ -217,7 +219,6 @@ const ModalPostAuction = ({ isShow, closeModal }) => {
               type='file'
               autoComplete='off'
               onChange={uploadImage}
-              required
             />
           )}
 
@@ -228,7 +229,7 @@ const ModalPostAuction = ({ isShow, closeModal }) => {
               color={Math.floor(Math.random() * 10 + 1)}
             />
           ) : (
-            <div className='flex mt-2 space-x-3 overflow-x-auto text-gray-200 scrollbar-thin'>
+            <div className='flex mt-2 space-x-3 overflow-x-auto text-gray-200 customScrollbar'>
               {itemImages
                 ? itemImages.length !== 0 &&
                   itemImages.map((itemImage) => {

@@ -6,6 +6,7 @@ const AuctionCard = ({
   id,
   name = 'Bidding Item',
   username,
+  userId,
   timeStart,
   timeEnd,
   image,
@@ -24,10 +25,12 @@ const AuctionCard = ({
       </div>
       <div className='flex flex-col justify-around w-7/12 p-5 space-y-3 text-center'>
         <h2 className='text-lg font-semibold uppercase'>{name}</h2>
-        <h3>
-          <i className='fas fa-user-circle' /> {username}
-        </h3>
-        <h3 className='w-full px-5'>
+        <Link to={`/profiles/${userId}`} className='w-full'>
+          <h3>
+            <i className='fas fa-user-circle' /> {username}
+          </h3>
+        </Link>
+        <h3 className='w-full px-2 xl:px-5'>
           <CountdownTimer timeStart={timeStart} timeEnd={timeEnd} />
         </h3>
         <div className='flex justify-around'>

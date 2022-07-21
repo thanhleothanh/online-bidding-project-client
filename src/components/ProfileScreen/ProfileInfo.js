@@ -1,0 +1,81 @@
+import React, { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { profileGetById } from '../../redux/actions/profileActions';
+import Alert from '../Alert';
+import Loader from '../Loader';
+
+const ProfileForm = () => {
+  const dispatch = useDispatch();
+  const location = useLocation();
+  const userId = location.pathname
+    ? location.pathname.split('profiles/')[1]
+    : undefined;
+
+  const {
+    profile: getProfileById,
+    loading: loadingGetProfileById,
+    error: errorGetProfileById,
+  } = useSelector((state) => state.profileGetById);
+
+  useEffect(() => {
+    dispatch(profileGetById(userId));
+  }, [userId]);
+
+  return (
+    <div>
+      <div className='w-full py-5 text-lg font-bold text-left text-gray-200 bg-orange-600 shadow-md xl:text-xl rounded-t-md pl-7'>
+        About this person
+      </div>
+      {loadingGetProfileById ? (
+        <Loader
+          className='mt-3'
+          loader={Math.floor(Math.random() * 10 + 1)}
+          color={Math.floor(Math.random() * 10 + 1)}
+        />
+      ) : errorGetProfileById ? (
+        <Alert className='mt-3'>{errorGetProfileById}</Alert>
+      ) : (
+        getProfileById && (
+          <form className='flex flex-col w-full px-8 pt-6 pb-8 mb-3 bg-gray-800 shadow-sm rounded-b-md'>
+            <div>
+              <label className='labelField'>Username</label>
+              <input
+                className='inputField'
+                id='username'
+                value={getProfileById.username}
+                type='text'
+                disabled
+                readOnly
+              />
+            </div>
+            <div className='mt-2'>
+              <label className='labelField'>Name</label>
+              <input
+                className='inputField'
+                id='name'
+                value={getProfileById.name}
+                type='text'
+                disabled
+                readOnly
+              />
+            </div>
+            <div className='mt-2'>
+              <label className='labelField'>Status</label>
+              <input
+                className='inputField'
+                id='status'
+                value={getProfileById.status}
+                type='text'
+                disabled
+                readOnly
+              />
+            </div>
+          </form>
+        )
+      )}
+    </div>
+  );
+};
+
+export default ProfileForm;

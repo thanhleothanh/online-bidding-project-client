@@ -1,16 +1,15 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import ProfileInfo from '../components/ProfileScreen/ProfileInfo';
+import MyProfileInfo from '../components/MyProfileScreen/MyProfileInfo';
 import Header from '../components/Header';
 import ProfileAuctions from '../components/ProfileScreen/ProfileAuctions';
 
-const ProfileScreen = ({ history }) => {
+const MyProfileScreen = ({ history }) => {
   const { userInfo } = useSelector((state) => state.userLogin);
   useEffect(() => {
     if (!userInfo) history.push('/login');
   }, [userInfo]);
-
   return (
     <div className='relative flex flex-col w-full h-auto min-h-screen p-5 space-y-5'>
       <div className='flex w-full'>
@@ -31,21 +30,25 @@ const ProfileScreen = ({ history }) => {
       </div>
       <div className='flex flex-col w-full h-auto my-5 space-y-5 xl:flex-row xl:space-x-5 xl:space-y-0'>
         <div className='w-full xl:w-2/3'>
-          <ProfileAuctions />
+          <div className='w-full py-5 bg-gray-800 rounded-md'>
+            <h1 className='text-lg font-bold text-left text-gray-200 pl-7 xl:text-xl'>
+              <i className='fas fa-coins' /> Your auctions
+            </h1>
+            <Link to={'/myAuctions'}>
+              <button className='mt-5 font-semibold bg-orange-600 ml-7 genericButton hover:bg-orange-700'>
+                Go to see your auctions
+              </button>
+            </Link>
+          </div>
         </div>
-        <div className='sticky top-0 w-full xl:w-1/3'>
-          {/* {userInfo && (
-            <> */}
-          <ProfileInfo />
-          <button className='w-full font-semibold genericButton'>
-            Report this user
-          </button>
-          {/* </>
-          )} */}
-        </div>
+        {userInfo && (
+          <div className='w-full xl:w-1/3'>
+            <MyProfileInfo />
+          </div>
+        )}
       </div>
     </div>
   );
 };
 
-export default ProfileScreen;
+export default MyProfileScreen;

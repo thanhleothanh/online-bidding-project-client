@@ -12,9 +12,11 @@ import {
 } from '../redux/actions/auctionActions';
 import PagingButtons from '../components/PagingButtons';
 
-const WelcomeScreen = () => {
+const WelcomeScreen = ({ history }) => {
   const dispatch = useDispatch();
   const [currentPage, setCurrentPage] = useState(0);
+
+  const { userInfo } = useSelector((state) => state.userLogin);
   const {
     auctions: openingAuctions,
     page: pageOpeningAuctions,
@@ -29,8 +31,13 @@ const WelcomeScreen = () => {
   } = useSelector((state) => state.auctionGetTopTrending);
 
   useEffect(() => {
+    if (userInfo && userInfo.role === 'ADMIN') history.push('/admin/auctions');
+  }, [userInfo]);
+
+  useEffect(() => {
     dispatch(auctionGetOpenings(currentPage));
   }, [currentPage]);
+
   useEffect(() => {
     dispatch(auctionGetTopTrending());
   }, []);
@@ -51,7 +58,7 @@ const WelcomeScreen = () => {
           </button>
         </div>
         {/* buttons section */}
-        <div className='flex justify-between pt-5'>
+        <div className='flex justify-between pt-3 xl:pt-5'>
           <div className='inline xl:hidden genericButton'>
             <i className='fas fa-align-justify fa-xl' />
           </div>
@@ -73,7 +80,7 @@ const WelcomeScreen = () => {
           </div>
         </div>
         {/* paging buttons */}
-        <div className='mt-5'>
+        <div className='mt-3 xl:mt-5'>
           {currentPage != null && (
             <PagingButtons
               setCurrentPage={setCurrentPage}
@@ -83,7 +90,7 @@ const WelcomeScreen = () => {
           )}
         </div>
         {/* auction cards section */}
-        <div className='w-full my-5'>
+        <div className='w-full my-3 xl:my-5'>
           {loadingOpeningAuctions ? (
             <Loader
               className='mt-3'
@@ -116,6 +123,7 @@ const WelcomeScreen = () => {
                           timeStart={auction.timeStart}
                           timeEnd={auction.timeEnd}
                           username={auction.user.profile.username}
+                          userId={auction.user.profile.id}
                         />
                       );
                     })}
@@ -151,9 +159,10 @@ const WelcomeScreen = () => {
                   There is no auction on trending!
                 </Message>
               ) : (
-                <>
-                  {topTrendingAuctions &&
-                    topTrendingAuctions.map((auction) => {
+                topTrendingAuctions &&
+                topTrendingAuctions.length !== 0 && (
+                  <>
+                    {topTrendingAuctions.map((auction) => {
                       return (
                         <AuctionTopTrendingCard
                           key={auction.id}
@@ -162,7 +171,8 @@ const WelcomeScreen = () => {
                         />
                       );
                     })}
-                </>
+                  </>
+                )
               )}
             </>
           )}

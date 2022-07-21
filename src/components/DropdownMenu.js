@@ -48,7 +48,6 @@ const DropdownMenu = () => {
         {userInfo &&
           userInfo.name &&
           userInfo.name[0].toUpperCase() + userInfo.name.slice(1)}{' '}
-        <i className='fas fa-caret-square-down' />
       </button>
 
       <div
@@ -57,19 +56,12 @@ const DropdownMenu = () => {
           opacity: `${show ? '100%' : '0%'}`,
         }}
       >
-        <div className='absolute z-10 flex flex-col mt-1 border-2 border-orange-500 rounded-md shadow-md w-44 right-5 overflow-hiddenbg-white'>
-          <Link to='/profile' className='w-full'>
+        <div className='absolute z-10 flex flex-col w-40 mt-1 border-2 border-orange-500 rounded-md shadow-md right-5 overflow-hiddenbg-white'>
+          <Link to='/myProfile' className='w-full'>
             <div className='w-full font-bold text-right rounded-b-none genericButton'>
               Profile <i className='fas fa-smile'></i>
             </div>
           </Link>
-          {userInfo.role === 'ADMIN' && (
-            <Link to='/admin'>
-              <div className='font-bold text-right rounded-none genericButton'>
-                For Admin <i className='fas fa-chalkboard-teacher'></i>
-              </div>
-            </Link>
-          )}
           <button
             className='w-full font-bold text-right rounded-t-none genericButton'
             onClick={() => logoutHandler()}
