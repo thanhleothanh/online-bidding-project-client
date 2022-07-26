@@ -26,18 +26,18 @@ const BiddingPriceTable = ({ auctionId }) => {
   }, [currentAuctionBids]);
 
   return (
-    <div className='overflow-y-auto rounded-md max-h-80 customScrollbar'>
-      <table className='w-full h-full table-auto'>
-        {userInfo && loadingCurrentAuctionBids ? (
-          <Loader
-            className='mt-3'
-            loader={Math.floor(Math.random() * 10 + 1)}
-            color={Math.floor(Math.random() * 10 + 1)}
-          />
-        ) : errorCurrentAuctionBids ? (
-          <Alert className='mt-3'>{errorCurrentAuctionBids}</Alert>
-        ) : (
-          <>
+    <div className='overflow-y-auto rounded-md max-h-80 '>
+      {userInfo && loadingCurrentAuctionBids ? (
+        <Loader
+          className='mt-3'
+          loader={Math.floor(Math.random() * 10 + 1)}
+          color={Math.floor(Math.random() * 10 + 1)}
+        />
+      ) : errorCurrentAuctionBids ? (
+        <Alert>{errorCurrentAuctionBids}</Alert>
+      ) : (
+        <>
+          <table className='w-full h-full table-auto'>
             <thead className='text-gray-100 bg-gray-700'>
               <tr>
                 <th className='w-4/12 py-5'>
@@ -95,9 +95,9 @@ const BiddingPriceTable = ({ auctionId }) => {
                 <td className='py-2 bg-gray-700'></td>
               </tr>
             </tbody>
-          </>
-        )}
-      </table>
+          </table>
+        </>
+      )}
       {auctionBids && auctionBids.length === 0 && (
         <Message type='info' className='w-full '>
           No one placed a bid yet! :(

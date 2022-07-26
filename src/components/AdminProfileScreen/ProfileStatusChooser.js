@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 
-const StatusChooser = ({ choosenStatus, setChoosenStatus }) => {
+const ProfileStatusChooser = ({ choosenStatus, setChoosenStatus }) => {
   const [show, setShow] = useState(false);
   const container = useRef(null);
 
@@ -45,51 +45,33 @@ const StatusChooser = ({ choosenStatus, setChoosenStatus }) => {
         <div className='absolute left-0 z-10 flex flex-col mt-1 border-2 border-orange-500 rounded-md shadow-md w-44 overflow-hiddenbg-white'>
           <button
             className='w-full rounded-b-none genericButton'
-            onClick={() => setChoosenStatus(null)}
+            onClick={() => setChoosenStatus('')}
           >
             All
           </button>
           <button
             className='w-full rounded-none genericButton'
-            onClick={() => setChoosenStatus('CANCELED')}
+            onClick={() => setChoosenStatus('INACTIVE')}
           >
-            CANCELED
+            INACTIVE
           </button>
           <button
             className='w-full rounded-none genericButton'
-            onClick={() => setChoosenStatus('DRAFT')}
+            onClick={() => setChoosenStatus('ACTIVE')}
           >
-            DRAFT
+            ACTIVE
           </button>
           <button
             className='w-full rounded-none genericButton'
-            onClick={() => setChoosenStatus('PENDING')}
+            onClick={() => setChoosenStatus('SUSPENDED')}
           >
-            PENDING
+            SUSPENDED
           </button>
           <button
             className='w-full rounded-none genericButton'
-            onClick={() => setChoosenStatus('QUEUED')}
+            onClick={() => setChoosenStatus('BANNED')}
           >
-            QUEUED
-          </button>
-          <button
-            className='w-full rounded-none genericButton'
-            onClick={() => setChoosenStatus('OPENING')}
-          >
-            OPENING
-          </button>
-          <button
-            className='w-full rounded-none genericButton'
-            onClick={() => setChoosenStatus('ENDED')}
-          >
-            ENDED
-          </button>
-          <button
-            className='w-full rounded-none genericButton'
-            onClick={() => setChoosenStatus('SUCCESSFUL')}
-          >
-            SUCCESSFUL
+            BANNED
           </button>
         </div>
       </div>
@@ -97,4 +79,4 @@ const StatusChooser = ({ choosenStatus, setChoosenStatus }) => {
   );
 };
 
-export default StatusChooser;
+export default ProfileStatusChooser;

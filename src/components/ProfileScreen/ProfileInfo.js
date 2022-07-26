@@ -1,26 +1,14 @@
-import React, { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { profileGetById } from '../../redux/actions/profileActions';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import Alert from '../Alert';
 import Loader from '../Loader';
 
 const ProfileForm = () => {
-  const dispatch = useDispatch();
-  const location = useLocation();
-  const userId = location.pathname
-    ? location.pathname.split('profiles/')[1]
-    : undefined;
-
   const {
     profile: getProfileById,
     loading: loadingGetProfileById,
     error: errorGetProfileById,
   } = useSelector((state) => state.profileGetById);
-
-  useEffect(() => {
-    dispatch(profileGetById(userId));
-  }, [userId]);
 
   return (
     <div>
@@ -34,14 +22,14 @@ const ProfileForm = () => {
           color={Math.floor(Math.random() * 10 + 1)}
         />
       ) : errorGetProfileById ? (
-        <Alert className='mt-3'>{errorGetProfileById}</Alert>
+        <Alert>{errorGetProfileById}</Alert>
       ) : (
         getProfileById && (
           <form className='flex flex-col w-full px-8 pt-6 pb-8 mb-3 bg-gray-800 shadow-sm rounded-b-md'>
             <div>
               <label className='labelField'>Username</label>
               <input
-                className='inputField'
+                className='bg-opacity-25 inputField'
                 id='username'
                 value={getProfileById.username}
                 type='text'
@@ -50,9 +38,20 @@ const ProfileForm = () => {
               />
             </div>
             <div className='mt-2'>
+              <label className='labelField'>Email</label>
+              <input
+                className='bg-opacity-25 inputField'
+                id='name'
+                value={getProfileById.email ?? 'n/a'}
+                type='email'
+                disabled
+                readOnly
+              />
+            </div>
+            <div className='mt-2'>
               <label className='labelField'>Name</label>
               <input
-                className='inputField'
+                className='bg-opacity-25 inputField'
                 id='name'
                 value={getProfileById.name}
                 type='text'
@@ -63,7 +62,7 @@ const ProfileForm = () => {
             <div className='mt-2'>
               <label className='labelField'>Status</label>
               <input
-                className='inputField'
+                className='bg-opacity-25 inputField'
                 id='status'
                 value={getProfileById.status}
                 type='text'

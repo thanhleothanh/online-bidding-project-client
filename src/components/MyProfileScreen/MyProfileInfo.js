@@ -32,6 +32,7 @@ const ProfileForm = () => {
       window.alert('Make sure you confirm your password properly!');
     else if (!loadingChangePassword) {
       if (window.confirm('Bạn có chắc là muốn đổi mặt khẩu không!')) {
+        reset();
         dispatch(
           profileChangePassword({
             currentPassword: data.currentPassword,
@@ -43,7 +44,7 @@ const ProfileForm = () => {
     }
   };
   return (
-    <div>
+    <div className='sticky top-5'>
       <div className='w-full py-5 text-lg font-bold text-left text-gray-200 bg-orange-600 shadow-md xl:text-xl rounded-t-md pl-7'>
         About you
       </div>
@@ -54,7 +55,7 @@ const ProfileForm = () => {
         <div>
           <label className='labelField'>Username</label>
           <input
-            className='inputField'
+            className='bg-opacity-25 inputField'
             id='username'
             value={userInfo.username}
             type='text'
@@ -65,7 +66,7 @@ const ProfileForm = () => {
         <div className='mt-2'>
           <label className='labelField'>Name</label>
           <input
-            className='inputField'
+            className='bg-opacity-25 inputField'
             id='name'
             value={userInfo.name}
             type='text'
@@ -76,8 +77,8 @@ const ProfileForm = () => {
         <div className='mt-2'>
           <label className='labelField'>Email</label>
           <input
-            className='inputField'
-            id='name'
+            className='bg-opacity-25 inputField'
+            id='email'
             value={userInfo.email ?? 'n/a'}
             type='text'
             disabled
@@ -87,7 +88,7 @@ const ProfileForm = () => {
         <div className='mt-2'>
           <label className='labelField'>Status</label>
           <input
-            className='inputField'
+            className='bg-opacity-25 inputField'
             id='status'
             value={userInfo.status}
             type='text'

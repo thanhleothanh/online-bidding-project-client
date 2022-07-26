@@ -10,16 +10,15 @@ import Message from './../components/Message';
 import Loader from './../components/Loader';
 import StatusChooser from '../components/MyAuctionsScreen/StatusChooser';
 import PagingButtons from '../components/PagingButtons';
-import ModalEditAuction from '../components/MyAuctionsScreen/ModalEditAuction';
-import ItemInfoSection from '../components/MyAuctionsScreen/ItemInfoSection';
-import AuctionInfoSection from '../components/MyAuctionsScreen/AuctionInfoSection';
+import ItemInfoSection from '../components/AdminAuctionScreen/ItemInfoSection';
+import AuctionInfoSection from '../components/AdminAuctionScreen/AuctionInfoSection';
 import notify from '../utils/notify';
+import UserInfoSection from '../components/AdminAuctionScreen/UserInfoSection';
 
-const MyAuctionScreen = ({ history }) => {
+const AdminAuctionScreen = ({ history }) => {
   const dispatch = useDispatch();
   const currentAuctionId = useRef(null);
   const [currentPage, setCurrentPage] = useState(0);
-  const [modalEditAuction, setModalEditAuction] = useState(false);
   const [choosenStatus, setChoosenStatus] = useState(null);
   const { userInfo } = useSelector((state) => state.userLogin);
 
@@ -42,7 +41,7 @@ const MyAuctionScreen = ({ history }) => {
       (approvedAuction !== null || errorApprovedAuction)
     ) {
       if (approvedAuction) {
-        notify(false, 'Approve bài đấu giá thành công!');
+        notify(false, 'Duyệt bài đấu giá thành công!');
         setTimeout(() => {
           window.location.reload();
         }, 1500);
@@ -64,6 +63,12 @@ const MyAuctionScreen = ({ history }) => {
     currentAuctionId.current = auctionId;
     if (window.confirm('Are you sure to appove this auction?'))
       dispatch(auctionAdminApprove(auctionId, { status: 'QUEUED' }));
+  };
+
+  const rejectButtonClickedHandler = (auctionId) => {
+    currentAuctionId.current = auctionId;
+    if (window.confirm('Are you sure to reject this auction?'))
+      dispatch(auctionAdminApprove(auctionId, { status: 'CANCELED' }));
   };
 
   return (
@@ -107,8 +112,8 @@ const MyAuctionScreen = ({ history }) => {
               )}
             </div>
             {/* auctions table section */}
-            <div className='w-full overflow-auto rounded-md scrollbar-thin'>
-              <table className='w-full table-fixed overflow-x-scoll round'>
+            <div className='w-full overflow-hidden rounded-md'>
+              <table className='w-full overflow-x-auto table-fixed '>
                 {userInfo && loadingAllAuctions ? (
                   <Loader
                     className='mt-3'
@@ -122,9 +127,10 @@ const MyAuctionScreen = ({ history }) => {
                     <thead className='text-gray-100 bg-orange-600'>
                       <tr className='border-2 border-orange-500'>
                         <th className='w-1/12 py-7'>ID</th>
-                        <th className='w-6/12 py-7'>Auction Info</th>
+                        <th className='w-3/12 py-7'>User Info</th>
+                        <th className='w-5/12 py-7'>Auction Info</th>
                         <th className='w-4/12 py-7'>Auction Item</th>
-                        <th className='w-1/12 py-7'></th>
+                        <th className='w-1/12 py-7'>Actions</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -135,21 +141,36 @@ const MyAuctionScreen = ({ history }) => {
                             <tr className='text-center text-gray-200 bg-gray-700 border-2 border-orange-500'>
                               <td className='py-10'>{auction.id}</td>
                               <td className='py-10 pr-1 xl:pr-5'>
+                                <UserInfoSection auction={auction} />
+                              </td>
+                              <td className='py-10 pr-1 lg:px-5'>
                                 <AuctionInfoSection auction={auction} />
                               </td>
-                              <td className='py-10 pl-1 xl:pl-5'>
+                              <td className='py-10 pl-1 lg:px-5'>
                                 <ItemInfoSection auction={auction} />
                               </td>
                               <td className='py-10 space-x-1'>
                                 {auction.status === 'PENDING' && (
-                                  <button>
-                                    <i
-                                      onClick={() =>
-                                        approveButtonClickedHandler(auction.id)
-                                      }
-                                      className='fas fa-thumbs-up fa-lg hover:text-orange-500'
-                                    />
-                                  </button>
+                                  <>
+                                    <button>
+                                      <i
+                                        onClick={() =>
+                                          approveButtonClickedHandler(
+                                            auction.id
+                                          )
+                                        }
+                                        className='fas fa-thumbs-up fa-lg hover:text-orange-500'
+                                      />
+                                    </button>
+                                    <button>
+                                      <i
+                                        onClick={() =>
+                                          rejectButtonClickedHandler(auction.id)
+                                        }
+                                        className='fas fa-thumbs-down fa-lg hover:text-orange-500'
+                                      />
+                                    </button>
+                                  </>
                                 )}
                               </td>
                             </tr>
@@ -168,13 +189,8 @@ const MyAuctionScreen = ({ history }) => {
           </div>
         </div>
       </div>
-      <ModalEditAuction
-        auctionId={currentAuctionId.current}
-        isShow={modalEditAuction}
-        closeModal={() => setModalEditAuction(false)}
-      />
     </>
   );
 };
 
-export default MyAuctionScreen;
+export default AdminAuctionScreen;

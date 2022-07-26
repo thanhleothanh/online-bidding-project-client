@@ -1,6 +1,20 @@
 import React, { useState, useRef, useEffect } from 'react';
 
-const StatusChooser = ({ choosenStatus, setChoosenStatus }) => {
+const categories = {
+  1: 'Đồ điện tử',
+  2: 'Thời trang',
+  3: 'Đồ nội thất',
+  4: 'Giải trí',
+  5: 'Nhà cửa',
+  6: 'Sức khoẻ',
+  7: 'Thú cưng',
+  8: 'Nghệ thuật',
+  9: 'Trang sức',
+  10: 'Thực phẩm',
+  11: 'Khoa học',
+};
+
+const CategoryChooser = ({ choosenCategory, setChoosenCategory }) => {
   const [show, setShow] = useState(false);
   const container = useRef(null);
 
@@ -33,7 +47,8 @@ const StatusChooser = ({ choosenStatus, setChoosenStatus }) => {
   return (
     <span ref={container} className='relative'>
       <button className='genericButton' onClick={() => setShow(!show)}>
-        <i className='fas fa-filter' /> {choosenStatus || 'Status'}
+        <i className='fas fa-filter' />{' '}
+        {categories[choosenCategory] || 'Category'}
       </button>
 
       <div
@@ -45,51 +60,75 @@ const StatusChooser = ({ choosenStatus, setChoosenStatus }) => {
         <div className='absolute left-0 z-10 flex flex-col mt-1 border-2 border-orange-500 rounded-md shadow-md w-44 overflow-hiddenbg-white'>
           <button
             className='w-full rounded-b-none genericButton'
-            onClick={() => setChoosenStatus(null)}
+            onClick={() => setChoosenCategory(null)}
           >
             All
           </button>
           <button
             className='w-full rounded-none genericButton'
-            onClick={() => setChoosenStatus('CANCELED')}
+            onClick={() => setChoosenCategory('1')}
           >
-            CANCELED
+            Đồ điện tử
           </button>
           <button
             className='w-full rounded-none genericButton'
-            onClick={() => setChoosenStatus('DRAFT')}
+            onClick={() => setChoosenCategory('2')}
           >
-            DRAFT
+            Thời trang
           </button>
           <button
             className='w-full rounded-none genericButton'
-            onClick={() => setChoosenStatus('PENDING')}
+            onClick={() => setChoosenCategory('3')}
           >
-            PENDING
+            Đồ nội thất
           </button>
           <button
             className='w-full rounded-none genericButton'
-            onClick={() => setChoosenStatus('QUEUED')}
+            onClick={() => setChoosenCategory('4')}
           >
-            QUEUED
+            Giải trí
           </button>
           <button
             className='w-full rounded-none genericButton'
-            onClick={() => setChoosenStatus('OPENING')}
+            onClick={() => setChoosenCategory('5')}
           >
-            OPENING
+            Nhà cửa
           </button>
           <button
             className='w-full rounded-none genericButton'
-            onClick={() => setChoosenStatus('ENDED')}
+            onClick={() => setChoosenCategory('6')}
           >
-            ENDED
+            Sức khoẻ
           </button>
           <button
             className='w-full rounded-none genericButton'
-            onClick={() => setChoosenStatus('SUCCESSFUL')}
+            onClick={() => setChoosenCategory('7')}
           >
-            SUCCESSFUL
+            Thú cưng
+          </button>
+          <button
+            className='w-full rounded-none genericButton'
+            onClick={() => setChoosenCategory('8')}
+          >
+            Nghệ thuật
+          </button>
+          <button
+            className='w-full rounded-none genericButton'
+            onClick={() => setChoosenCategory('9')}
+          >
+            Trang sức
+          </button>
+          <button
+            className='w-full rounded-none genericButton'
+            onClick={() => setChoosenCategory('10')}
+          >
+            Thực phẩm
+          </button>
+          <button
+            className='w-full rounded-t-none genericButton'
+            onClick={() => setChoosenCategory('11')}
+          >
+            Khoa học
           </button>
         </div>
       </div>
@@ -97,4 +136,4 @@ const StatusChooser = ({ choosenStatus, setChoosenStatus }) => {
   );
 };
 
-export default StatusChooser;
+export default CategoryChooser;

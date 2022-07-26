@@ -5,6 +5,13 @@ import {
   PROFILE_CHANGE_PASSWORD_FAIL,
   PROFILE_CHANGE_PASSWORD_REQUEST,
   PROFILE_CHANGE_PASSWORD_SUCCESS,
+  //admin
+  PROFILE_ADMIN_GET_ALL_FAIL,
+  PROFILE_ADMIN_GET_ALL_REQUEST,
+  PROFILE_ADMIN_GET_ALL_SUCCESS,
+  PROFILE_ADMIN_BAN_FAIL,
+  PROFILE_ADMIN_BAN_REQUEST,
+  PROFILE_ADMIN_BAN_SUCCESS,
 } from '../constants/profileConstants';
 import axios from 'axios';
 import { API_URL } from '../../utils/config';
@@ -64,6 +71,70 @@ export const profileChangePassword = (payload) => async (dispatch) => {
       error.response.data.message + ' ' + error.response.data.errors.toString();
     dispatch({
       type: PROFILE_CHANGE_PASSWORD_FAIL,
+      payload: errorMessage,
+    });
+  }
+};
+
+//admin
+
+export const profileAdminGetAll =
+  (page = 0, status = '') =>
+  async (dispatch) => {
+    try {
+      dispatch({
+        type: PROFILE_ADMIN_GET_ALL_REQUEST,
+      });
+      const config = {
+        withCredentials: true,
+        headers: {
+          page,
+          page_size: 5,
+        },
+      };
+      const { data } = await axios.get(
+        `${API_URL}/api/v1/admin/profiles?status=${status}`,
+        config
+      );
+      dispatch({
+        type: PROFILE_ADMIN_GET_ALL_SUCCESS,
+        payload: data.data,
+      });
+    } catch (error) {
+      const errorMessage =
+        error.response.data.message + error.response.data.errors.toString();
+      dispatch({
+        type: PROFILE_ADMIN_GET_ALL_FAIL,
+        payload: errorMessage,
+      });
+    }
+  };
+
+export const profileAdminBan = (userId, payload) => async (dispatch) => {
+  try {
+    dispatch({
+      type: PROFILE_ADMIN_BAN_REQUEST,
+    });
+    const config = {
+      withCredentials: true,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    const { data } = await axios.put(
+      `${API_URL}/api/v1/admin/profiles/${userId}`,
+      payload,
+      config
+    );
+    dispatch({
+      type: PROFILE_ADMIN_BAN_SUCCESS,
+      payload: data.data,
+    });
+  } catch (error) {
+    const errorMessage =
+      error.response.data.message + ' ' + error.response.data.errors.toString();
+    dispatch({
+      type: PROFILE_ADMIN_BAN_FAIL,
       payload: errorMessage,
     });
   }

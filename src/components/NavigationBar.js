@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 
@@ -12,6 +12,17 @@ const NavigationBar = () => {
     <nav className='sticky top-0 flex flex-col items-center justify-center w-16 h-screen text-gray-200 bg-gray-800'>
       {userInfo && userInfo.role === 'ADMIN' ? (
         <>
+          <Link to={'/admin/users'} className='w-full'>
+            <button
+              className={`${
+                currentPage[2] === 'users'
+                  ? 'text-gray-200'
+                  : 'text-gray-600 hover:bg-gray-700'
+              } w-full transition py-4 `}
+            >
+              <i className='fas fa-user-edit fa-lg' />
+            </button>
+          </Link>
           <Link to={'/admin/auctions'} className='w-full'>
             <button
               className={`${
@@ -20,7 +31,7 @@ const NavigationBar = () => {
                   : 'text-gray-600 hover:bg-gray-700'
               } w-full transition py-4 `}
             >
-              <i className='fas fa-flag fa-lg' />
+              <i className='fas fa-money-bill fa-lg' />
             </button>
           </Link>
 
@@ -57,7 +68,7 @@ const NavigationBar = () => {
                   : 'text-gray-600 hover:bg-gray-700'
               } w-full transition py-4 `}
             >
-              <i className='fas fa-coins fa-lg' />
+              <i className='fas fa-piggy-bank fa-lg' />
             </button>
           </Link>
 
@@ -69,18 +80,7 @@ const NavigationBar = () => {
                   : 'text-gray-600 hover:bg-gray-700'
               } w-full transition py-4 `}
             >
-              <i className='fas fa-cart-plus fa-lg'></i>
-            </button>
-          </Link>
-          <Link to={'/settings'} className='w-full'>
-            <button
-              className={`${
-                currentPage[1] === 'settings'
-                  ? 'text-gray-200'
-                  : 'text-gray-600 hover:bg-gray-700'
-              } w-full transition py-4 `}
-            >
-              <i className='fas fa-cog fa-lg' />
+              <i className='fas fa-hourglass-end fa-lg'></i>
             </button>
           </Link>
         </>

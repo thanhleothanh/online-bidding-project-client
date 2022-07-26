@@ -131,6 +131,7 @@ const ModalPostAuction = ({ isShow, closeModal }) => {
               <input
                 className='modalFormField'
                 type='number'
+                defaultValue={100000}
                 autoComplete='off'
                 required
                 {...register('priceStart')}
@@ -142,6 +143,7 @@ const ModalPostAuction = ({ isShow, closeModal }) => {
               <input
                 className='modalFormField'
                 type='number'
+                defaultValue={50000}
                 autoComplete='off'
                 required
                 {...register('priceStep')}
@@ -196,6 +198,7 @@ const ModalPostAuction = ({ isShow, closeModal }) => {
           <label className='mt-2 modalFormLabel'>Item Amount</label>
           <input
             className='modalFormField'
+            defaultValue={1}
             type='number'
             autoComplete='off'
             required
@@ -229,20 +232,19 @@ const ModalPostAuction = ({ isShow, closeModal }) => {
               color={Math.floor(Math.random() * 10 + 1)}
             />
           ) : (
-            <div className='flex mt-2 space-x-3 overflow-x-auto text-gray-200 customScrollbar'>
-              {itemImages
-                ? itemImages.length !== 0 &&
-                  itemImages.map((itemImage) => {
-                    return (
-                      <>
-                        <img
-                          src={itemImage.imageUrl}
-                          className='object-cover rounded-md w-44 h-44'
-                        />
-                      </>
-                    );
-                  })
-                : 'You havent added an item to this auction!'}
+            <div className='flex mt-2 space-x-3 overflow-x-auto text-gray-200 '>
+              {itemImages &&
+                itemImages.length !== 0 &&
+                itemImages.map((itemImage) => {
+                  return (
+                    <>
+                      <img
+                        src={itemImage.imageUrl}
+                        className='object-cover rounded-md w-44 h-44'
+                      />
+                    </>
+                  );
+                })}
               {itemImages && itemImages.length === 0 && 'No item images added!'}
             </div>
           )}

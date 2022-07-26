@@ -11,10 +11,12 @@ import {
   auctionGetTopTrending,
 } from '../redux/actions/auctionActions';
 import PagingButtons from '../components/PagingButtons';
+import CategoryChooser from '../components/AdminAuctionScreen/CategoryChooser';
 
 const WelcomeScreen = ({ history }) => {
   const dispatch = useDispatch();
   const [currentPage, setCurrentPage] = useState(0);
+  const [choosenCategory, setChoosenCategory] = useState(null);
 
   const { userInfo } = useSelector((state) => state.userLogin);
   const {
@@ -35,8 +37,8 @@ const WelcomeScreen = ({ history }) => {
   }, [userInfo]);
 
   useEffect(() => {
-    dispatch(auctionGetOpenings(currentPage));
-  }, [currentPage]);
+    dispatch(auctionGetOpenings(currentPage, choosenCategory));
+  }, [currentPage, choosenCategory]);
 
   useEffect(() => {
     dispatch(auctionGetTopTrending());
@@ -63,18 +65,19 @@ const WelcomeScreen = ({ history }) => {
             <i className='fas fa-align-justify fa-xl' />
           </div>
           <div className='hidden space-x-2 xl:inline'>
-            <button className='genericButton'>
-              <i className='fas fa-money-bill' /> Price
-            </button>
-            <button className='genericButton'>
-              <i className='fas fa-filter' /> Category
-            </button>
+            <CategoryChooser
+              choosenCategory={choosenCategory}
+              setChoosenCategory={setChoosenCategory}
+            />
           </div>
           <div className='space-x-2'>
             <button className='font-bold bg-orange-600 genericButton hover:bg-orange-700'>
               Filter
             </button>
-            <button className='genericButton'>
+            <button
+              className='genericButton'
+              onClick={() => setChoosenCategory(null)}
+            >
               <i className='fas fa-redo' />
             </button>
           </div>
@@ -103,7 +106,7 @@ const WelcomeScreen = ({ history }) => {
             <>
               {openingAuctions && openingAuctions.length === 0 ? (
                 <Message type='info' className='mt-3'>
-                  There is no auction opening!
+                  There is no auction with these criterias opening!
                 </Message>
               ) : (
                 <div className='w-full space-y-5 col lg:columns-2 columns-1'>

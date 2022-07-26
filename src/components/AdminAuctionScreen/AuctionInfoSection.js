@@ -1,7 +1,11 @@
 import React from 'react';
 import toPrice from '../../utils/toPrice';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 const AuctionInfoSection = ({ auction }) => {
+  const { userInfo } = useSelector((state) => state.userLogin);
+
   return (
     <div className='flex flex-col w-full space-y-2'>
       <div className='flex justify-between'>
@@ -44,6 +48,17 @@ const AuctionInfoSection = ({ auction }) => {
         <div className='font-semibold text-left'>Created At:</div>
         {auction.createdAt ?? null}
       </div>
+      {userInfo && auction.winner && (
+        <div className='flex justify-between'>
+          <div className='font-semibold text-left text-orange-500'>Winner</div>
+          <Link to={`/profiles/${auction.winner.bid.user.profile.id}`}>
+            <div className='text-orange-500 underline'>
+              {auction.winner.bid.user.profile.username}
+              {userInfo.id === auction.winner.bid.user.id && ' (You)'}
+            </div>
+          </Link>
+        </div>
+      )}
     </div>
   );
 };

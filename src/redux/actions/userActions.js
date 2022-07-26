@@ -41,7 +41,7 @@ export const login = (username, password) => async (dispatch) => {
   }
 };
 
-export const signup = (username, name, password) => async (dispatch) => {
+export const signup = (payload) => async (dispatch) => {
   try {
     dispatch({
       type: USER_SIGNUP_REQUEST,
@@ -54,7 +54,7 @@ export const signup = (username, name, password) => async (dispatch) => {
     };
     const { data } = await axios.post(
       `${API_URL}/api/v1/auth/signup`,
-      { username, name, password, role: { id: 2 } },
+      { ...payload, role: { id: 2 } },
       config
     );
     dispatch({

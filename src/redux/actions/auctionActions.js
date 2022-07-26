@@ -34,12 +34,27 @@ import {
   AUCTION_GET_USERS_AUCTIONS_FAIL,
   AUCTION_GET_USERS_AUCTIONS_REQUEST,
   AUCTION_GET_USERS_AUCTIONS_SUCCESS,
+  AUCTION_GET_INTERESTED_FAIL,
+  AUCTION_GET_INTERESTED_REQUEST,
+  AUCTION_GET_INTERESTED_SUCCESS,
+  AUCTION_CHECK_INTERESTED_FAIL,
+  AUCTION_CHECK_INTERESTED_REQUEST,
+  AUCTION_CHECK_INTERESTED_SUCCESS,
+  AUCTION_DELETE_INTERESTED_FAIL,
+  AUCTION_DELETE_INTERESTED_REQUEST,
+  AUCTION_DELETE_INTERESTED_SUCCESS,
+  AUCTION_SAVE_INTERESTED_FAIL,
+  AUCTION_SAVE_INTERESTED_REQUEST,
+  AUCTION_SAVE_INTERESTED_SUCCESS,
+  AUCTION_GET_MY_WINS_FAIL,
+  AUCTION_GET_MY_WINS_REQUEST,
+  AUCTION_GET_MY_WINS_SUCCESS,
 } from '../constants/auctionConstants';
 import axios from 'axios';
 import { API_URL } from '../../utils/config';
 
 export const auctionGetOpenings =
-  (page = 0) =>
+  (page = 0, categoryId = null) =>
   async (dispatch) => {
     try {
       dispatch({
@@ -52,7 +67,10 @@ export const auctionGetOpenings =
           page_size: 4,
         },
       };
-      const { data } = await axios.get(`${API_URL}/api/v1/auctions`, config);
+      const { data } = await axios.get(
+        `${API_URL}/api/v1/auctions?categoryId=${categoryId ?? ''}`,
+        config
+      );
       dispatch({
         type: AUCTION_GET_OPENINGS_SUCCESS,
         payload: data.data,
@@ -137,7 +155,7 @@ export const auctionGetMyAuctions = () => async (dispatch) => {
       },
     };
     const { data } = await axios.get(
-      `${API_URL}/api/v1/auctions/myAuctions`,
+      `${API_URL}/api/v1/profiles/myAuctions`,
       config
     );
     dispatch({
@@ -360,6 +378,155 @@ export const auctionGetUsersAuctions = (userId) => async (dispatch) => {
       error.response.data.message + ' ' + error.response.data.errors.toString();
     dispatch({
       type: AUCTION_GET_USERS_AUCTIONS_FAIL,
+      payload: errorMessage,
+    });
+  }
+};
+
+export const auctionGetInterested = () => async (dispatch) => {
+  try {
+    dispatch({
+      type: AUCTION_GET_INTERESTED_REQUEST,
+    });
+    const config = {
+      withCredentials: true,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    const { data } = await axios.get(
+      `${API_URL}/api/v1/profiles/myInterestedAuctions`,
+      config
+    );
+    dispatch({
+      type: AUCTION_GET_INTERESTED_SUCCESS,
+      payload: data.data,
+    });
+  } catch (error) {
+    const errorMessage =
+      error.response.data.message + ' ' + error.response.data.errors.toString();
+    dispatch({
+      type: AUCTION_GET_INTERESTED_FAIL,
+      payload: errorMessage,
+    });
+  }
+};
+
+export const auctionCheckInterested = (auctionId) => async (dispatch) => {
+  try {
+    dispatch({
+      type: AUCTION_CHECK_INTERESTED_REQUEST,
+    });
+    const config = {
+      withCredentials: true,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    const { data } = await axios.get(
+      `${API_URL}/api/v1/profiles/myInterestedAuctions/${auctionId}`,
+      config
+    );
+    dispatch({
+      type: AUCTION_CHECK_INTERESTED_SUCCESS,
+      payload: true,
+    });
+  } catch (error) {
+    const errorMessage =
+      error.response.data.message + ' ' + error.response.data.errors.toString();
+    dispatch({
+      type: AUCTION_CHECK_INTERESTED_FAIL,
+      payload: errorMessage,
+    });
+  }
+};
+
+export const auctionDeleteInterested = (auctionId) => async (dispatch) => {
+  try {
+    dispatch({
+      type: AUCTION_DELETE_INTERESTED_REQUEST,
+    });
+    const config = {
+      withCredentials: true,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    const { data } = await axios.delete(
+      `${API_URL}/api/v1/profiles/myInterestedAuctions/${auctionId}`,
+      config
+    );
+    dispatch({
+      type: AUCTION_DELETE_INTERESTED_SUCCESS,
+      payload: true,
+    });
+  } catch (error) {
+    const errorMessage =
+      error.response.data.message + ' ' + error.response.data.errors.toString();
+    dispatch({
+      type: AUCTION_DELETE_INTERESTED_FAIL,
+      payload: errorMessage,
+    });
+  }
+};
+
+export const auctionSaveInterested = (payload) => async (dispatch) => {
+  try {
+    dispatch({
+      type: AUCTION_SAVE_INTERESTED_REQUEST,
+    });
+    const config = {
+      withCredentials: true,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    const { data } = await axios.post(
+      `${API_URL}/api/v1/profiles/myInterestedAuctions/`,
+      payload,
+      config
+    );
+    dispatch({
+      type: AUCTION_SAVE_INTERESTED_SUCCESS,
+      payload: true,
+    });
+  } catch (error) {
+    const errorMessage =
+      error.response.data.message + ' ' + error.response.data.errors.toString();
+    dispatch({
+      type: AUCTION_SAVE_INTERESTED_FAIL,
+      payload: errorMessage,
+    });
+  }
+};
+
+export const auctionGetMyWins = () => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: AUCTION_GET_MY_WINS_REQUEST,
+    });
+    const config = {
+      withCredentials: true,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    const {
+      userLogin: { userInfo },
+    } = getState();
+    const { data } = await axios.get(
+      `${API_URL}/api/v1/profiles/${userInfo.id}/wonAuctions`,
+      config
+    );
+    dispatch({
+      type: AUCTION_GET_MY_WINS_SUCCESS,
+      payload: data.data,
+    });
+  } catch (error) {
+    const errorMessage =
+      error.response.data.message + ' ' + error.response.data.errors.toString();
+    dispatch({
+      type: AUCTION_GET_MY_WINS_FAIL,
       payload: errorMessage,
     });
   }

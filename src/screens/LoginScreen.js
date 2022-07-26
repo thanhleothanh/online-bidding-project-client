@@ -12,8 +12,10 @@ const LoginScreen = ({ history }) => {
   const { userInfo, loading, error } = useSelector((state) => state.userLogin);
   useEffect(() => {
     if (!loading && (userInfo !== null || error)) {
-      if (userInfo) notify(false, 'Đăng nhập thành công!');
-      else notify(true, error);
+      if (userInfo) {
+        notify(false, 'Đăng nhập thành công!');
+        reset();
+      } else notify(true, error);
     }
   }, [loading]);
 
@@ -22,10 +24,7 @@ const LoginScreen = ({ history }) => {
   }, [userInfo, history]);
 
   const loginHandler = (data) => {
-    if (!loading) {
-      dispatch(login(data.username, data.password));
-      reset();
-    }
+    dispatch(login(data.username, data.password));
   };
 
   return (

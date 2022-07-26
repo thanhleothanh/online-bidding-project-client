@@ -54,16 +54,9 @@ const AuctionScreen = ({ history }) => {
     else {
       dispatch(auctionGetById(auctionId));
       dispatch(bidGetByAuctionId(auctionId));
+      // dispatch(auctionCheckInterested(auctionId));
     }
   }, [auctionId]);
-
-  useEffect(() => {
-    if (auctionId == undefined) history.push('/');
-    else {
-      dispatch(auctionGetById(auctionId));
-      dispatch(bidGetByAuctionId(auctionId));
-    }
-  }, []);
 
   const postBidHandler = () => {
     if (window.confirm('Are you sure to post this bidding price?')) {
@@ -76,12 +69,10 @@ const AuctionScreen = ({ history }) => {
     <div className='flex flex-col w-full h-auto min-h-screen p-5'>
       {/* header section */}
       <div className='flex justify-between w-full'>
-        <div className='w-full h-full xl:w-2/3'>
-          <Link to='/'>
-            <button className='genericButton'>
-              <i className='fas fa-arrow-left' />
-            </button>
-          </Link>
+        <div className='w-full h-full space-x-2 xl:w-2/3'>
+          <button className='genericButton' onClick={history.goBack}>
+            <i className='fas fa-arrow-left' />
+          </button>
         </div>
         <div className='w-full xl:w-1/3'>
           <Header />
@@ -142,9 +133,15 @@ const AuctionScreen = ({ history }) => {
                   {/* item and user info */}
                   <h3 className='italic font-medium text-gray-200 xl:text-xl'>
                     <i className='fas fa-user-circle' />{' '}
-                    {currentAuction.user.profile.id === userInfo.id
-                      ? 'Your Auction'
-                      : currentAuction.user.profile.username}
+                    {currentAuction.user.profile.id === userInfo.id ? (
+                      'Your Auction (You cant raise the price!)'
+                    ) : (
+                      <Link to={`/profiles/${currentAuction.user.profile.id}`}>
+                        <span className='underline'>
+                          {currentAuction.user.profile.username}
+                        </span>
+                      </Link>
+                    )}
                   </h3>
                   <h1 className='font-bold text-gray-200 uppercase xl:text-xl'>
                     <i className='fab fa-product-hunt' />{' '}
@@ -171,7 +168,7 @@ const AuctionScreen = ({ history }) => {
                     <input
                       onChange={(e) => setBiddingPrice(e.target.value)}
                       type='number'
-                      value={biddingPrice || 0}
+                      value={biddingPrice || ''}
                       className='w-1/2 appearance-none inputField'
                       placeholder='Name your price!'
                     />

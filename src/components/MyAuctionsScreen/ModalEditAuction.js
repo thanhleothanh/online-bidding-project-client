@@ -128,8 +128,6 @@ const ModalEditAuction = ({ isShow, closeModal, auctionId }) => {
   const putAuctionHandler = (data) => {
     const payload = {
       description: data.description,
-      timeStart: data.timeStart + ':00',
-      timeEnd: data.timeEnd + ':00',
       priceStart: data.priceStart,
       priceStep: data.priceStep,
       category: {
@@ -200,39 +198,39 @@ const ModalEditAuction = ({ isShow, closeModal, auctionId }) => {
                   {...register('description')}
                 />
 
-                <div className='flex w-full mt-2'>
-                  <div className='flex flex-col w-1/2 pr-2'>
-                    <label className='modalFormLabel'>Time Start</label>
+                {/* <div classname='flex w-full mt-2'>
+                  <div classname='flex flex-col w-1/2 pr-2'>
+                    <label classname='modalformlabel'>time start</label>
                     <input
-                      className='modalFormField'
+                      classname='modalformfield'
                       type='datetime-local'
-                      defaultValue={
-                        currentAuction.timeStart
-                          ? currentAuction.timeStart.substring(0, 16) ?? null
+                      defaultvalue={
+                        currentauction.timestart
+                          ? currentauction.timestart.substring(0, 16) ?? null
                           : null
                       }
-                      autoComplete='off'
+                      autocomplete='off'
                       required
-                      {...register('timeStart')}
+                      {...register('timestart')}
                     />
                   </div>
 
-                  <div className='flex flex-col w-1/2 pl-2'>
-                    <label className='modalFormLabel'>Time End</label>
+                  <div classname='flex flex-col w-1/2 pl-2'>
+                    <label classname='modalformlabel'>time end</label>
                     <input
-                      className=' modalFormField'
+                      classname=' modalformfield'
                       type='datetime-local'
-                      defaultValue={
-                        currentAuction.timeEnd
-                          ? currentAuction.timeStart.substring(0, 16) ?? null
+                      defaultvalue={
+                        currentauction.timeend
+                          ? currentauction.timestart.substring(0, 16) ?? null
                           : null
                       }
-                      autoComplete='off'
+                      autocomplete='off'
                       required
-                      {...register('timeEnd')}
+                      {...register('timeend')}
                     />
                   </div>
-                </div>
+                </div> */}
 
                 <div className='flex w-full mt-2'>
                   <div className='flex flex-col w-1/2 pr-2'>
@@ -373,7 +371,7 @@ const ModalEditAuction = ({ isShow, closeModal, auctionId }) => {
                     color={Math.floor(Math.random() * 10 + 1)}
                   />
                 ) : (
-                  <div className='flex mt-2 space-x-3 overflow-x-auto text-gray-200 customScrollbar'>
+                  <div className='flex mt-2 space-x-3 overflow-x-auto text-gray-200 '>
                     {itemImages
                       ? itemImages.length !== 0 &&
                         itemImages.map((itemImage) => {

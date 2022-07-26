@@ -39,6 +39,24 @@ import {
   AUCTION_GET_USERS_AUCTIONS_FAIL,
   AUCTION_GET_USERS_AUCTIONS_REQUEST,
   AUCTION_GET_USERS_AUCTIONS_SUCCESS,
+  AUCTION_GET_INTERESTED_FAIL,
+  AUCTION_GET_INTERESTED_REQUEST,
+  AUCTION_GET_INTERESTED_SUCCESS,
+  AUCTION_CHECK_INTERESTED_FAIL,
+  AUCTION_CHECK_INTERESTED_REQUEST,
+  AUCTION_CHECK_INTERESTED_SUCCESS,
+  AUCTION_CHECK_INTERESTED_RESET,
+  AUCTION_DELETE_INTERESTED_FAIL,
+  AUCTION_DELETE_INTERESTED_REQUEST,
+  AUCTION_DELETE_INTERESTED_SUCCESS,
+  AUCTION_DELETE_INTERESTED_RESET,
+  AUCTION_SAVE_INTERESTED_FAIL,
+  AUCTION_SAVE_INTERESTED_REQUEST,
+  AUCTION_SAVE_INTERESTED_SUCCESS,
+  AUCTION_SAVE_INTERESTED_RESET,
+  AUCTION_GET_MY_WINS_FAIL,
+  AUCTION_GET_MY_WINS_REQUEST,
+  AUCTION_GET_MY_WINS_SUCCESS,
 } from '../constants/auctionConstants';
 
 export const auctionGetOpeningsReducer = (state = {}, action) => {
@@ -211,6 +229,77 @@ export const auctionGetUsersAuctionsReducer = (state = {}, action) => {
     case AUCTION_GET_USERS_AUCTIONS_SUCCESS:
       return { loading: false, auctions: action.payload };
     case AUCTION_GET_USERS_AUCTIONS_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const auctionGetInterestedReducer = (state = {}, action) => {
+  switch (action.type) {
+    case AUCTION_GET_INTERESTED_REQUEST:
+      return { loading: true };
+    case AUCTION_GET_INTERESTED_SUCCESS:
+      return { loading: false, auctions: action.payload };
+    case AUCTION_GET_INTERESTED_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const auctionCheckInterestedReducer = (state = {}, action) => {
+  switch (action.type) {
+    case AUCTION_CHECK_INTERESTED_REQUEST:
+      return { loading: true };
+    case AUCTION_CHECK_INTERESTED_SUCCESS:
+      return { loading: false, success: action.payload };
+    case AUCTION_CHECK_INTERESTED_FAIL:
+      return { loading: false, error: action.payload };
+    case AUCTION_CHECK_INTERESTED_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
+export const auctionDeleteInterestedReducer = (state = {}, action) => {
+  switch (action.type) {
+    case AUCTION_DELETE_INTERESTED_REQUEST:
+      return { loading: true };
+    case AUCTION_DELETE_INTERESTED_SUCCESS:
+      return { loading: false, success: action.payload };
+    case AUCTION_DELETE_INTERESTED_FAIL:
+      return { loading: false, error: action.payload };
+    case AUCTION_DELETE_INTERESTED_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
+export const auctionSaveInterestedReducer = (state = {}, action) => {
+  switch (action.type) {
+    case AUCTION_SAVE_INTERESTED_REQUEST:
+      return { loading: true };
+    case AUCTION_SAVE_INTERESTED_SUCCESS:
+      return { loading: false, success: action.payload };
+    case AUCTION_SAVE_INTERESTED_FAIL:
+      return { loading: false, error: action.payload };
+    case AUCTION_SAVE_INTERESTED_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
+export const auctionGetMyWinsReducer = (state = {}, action) => {
+  switch (action.type) {
+    case AUCTION_GET_MY_WINS_REQUEST:
+      return { loading: true };
+    case AUCTION_GET_MY_WINS_SUCCESS:
+      return { loading: false, auctions: action.payload };
+    case AUCTION_GET_MY_WINS_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;

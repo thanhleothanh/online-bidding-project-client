@@ -29,7 +29,7 @@ const ItemInfoSection = ({ auction }) => {
       </div>
       <div className='flex flex-col'>
         <div className='font-semibold text-left'>Item Images:</div>
-        <div className='flex space-x-3 overflow-x-auto customScrollbar'>
+        <div className='flex space-x-3 overflow-x-auto '>
           {auction.item
             ? auction.item.itemImages.length !== 0 &&
               auction.item.itemImages.map((itemImage) => {
@@ -41,7 +41,7 @@ const ItemInfoSection = ({ auction }) => {
                         currentTarget.onerror = null;
                         currentTarget.src = '/images/auction_img.jpg';
                       }}
-                      className='object-cover rounded-md w-44 h-44'
+                      className='object-cover rounded-md w-60 h-60'
                     />
                   </>
                 );

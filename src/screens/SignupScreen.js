@@ -52,7 +52,15 @@ const SignupScreen = ({ history }) => {
       ) {
         if (data.password.length < 8)
           window.alert('Mật khẩu phải ít nhất 8 kí tự!');
-        else dispatch(signup(data.username, data.name, data.password));
+        else
+          dispatch(
+            signup({
+              username: data.username,
+              email: data.email,
+              name: data.name,
+              password: data.password,
+            })
+          );
       }
     }
   };
@@ -75,6 +83,16 @@ const SignupScreen = ({ history }) => {
               {...register('username')}
               required
               placeholder='Your username'
+            />
+          </div>
+          <div className='mt-3'>
+            <label className='labelField'>Email</label>
+            <input
+              className='inputField'
+              type='email'
+              {...register('email')}
+              required
+              placeholder='Your email'
             />
           </div>
           <div className='mt-3'>
