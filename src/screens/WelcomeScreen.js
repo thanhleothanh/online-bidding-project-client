@@ -12,11 +12,35 @@ import {
 } from '../redux/actions/auctionActions';
 import PagingButtons from '../components/PagingButtons';
 import CategoryChooser from '../components/AdminAuctionScreen/CategoryChooser';
+import { useTrail, a } from '@react-spring/web';
+
+const Trail = ({ open, children }) => {
+  const items = React.Children.toArray(children)
+  React.useEffect(() => {
+    console.log(open)
+  }, [open])
+  const trail = useTrail(items.length, {
+    config: { mass: 5, tension: 2000, friction: 200 },
+    opacity: open ? 1 : 0,
+    height: open ? 320 : 0,
+    from: { opacity: 0, height: 0 },
+  })
+  return (
+    <div>
+      {trail.map(({ height, ...style }, index) => (
+        <a.div key={index} className='trailsText' style={style}>
+          <a.div style={{ height }}>{items[index]}</a.div>
+        </a.div>
+      ))}
+    </div>
+  )
+}
 
 const WelcomeScreen = ({ history }) => {
   const dispatch = useDispatch();
   const [currentPage, setCurrentPage] = useState(0);
   const [choosenCategory, setChoosenCategory] = useState(null);
+  const [open, setOpen] = useState(false);
 
   const { userInfo } = useSelector((state) => state.userLogin);
   const {
@@ -43,6 +67,10 @@ const WelcomeScreen = ({ history }) => {
   useEffect(() => {
     dispatch(auctionGetTopTrending());
   }, []);
+
+  useEffect(() => { setOpen(true) }, []);
+
+  const myTimeout = 0
 
   return (
     <div className='relative flex flex-col w-full h-auto min-h-screen p-5 space-y-5 xl:space-y-0 xl:space-x-5 xl:flex-row'>
@@ -111,23 +139,30 @@ const WelcomeScreen = ({ history }) => {
               ) : (
                 <div className='w-full space-y-5 col lg:columns-2 columns-1'>
                   {openingAuctions &&
-                    openingAuctions.map((auction) => {
+                    openingAuctions.map((auction, i) => {
+                      var boo = false;
+                      setTimeout(function () {
+                        boo = true;
+                      }, i * 100);
+
                       return (
-                        <AuctionCard
-                          image={
-                            auction.item.itemImages == null ||
-                            auction.item.itemImages.length === 0
-                              ? '/images/auction_img.jpg'
-                              : auction.item.itemImages[0].imageUrl
-                          }
-                          key={auction.id}
-                          id={auction.id}
-                          name={auction.item.name}
-                          timeStart={auction.timeStart}
-                          timeEnd={auction.timeEnd}
-                          username={auction.user.profile.username}
-                          userId={auction.user.profile.id}
-                        />
+                        <Trail open={open}>
+                          <AuctionCard
+                            image={
+                              auction.item.itemImages == null ||
+                                auction.item.itemImages.length === 0
+                                ? '/images/auction_img.jpg'
+                                : auction.item.itemImages[0].imageUrl
+                            }
+                            key={auction.id}
+                            id={auction.id}
+                            name={auction.item.name}
+                            timeStart={auction.timeStart}
+                            timeEnd={auction.timeEnd}
+                            username={auction.user.profile.username}
+                            userId={auction.user.profile.id}
+                          />
+                        </Trail>
                       );
                     })}
                 </div>

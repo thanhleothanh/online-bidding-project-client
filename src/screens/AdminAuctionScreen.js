@@ -73,7 +73,7 @@ const AdminAuctionScreen = ({ history }) => {
 
   return (
     <>
-      <div className='relative flex flex-col w-full h-auto min-h-screen p-5 space-y-5'>
+      <div className='animate-fadeIn relative flex flex-col w-full h-auto min-h-screen p-5 space-y-5'>
         <div className='flex w-full'>
           <div className='w-full h-full xl:w-2/3'>
             <div className='flex invisible xl:visible'>

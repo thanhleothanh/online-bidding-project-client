@@ -7,6 +7,7 @@ import Loader from '../components/Loader';
 import ProfileStatusChooser from '../components/AdminProfileScreen/ProfileStatusChooser';
 import PagingButtons from '../components/PagingButtons';
 import ProfileInfoSection from '../components/AdminProfileScreen/ProfileInfoSection';
+import ReactTooltip from 'react-tooltip';
 import notify from '../utils/notify';
 import {
   profileAdminBan,
@@ -74,7 +75,7 @@ const AdminProfileScreen = ({ history }) => {
 
   return (
     <>
-      <div className='relative flex flex-col w-full h-auto min-h-screen p-5 space-y-5'>
+      <div className='animate-fadeIn relative flex flex-col w-full h-auto min-h-screen p-5 space-y-5'>
         <div className='flex w-full'>
           <div className='w-full h-full xl:w-2/3'>
             <div className='flex invisible xl:visible'>
@@ -150,7 +151,10 @@ const AdminProfileScreen = ({ history }) => {
                                     <>
                                       {profile.status === 'ACTIVE' && (
                                         <>
-                                          <button>
+                                          <button
+                                            data-for="suspend"
+                                            data-tip="Suspend user"
+                                          >
                                             <i
                                               onClick={() =>
                                                 suspendButtonClickedHandler(
@@ -160,7 +164,16 @@ const AdminProfileScreen = ({ history }) => {
                                               className='fas fa-user-lock fa-lg hover:text-orange-500'
                                             />
                                           </button>
-                                          <button>
+                                          <ReactTooltip
+                                            id="suspend"
+                                            place="top"
+                                            effect="float"
+                                          />
+
+                                          <button
+                                            data-for="ban"
+                                            data-tip="Ban user"
+                                          >
                                             <i
                                               onClick={() =>
                                                 banButtonClickedHandler(
@@ -170,11 +183,19 @@ const AdminProfileScreen = ({ history }) => {
                                               className='fas fa-user-slash fa-lg hover:text-orange-500'
                                             />
                                           </button>
+                                          <ReactTooltip
+                                            id="ban"
+                                            place="top"
+                                            effect="float"
+                                          />
                                         </>
                                       )}
                                       {profile.status !== 'ACTIVE' && (
                                         <>
-                                          <button>
+                                          <button
+                                            data-for="unlock"
+                                            data-tip="Unlock user"
+                                          >
                                             <i
                                               onClick={() =>
                                                 unlockButtonClickedHandler(
@@ -184,6 +205,11 @@ const AdminProfileScreen = ({ history }) => {
                                               className='fas fa-user-check fa-lg hover:text-orange-500'
                                             />
                                           </button>
+                                          <ReactTooltip
+                                            id="unlock"
+                                            place="top"
+                                            effect="float"
+                                          />
                                         </>
                                       )}
                                     </>
@@ -207,7 +233,10 @@ const AdminProfileScreen = ({ history }) => {
                                     <>
                                       {profile.status === 'ACTIVE' && (
                                         <>
-                                          <button>
+                                          <button
+                                            data-for="suspend"
+                                            data-tip="Suspend user"
+                                          >
                                             <i
                                               onClick={() =>
                                                 suspendButtonClickedHandler(
@@ -217,7 +246,16 @@ const AdminProfileScreen = ({ history }) => {
                                               className='fas fa-user-lock fa-lg hover:text-orange-500'
                                             />
                                           </button>
-                                          <button>
+                                          <ReactTooltip
+                                            id="suspend"
+                                            place="top"
+                                            effect="float"
+                                          />
+
+                                          <button
+                                            data-for="ban"
+                                            data-tip="Ban user"
+                                          >
                                             <i
                                               onClick={() =>
                                                 banButtonClickedHandler(
@@ -227,11 +265,18 @@ const AdminProfileScreen = ({ history }) => {
                                               className='fas fa-user-slash fa-lg hover:text-orange-500'
                                             />
                                           </button>
+                                          <ReactTooltip
+                                            id="suspend"
+                                            place="top"
+                                            effect="float"
+                                          />
                                         </>
                                       )}
                                       {profile.status !== 'ACTIVE' && (
                                         <>
-                                          <button>
+                                          <button
+                                            data-for="unlock"
+                                            data-tip="Unlock user">
                                             <i
                                               onClick={() =>
                                                 unlockButtonClickedHandler(
@@ -241,6 +286,11 @@ const AdminProfileScreen = ({ history }) => {
                                               className='fas fa-user-check fa-lg hover:text-orange-500'
                                             />
                                           </button>
+                                          <ReactTooltip
+                                            id="unlock"
+                                            place="top"
+                                            effect="float"
+                                          />
                                         </>
                                       )}
                                     </>

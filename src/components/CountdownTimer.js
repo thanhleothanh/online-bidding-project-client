@@ -59,7 +59,7 @@ const CountdownTimer = ({ timeStart, timeEnd }) => {
             className={`text-sm font-semibold inline-block py-1 px-3 uppercase rounded-full 
             text-orange-50 bg-orange-800`}
           >
-            <i className='fas fa-hourglass' />
+            <i className='fas fa-hourglass hover:animate-spin' />
           </span>
         </div>
         <div className='text-right'>

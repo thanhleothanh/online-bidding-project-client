@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import ReactTooltip from 'react-tooltip';
 import {
   auctionDelete,
   auctionSubmit,
@@ -99,7 +100,7 @@ const MyAuctionsScreen = ({ history }) => {
     <>
       {userInfo !== null ? (
         <>
-          <div className='relative flex flex-col w-full h-auto min-h-screen p-5 space-y-5'>
+          <div className='animate-fadeIn relative flex flex-col w-full h-auto min-h-screen p-5 space-y-5'>
             <div className='flex w-full'>
               <div className='w-full h-full xl:w-2/3'>
                 <div className='flex invisible xl:visible'>
@@ -172,39 +173,65 @@ const MyAuctionsScreen = ({ history }) => {
                                   <td className='py-10 space-x-1'>
                                     {(auction.status === 'PENDING' ||
                                       auction.status === 'DRAFT') && (
-                                      <>
-                                        <button>
-                                          <i
-                                            onClick={() =>
-                                              editButtonClickedHandler(
-                                                auction.id
-                                              )
-                                            }
-                                            className='fas fa-edit fa-lg hover:text-orange-500'
+                                        <>
+                                          <button
+                                            data-for="edit"
+                                            data-tip="Edit"
+                                          >
+                                            <i
+                                              onClick={() =>
+                                                editButtonClickedHandler(
+                                                  auction.id
+                                                )
+                                              }
+                                              className='fas fa-edit fa-lg hover:text-orange-500'
+                                            />
+                                          </button>
+                                          <ReactTooltip
+                                            id="edit"
+                                            place="top"
+                                            effect="float"
                                           />
-                                        </button>
-                                        <button>
-                                          <i
-                                            className='fas fa-cloud-upload fa-lg hover:text-orange-500'
-                                            onClick={() =>
-                                              submitButtonClickedHandler(
-                                                auction.id
-                                              )
-                                            }
+
+                                          <button
+                                            data-for="submit"
+                                            data-tip="Submit"
+                                          >
+                                            <i
+                                              className='fas fa-cloud-upload fa-lg hover:text-orange-500'
+                                              onClick={() =>
+                                                submitButtonClickedHandler(
+                                                  auction.id
+                                                )
+                                              }
+                                            />
+                                          </button>
+                                          <ReactTooltip
+                                            id="submit"
+                                            place="top"
+                                            effect="float"
                                           />
-                                        </button>
-                                        <button>
-                                          <i
-                                            className='fas fa-trash fa-lg hover:text-orange-500'
-                                            onClick={() =>
-                                              deleteButtonClickedHandler(
-                                                auction.id
-                                              )
-                                            }
+
+                                          <button
+                                            data-for="delete"
+                                            data-tip="Delete"
+                                          >
+                                            <i
+                                              className='fas fa-trash fa-lg hover:text-orange-500'
+                                              onClick={() =>
+                                                deleteButtonClickedHandler(
+                                                  auction.id
+                                                )
+                                              }
+                                            />
+                                          </button>
+                                          <ReactTooltip
+                                            id="delete"
+                                            place="top"
+                                            effect="float"
                                           />
-                                        </button>
-                                      </>
-                                    )}
+                                        </>
+                                      )}
                                   </td>
                                 </tr>
                               );
@@ -225,41 +252,68 @@ const MyAuctionsScreen = ({ history }) => {
                                     <td className='py-10 space-x-1'>
                                       {(auction.status === 'PENDING' ||
                                         auction.status === 'DRAFT') && (
-                                        <>
-                                          <button>
-                                            <i
-                                              onClick={() =>
-                                                editButtonClickedHandler(
-                                                  auction.id
-                                                )
-                                              }
-                                              className='fas fa-edit fa-lg hover:text-orange-500'
-                                            />
-                                          </button>
-                                          {auction.status === 'DRAFT' && (
-                                            <button>
+                                          <>
+                                            <button
+                                              data-for="edit"
+                                              data-tip="Edit"
+                                            >
                                               <i
-                                                className='fas fa-cloud-upload fa-lg hover:text-orange-500'
                                                 onClick={() =>
-                                                  submitButtonClickedHandler(
+                                                  editButtonClickedHandler(
+                                                    auction.id
+                                                  )
+                                                }
+                                                className='fas fa-edit fa-lg hover:text-orange-500'
+                                              />
+                                            </button>
+                                            <ReactTooltip
+                                              id="edit"
+                                              place="top"
+                                              effect="float"
+                                            />
+
+                                            {auction.status === 'DRAFT' && (
+                                              <>
+                                                <button
+                                                  data-for="submit"
+                                                  data-tip="Submit"
+                                                >
+                                                  <i
+                                                    className='fas fa-cloud-upload fa-lg hover:text-orange-500'
+                                                    onClick={() =>
+                                                      submitButtonClickedHandler(
+                                                        auction.id
+                                                      )
+                                                    }
+                                                  />
+                                                </button>
+                                                <ReactTooltip
+                                                  id="submit"
+                                                  place="top"
+                                                  effect="float"
+                                                />
+                                              </>
+                                            )}
+                                            <button
+                                              data-for="delete"
+                                              data-tip="Delete"
+                                            >
+                                              <i
+                                                className='fas fa-trash fa-lg hover:text-orange-500'
+                                                onClick={() =>
+                                                  deleteButtonClickedHandler(
                                                     auction.id
                                                   )
                                                 }
                                               />
                                             </button>
-                                          )}
-                                          <button>
-                                            <i
-                                              className='fas fa-trash fa-lg hover:text-orange-500'
-                                              onClick={() =>
-                                                deleteButtonClickedHandler(
-                                                  auction.id
-                                                )
-                                              }
+                                            <ReactTooltip
+                                              id="delete"
+                                              place="top"
+                                              effect="float"
                                             />
-                                          </button>
-                                        </>
-                                      )}
+                                          </>
+                                        )}
                                     </td>
                                   </tr>
                                 );

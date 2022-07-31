@@ -12,7 +12,7 @@ const AuctionCard = ({
   image,
 }) => {
   return (
-    <div className='flex w-full text-gray-200 bg-gray-800 rounded-md h-80'>
+    <div className='flex overflow-hidden w-full text-gray-200 bg-gray-800 rounded-md h-80 transition ease-in-out hover:-translate-y-1 hover:scale-105 duration-300'>
       <div className='w-5/12 h-full'>
         <img
           src={image}
@@ -25,7 +25,7 @@ const AuctionCard = ({
       </div>
       <div className='flex flex-col justify-around w-7/12 p-5 space-y-3 text-center'>
         <h2 className='text-lg font-semibold uppercase'>{name}</h2>
-        <Link to={`/profiles/${userId}`} className='w-full'>
+        <Link to={`/profiles/${userId}`} className='w-full hover:text-orange-500'>
           <h3>
             <i className='fas fa-user-circle' /> {username}
           </h3>

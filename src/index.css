@@ -41,5 +41,16 @@
   .modalFormButton {
     @apply w-full px-6 py-2 text-sm font-bold text-gray-200 bg-orange-600 rounded-md shadow-md md:text-base focus:outline-none hover:bg-orange-700;
   }
+  .trailsText {
+    position: relative;
+    width: 100%;
+    color: black;
+    padding: 5px 0;
+    will-change: transform, opacity;
+    overflow: hidden;
+  }
+  .trailsText > div {
+    overflow: hidden;
+  }
 }
 @tailwind utilities;
