@@ -1,6 +1,5 @@
 import { BrowserRouter, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import NavigationBar from './components/NavigationBar';
 import WelcomeScreen from './screens/WelcomeScreen';
 import AuctionScreen from './screens/AuctionScreen';
@@ -8,12 +7,13 @@ import LoginScreen from './screens/LoginScreen';
 import SignupScreen from './screens/SignupScreen';
 import MyAuctionsScreen from './screens/MyAuctionsScreen';
 import MyInterestedAuctionsScreen from './screens/MyInterestedAuctionsScreen';
-import './index.css';
 import ProfileScreen from './screens/ProfileScreen';
 import MyProfileScreen from './screens/MyProfileScreen';
 import AdminAuctionScreen from './screens/AdminAuctionScreen';
 import AdminReportScreen from './screens/AdminReportScreen';
 import AdminProfileScreen from './screens/AdminProfileScreen';
+import './index.css';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
@@ -34,6 +34,17 @@ function App() {
         <Route path='/auctions/:id' component={AuctionScreen} />
         <Route path='/profiles/:id' component={ProfileScreen} />
         <Route path='/' component={WelcomeScreen} exact />
+        <ToastContainer
+          position='bottom-left'
+          autoClose={2000}
+          hideProgressBar
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss={false}
+          draggable
+          pauseOnHover={false}
+        />
         <ToastContainer
           position='bottom-right'
           autoClose={2000}

@@ -12,7 +12,7 @@ const AuctionCard = ({
   image,
 }) => {
   return (
-    <div className='flex overflow-hidden w-full text-gray-200 bg-gray-800 rounded-md h-80 transition ease-in-out hover:-translate-y-1 hover:scale-105 duration-300'>
+    <div className='flex w-full overflow-hidden text-gray-200 transition duration-300 ease-in-out bg-gray-800 rounded-md h-72 hover:-translate-y-1 hover:scale-105'>
       <div className='w-5/12 h-full'>
         <img
           src={image}
@@ -25,11 +25,14 @@ const AuctionCard = ({
       </div>
       <div className='flex flex-col justify-around w-7/12 p-5 space-y-3 text-center'>
         <h2 className='text-lg font-semibold uppercase'>{name}</h2>
-        <Link to={`/profiles/${userId}`} className='w-full hover:text-orange-500'>
-          <h3>
+        <h3>
+          <Link
+            to={`/profiles/${userId}`}
+            className='w-full hover:text-orange-500'
+          >
             <i className='fas fa-user-circle' /> {username}
-          </h3>
-        </Link>
+          </Link>
+        </h3>
         <h3 className='w-full px-2 xl:px-5'>
           <CountdownTimer timeStart={timeStart} timeEnd={timeEnd} />
         </h3>

@@ -17,7 +17,7 @@ const ProfileForm = () => {
       </div>
       {loadingGetProfileById ? (
         <Loader
-          className='mt-3'
+          className={'py-3'}
           loader={Math.floor(Math.random() * 10 + 1)}
           color={Math.floor(Math.random() * 10 + 1)}
         />

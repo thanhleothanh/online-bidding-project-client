@@ -140,7 +140,7 @@ const ProfileForm = () => {
         <div>
           {loadingChangePassword && (
             <Loader
-              className='mt-5'
+              className={'py-3'}
               loader={Math.floor(Math.random() * 10 + 1)}
               color={Math.floor(Math.random() * 10 + 1)}
             />

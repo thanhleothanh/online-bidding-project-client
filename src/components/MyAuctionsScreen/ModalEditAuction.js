@@ -171,12 +171,12 @@ const ModalEditAuction = ({ isShow, closeModal, auctionId }) => {
       <div className='w-full pb-10 h-7/10'>
         {loadingCurrentAuction ? (
           <Loader
-            className='mt-3'
+            className={'py-3'}
             loader={Math.floor(Math.random() * 10 + 1)}
             color={Math.floor(Math.random() * 10 + 1)}
           />
         ) : errorCurrentAuction ? (
-          <Alert className='mt-3'>{errorCurrentAuction}</Alert>
+          <Alert className={'mt-3'}>{errorCurrentAuction}</Alert>
         ) : (
           auctionId &&
           currentAuction && (
@@ -367,6 +367,7 @@ const ModalEditAuction = ({ isShow, closeModal, auctionId }) => {
 
                 {loadingImageUpload ? (
                   <Loader
+                    className={'py-3'}
                     loader={Math.floor(Math.random() * 10 + 1)}
                     color={Math.floor(Math.random() * 10 + 1)}
                   />

@@ -24,13 +24,13 @@ const ProfileAuctions = ({ userId }) => {
   }, [userId]);
 
   return (
-    <div className='w-full pt-5 space-y-5 bg-gray-800 rounded-md'>
-      <h1 className='text-lg font-bold text-left text-gray-200 pl-7 xl:text-xl'>
+    <div className='w-full bg-gray-800 rounded-md'>
+      <h1 className='py-5 text-lg font-bold text-left text-gray-200 pl-7 xl:text-xl'>
         <i className='fas fa-coins' /> This person's auctions
       </h1>
       {loadingUsersAuctions ? (
         <Loader
-          className='mt-3'
+          className={'py-3'}
           loader={Math.floor(Math.random() * 10 + 1)}
           color={Math.floor(Math.random() * 10 + 1)}
         />
@@ -38,13 +38,18 @@ const ProfileAuctions = ({ userId }) => {
         <Alert>{errorUsersAuctions}</Alert>
       ) : (
         <>
+          <tr className='sticky top-0 flex w-full text-gray-100 bg-orange-600 rounded-t-md'>
+            <th className='w-3/12 py-7'>User Info</th>
+            <th className='w-4/12 py-7'>Auction Info</th>
+            <th className='w-5/12 py-7'>Auction Item</th>
+          </tr>
           <div className='w-full overflow-hidden rounded-md'>
-            <table className='w-full table-fixed overflow-x-scoll '>
-              <thead className='text-gray-100 bg-orange-600'>
-                <tr className='border-2 border-orange-500'>
-                  <th className='w-3/12 py-7'>User Info</th>
-                  <th className='w-5/12 py-7'>Auction Info</th>
-                  <th className='w-4/12 py-7'>Auction Item</th>
+            <table className='w-full overflow-x-auto table-fixed'>
+              <thead>
+                <tr>
+                  <th className='w-3/12'></th>
+                  <th className='w-4/12'></th>
+                  <th className='w-5/12'></th>
                 </tr>
               </thead>
               <tbody>
@@ -53,7 +58,7 @@ const ProfileAuctions = ({ userId }) => {
                   usersAuctions.map((auction) => {
                     return (
                       <tr
-                        className='text-center text-gray-200 bg-gray-700 border-2 border-orange-500'
+                        className='text-center text-gray-200 bg-gray-700 border-orange-500 border-y-2'
                         key={auction.id}
                       >
                         <td className='py-10 lg:px-5'>
@@ -71,7 +76,7 @@ const ProfileAuctions = ({ userId }) => {
               </tbody>
             </table>
             {usersAuctions && usersAuctions.length === 0 && (
-              <Message type='info' className='w-full '>
+              <Message type='info' className={'w-full'}>
                 This person havent had any auction!
               </Message>
             )}

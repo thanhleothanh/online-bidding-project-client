@@ -13,6 +13,7 @@ import PagingButtons from '../components/PagingButtons';
 import ItemInfoSection from '../components/AdminAuctionScreen/ItemInfoSection';
 import AuctionInfoSection from '../components/AdminAuctionScreen/AuctionInfoSection';
 import notify from '../utils/notify';
+import ReactTooltip from 'react-tooltip';
 import UserInfoSection from '../components/AdminAuctionScreen/UserInfoSection';
 
 const AdminAuctionScreen = ({ history }) => {
@@ -73,7 +74,7 @@ const AdminAuctionScreen = ({ history }) => {
 
   return (
     <>
-      <div className='animate-fadeIn relative flex flex-col w-full h-auto min-h-screen p-5 space-y-5'>
+      <div className='relative flex flex-col w-full h-auto min-h-screen p-5 space-y-5 animate-fadeIn'>
         <div className='flex w-full'>
           <div className='w-full h-full xl:w-2/3'>
             <div className='flex invisible xl:visible'>
@@ -94,99 +95,112 @@ const AdminAuctionScreen = ({ history }) => {
         </div>
         <div className='w-full my-5'>
           {/* buttons section */}
-          <div className='flex justify-between mb-5'>
-            <StatusChooser
-              choosenStatus={choosenStatus}
-              setChoosenStatus={setChoosenStatus}
-            />
-          </div>
-          {/* auctions table section */}
-          <div className='w-full overflow-auto rounded-md scrollbar-thin'>
-            <div className='mb-5'>
-              {currentPage != null && (
-                <PagingButtons
-                  setCurrentPage={setCurrentPage}
-                  page={pageAllAuctions}
-                  pageTotal={pageTotalAllAuctions}
-                />
-              )}
-            </div>
-            {/* auctions table section */}
-            <div className='w-full overflow-hidden rounded-md'>
-              <table className='w-full overflow-x-auto table-fixed '>
-                {userInfo && loadingAllAuctions ? (
-                  <Loader
-                    className='mt-3'
-                    loader={Math.floor(Math.random() * 10 + 1)}
-                    color={Math.floor(Math.random() * 10 + 1)}
-                  />
-                ) : errorAllAuctions ? (
-                  <Alert className='mt-3'>{errorAllAuctions}</Alert>
-                ) : (
-                  <>
-                    <thead className='text-gray-100 bg-orange-600'>
-                      <tr className='border-2 border-orange-500'>
-                        <th className='w-1/12 py-7'>ID</th>
-                        <th className='w-3/12 py-7'>User Info</th>
-                        <th className='w-5/12 py-7'>Auction Info</th>
-                        <th className='w-4/12 py-7'>Auction Item</th>
-                        <th className='w-1/12 py-7'>Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {allAuctions &&
-                        allAuctions.length !== 0 &&
-                        allAuctions.map((auction) => {
-                          return (
-                            <tr className='text-center text-gray-200 bg-gray-700 border-2 border-orange-500'>
-                              <td className='py-10'>{auction.id}</td>
-                              <td className='py-10 pr-1 xl:pr-5'>
-                                <UserInfoSection auction={auction} />
-                              </td>
-                              <td className='py-10 pr-1 lg:px-5'>
-                                <AuctionInfoSection auction={auction} />
-                              </td>
-                              <td className='py-10 pl-1 lg:px-5'>
-                                <ItemInfoSection auction={auction} />
-                              </td>
-                              <td className='py-10 space-x-1'>
-                                {auction.status === 'PENDING' && (
-                                  <>
-                                    <button>
-                                      <i
-                                        onClick={() =>
-                                          approveButtonClickedHandler(
-                                            auction.id
-                                          )
-                                        }
-                                        className='fas fa-thumbs-up fa-lg hover:text-orange-500'
-                                      />
-                                    </button>
-                                    <button>
-                                      <i
-                                        onClick={() =>
-                                          rejectButtonClickedHandler(auction.id)
-                                        }
-                                        className='fas fa-thumbs-down fa-lg hover:text-orange-500'
-                                      />
-                                    </button>
-                                  </>
-                                )}
-                              </td>
-                            </tr>
-                          );
-                        })}
-                    </tbody>
-                  </>
-                )}
-              </table>
-            </div>
-            {allAuctions && allAuctions.length === 0 && (
-              <Message type='info' className='w-full '>
-                No auction with these criterias found!
-              </Message>
+          <StatusChooser
+            choosenStatus={choosenStatus}
+            setChoosenStatus={setChoosenStatus}
+          />
+          <div className='my-3'>
+            {currentPage != null && allAuctions && allAuctions.length !== 0 && (
+              <PagingButtons
+                setCurrentPage={setCurrentPage}
+                page={pageAllAuctions}
+                pageTotal={pageTotalAllAuctions}
+              />
             )}
           </div>
+          {/* auctions table section */}
+          {userInfo && loadingAllAuctions ? (
+            <Loader
+              className={'py-3'}
+              loader={Math.floor(Math.random() * 10 + 1)}
+              color={Math.floor(Math.random() * 10 + 1)}
+            />
+          ) : errorAllAuctions ? (
+            <Alert className={'mt-3'}>{errorAllAuctions}</Alert>
+          ) : (
+            <>
+              <tr className='sticky top-0 flex w-full text-gray-100 bg-orange-600 rounded-t-md'>
+                <th className='w-1/12 py-7'>ID</th>
+                <th className='w-2/12 py-7'>User Info</th>
+                <th className='w-4/12 py-7'>Auction Info</th>
+                <th className='w-5/12 py-7'>Auction Item</th>
+                <th className='w-1/12 py-7'></th>
+              </tr>
+              <div className='w-full overflow-hidden rounded-md'>
+                <table className='w-full overflow-x-auto table-fixed '>
+                  <thead>
+                    <tr>
+                      <th className='w-1/12'></th>
+                      <th className='w-2/12'></th>
+                      <th className='w-4/12'></th>
+                      <th className='w-5/12'></th>
+                      <th className='w-1/12'></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {allAuctions &&
+                      allAuctions.length !== 0 &&
+                      allAuctions.map((auction) => {
+                        return (
+                          <tr
+                            className='text-center text-gray-200 bg-gray-700 border-orange-500 border-y-2'
+                            key={auction.id}
+                          >
+                            <td className='py-10'>{auction.id}</td>
+                            <td className='py-10 pr-1 xl:pr-5'>
+                              <UserInfoSection auction={auction} />
+                            </td>
+                            <td className='py-10 pr-1 lg:px-5'>
+                              <AuctionInfoSection auction={auction} />
+                            </td>
+                            <td className='py-10 pl-1 lg:px-5'>
+                              <ItemInfoSection auction={auction} />
+                            </td>
+                            <td className='py-10 space-x-1'>
+                              {auction.status === 'PENDING' && (
+                                <>
+                                  <button data-for='approve' data-tip='Approve'>
+                                    <i
+                                      onClick={() =>
+                                        approveButtonClickedHandler(auction.id)
+                                      }
+                                      className='fas fa-thumbs-up fa-lg hover:text-orange-500'
+                                    />
+                                  </button>
+                                  <ReactTooltip
+                                    id='approve'
+                                    place='top'
+                                    effect='float'
+                                  />
+                                  <button data-for='reject' data-tip='Reject'>
+                                    <i
+                                      onClick={() =>
+                                        rejectButtonClickedHandler(auction.id)
+                                      }
+                                      className='fas fa-thumbs-down fa-lg hover:text-orange-500'
+                                    />
+                                  </button>
+                                  <ReactTooltip
+                                    id='reject'
+                                    place='top'
+                                    effect='float'
+                                  />
+                                </>
+                              )}
+                            </td>
+                          </tr>
+                        );
+                      })}
+                  </tbody>
+                </table>
+              </div>
+            </>
+          )}
+          {allAuctions && allAuctions.length === 0 && (
+            <Message type='info' className={'w-full'}>
+              No auction with these criterias found!
+            </Message>
+          )}
         </div>
       </div>
     </>
