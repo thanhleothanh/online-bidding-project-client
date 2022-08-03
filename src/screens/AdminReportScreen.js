@@ -13,6 +13,7 @@ import ReportResultChooser from '../components/AdminReportScreen/ReportResultCho
 import PagingButtons from '../components/PagingButtons';
 import ReportDetailInfo from '../components/AdminReportScreen/ReportDetailInfo';
 import ReportUsersInfo from '../components/AdminReportScreen/ReportUsersInfo';
+import ReactTooltip from 'react-tooltip';
 import notify from '../utils/notify';
 
 const AdminReportScreen = ({ history }) => {
@@ -93,7 +94,7 @@ const AdminReportScreen = ({ history }) => {
 
   return (
     <>
-      <div className='relative flex flex-col w-full h-auto min-h-screen p-5 space-y-5'>
+      <div className='animate-fadeIn relative flex flex-col w-full h-auto min-h-screen p-5 space-y-5'>
         <div className='flex w-full'>
           <div className='w-full h-full xl:w-2/3'></div>
           <div className='w-full xl:w-1/3'>
@@ -158,7 +159,10 @@ const AdminReportScreen = ({ history }) => {
                               <td className='py-10 space-x-1'>
                                 {report.reportResult === null && (
                                   <>
-                                    <button>
+                                    <button
+                                      data-for="approve"
+                                      data-tip="Approve"
+                                    >
                                       <i
                                         onClick={() =>
                                           approveButtonClickedHandler(report.id)
@@ -166,7 +170,16 @@ const AdminReportScreen = ({ history }) => {
                                         className='fas fa-thumbs-up fa-lg hover:text-orange-500'
                                       />
                                     </button>
-                                    <button>
+                                    <ReactTooltip
+                                      id="approve"
+                                      place="top"
+                                      effect="float"
+                                    />
+
+                                    <button
+                                      data-for="reject"
+                                      data-tip="Reject"
+                                    >
                                       <i
                                         onClick={() =>
                                           rejectButtonClickedHandler(report.id)
@@ -174,7 +187,16 @@ const AdminReportScreen = ({ history }) => {
                                         className='fas fa-thumbs-down fa-lg hover:text-orange-500'
                                       />
                                     </button>
-                                    <button>
+                                    <ReactTooltip
+                                      id="reject"
+                                      place="top"
+                                      effect="float"
+                                    />
+
+                                    <button
+                                      data-for="delete"
+                                      data-tip="Delete"
+                                    >
                                       <i
                                         onClick={() =>
                                           deleteButtonClickedHandler(report.id)
@@ -182,6 +204,11 @@ const AdminReportScreen = ({ history }) => {
                                         className='fas fa-trash fa-lg hover:text-orange-500'
                                       />
                                     </button>
+                                    <ReactTooltip
+                                      id="delete"
+                                      place="top"
+                                      effect="float"
+                                    />
                                   </>
                                 )}
                               </td>

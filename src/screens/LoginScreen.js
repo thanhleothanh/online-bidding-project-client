@@ -29,7 +29,7 @@ const LoginScreen = ({ history }) => {
 
   return (
     <div className='flex flex-col items-center justify-center w-full mt-10'>
-      <div className='w-11/12 max-w-lg md:w-full'>
+      <div className='w-11/12 max-w-lg md:w-full animate-leftToRight'>
         <div className='w-full py-5 text-2xl font-bold text-left text-gray-200 bg-orange-600 rounded-t-md md:text-3xl px-7'>
           Login <i className='fas fa-fingerprint' />
         </div>

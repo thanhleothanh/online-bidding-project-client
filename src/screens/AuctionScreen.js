@@ -66,7 +66,7 @@ const AuctionScreen = ({ history }) => {
   };
 
   return (
-    <div className='flex flex-col w-full h-auto min-h-screen p-5'>
+    <div className='animate-fadeIn flex flex-col w-full h-auto min-h-screen p-5'>
       {/* header section */}
       <div className='flex justify-between w-full'>
         <div className='w-full h-full space-x-2 xl:w-2/3'>
