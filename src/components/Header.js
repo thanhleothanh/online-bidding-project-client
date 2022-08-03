@@ -2,15 +2,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import DropdownMenu from './DropdownMenu';
+import NotificationDropdown from './NotificationDropdown';
 
 const Header = () => {
   const { userInfo } = useSelector((state) => state.userLogin);
 
   return (
     <div className='flex justify-end space-x-2 text-gray-200'>
-      <button className='genericButton'>
-        <i className='fas fa-bell fa-lg'></i>
-      </button>
       {!userInfo ? (
         <Link to='/login'>
           <button className='font-bold genericButton'>
@@ -18,7 +16,10 @@ const Header = () => {
           </button>
         </Link>
       ) : (
-        <DropdownMenu />
+        <>
+          <NotificationDropdown />
+          <DropdownMenu />
+        </>
       )}
     </div>
   );

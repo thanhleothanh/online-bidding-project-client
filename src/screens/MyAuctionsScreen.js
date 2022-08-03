@@ -136,21 +136,28 @@ const MyAuctionsScreen = ({ history }) => {
               {/* auctions table section */}
               {loadingMyAuctions ? (
                 <Loader
+                  className={'py-3'}
                   loader={Math.floor(Math.random() * 10 + 1)}
                   color={Math.floor(Math.random() * 10 + 1)}
                 />
               ) : errorMyAuctions ? (
-                <Alert className='mt-3'>{errorMyAuctions}</Alert>
+                <Alert className={'mt-3'}>{errorMyAuctions}</Alert>
               ) : (
                 <>
-                  <div className='w-full overflow-hidden rounded-md'>
-                    <table className='w-full overflow-x-auto table-fixed '>
-                      <thead className='text-gray-100 bg-orange-600'>
-                        <tr className='border-2 border-orange-500'>
-                          <th className='w-1/12 py-7'>ID</th>
-                          <th className='w-6/12 py-7'>Auction Info</th>
-                          <th className='w-4/12 py-7'>Auction Item</th>
-                          <th className='w-1/12 py-7'></th>
+                  <tr className='sticky top-0 flex w-full text-gray-100 bg-orange-600 rounded-t-md'>
+                    <th className='w-1/12 py-7'>ID</th>
+                    <th className='w-4/12 py-7'>Auction Info</th>
+                    <th className='w-6/12 py-7'>Auction Item</th>
+                    <th className='w-1/12 py-7'></th>
+                  </tr>
+                  <div className='w-full overflow-hidden rounded-md rounded-t-none'>
+                    <table className='w-full overflow-x-auto table-fixed'>
+                      <thead>
+                        <tr>
+                          <th className='w-1/12'></th>
+                          <th className='w-4/12'></th>
+                          <th className='w-6/12'></th>
+                          <th className='w-1/12'></th>
                         </tr>
                       </thead>
                       <tbody>
@@ -160,7 +167,7 @@ const MyAuctionsScreen = ({ history }) => {
                             if (choosenStatus == null)
                               return (
                                 <tr
-                                  className='text-center text-gray-200 bg-gray-700 border-2 border-orange-500'
+                                  className='text-center text-gray-200 bg-gray-700 border-orange-500 border-y-2'
                                   key={auction.id}
                                 >
                                   <td className='py-10'>{auction.id}</td>
@@ -322,7 +329,7 @@ const MyAuctionsScreen = ({ history }) => {
                       </tbody>
                     </table>
                     {myAuctions && myAuctions.length === 0 && (
-                      <Message type='info' className='w-full '>
+                      <Message type='info' className={'w-full'}>
                         You dont have any auction!
                       </Message>
                     )}

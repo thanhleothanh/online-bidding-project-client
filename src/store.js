@@ -49,6 +49,7 @@ import {
   reportAdminJudgeReducer,
   reportAdminDeleteReducer,
 } from './redux/reducers/reportReducers';
+import { notificationGetMyNotificationsReducer } from './redux/reducers/notificationReducers';
 
 const reducer = combineReducers({
   //user related
@@ -98,6 +99,9 @@ const reducer = combineReducers({
   reportAdminGetAll: reportAdminGetAllReducer,
   reportAdminJudge: reportAdminJudgeReducer,
   reportAdminDelete: reportAdminDeleteReducer,
+
+  //notification related
+  notificationGetMyNotifications: notificationGetMyNotificationsReducer,
 });
 
 const userInfoFromLocalStorage =

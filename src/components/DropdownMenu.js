@@ -40,7 +40,7 @@ const DropdownMenu = () => {
   };
 
   return (
-    <span ref={container}>
+    <span ref={container} className='relative'>
       <button
         className='font-bold genericButton'
         onClick={() => setShow(!show)}
@@ -56,7 +56,7 @@ const DropdownMenu = () => {
           opacity: `${show ? '100%' : '0%'}`,
         }}
       >
-        <div className='absolute z-10 flex flex-col w-40 mt-1 border-2 border-orange-500 rounded-md shadow-md right-5 overflow-hiddenbg-white'>
+        <div className='absolute right-0 z-20 flex flex-col w-40 mt-1 overflow-hidden border-2 border-orange-500 rounded-md shadow-md'>
           <Link to='/myProfile' className='w-full'>
             <div className='w-full font-bold text-right rounded-b-none genericButton'>
               Profile <i className='fas fa-smile'></i>

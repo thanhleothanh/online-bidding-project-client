@@ -29,21 +29,20 @@ const ItemInfoSection = ({ auction }) => {
       </div>
       <div className='flex flex-col'>
         <div className='font-semibold text-left'>Item Images:</div>
-        <div className='flex space-x-3 overflow-x-auto '>
+        <div className='flex space-x-2 overflow-x-auto scrollbar-thin'>
           {auction.item
             ? auction.item.itemImages.length !== 0 &&
-              auction.item.itemImages.map((itemImage) => {
+              auction.item.itemImages.map((itemImage, i) => {
                 return (
-                  <>
-                    <img
-                      src={itemImage.imageUrl}
-                      onError={({ currentTarget }) => {
-                        currentTarget.onerror = null;
-                        currentTarget.src = '/images/auction_img.jpg';
-                      }}
-                      className='object-cover rounded-md w-60 h-60'
-                    />
-                  </>
+                  <img
+                    key={itemImage.imageUrl}
+                    src={itemImage.imageUrl}
+                    onError={({ currentTarget }) => {
+                      currentTarget.onerror = null;
+                      currentTarget.src = '/images/auction_img.jpg';
+                    }}
+                    className='object-cover rounded-md w-60 h-60'
+                  />
                 );
               })
             : 'You havent added an item to this auction!'}

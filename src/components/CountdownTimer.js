@@ -1,23 +1,9 @@
 import React, { useState, useEffect } from 'react';
-
-function duration(timeStart, timeEnd) {
-  let diffTime = Math.abs(
-    new Date(timeEnd).valueOf() - new Date(timeStart).valueOf()
-  );
-  let days = diffTime / (24 * 60 * 60 * 1000);
-  let hours = (days / 1) * 24;
-  let minutes = (hours % 1) * 60;
-  let secs = (minutes % 1) * 60;
-  return {
-    hours: Math.floor(hours),
-    minutes: Math.floor(minutes),
-    secs: Math.floor(secs),
-  };
-}
+import toDuration from '../utils/toDuration';
 
 const CountdownTimer = ({ timeStart, timeEnd }) => {
-  const totalDuration = duration(timeStart, timeEnd);
-  const durationLeft = duration(new Date().toString(), timeEnd);
+  const totalDuration = toDuration(timeStart, timeEnd);
+  const durationLeft = toDuration(new Date().toString(), timeEnd);
 
   const [originalTime] = useState(
     totalDuration.hours * 60 * 60 +

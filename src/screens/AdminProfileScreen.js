@@ -75,7 +75,7 @@ const AdminProfileScreen = ({ history }) => {
 
   return (
     <>
-      <div className='animate-fadeIn relative flex flex-col w-full h-auto min-h-screen p-5 space-y-5'>
+      <div className='relative flex flex-col w-full h-auto min-h-screen p-5 space-y-5 animate-fadeIn'>
         <div className='flex w-full'>
           <div className='w-full h-full xl:w-2/3'>
             <div className='flex invisible xl:visible'>
@@ -97,7 +97,7 @@ const AdminProfileScreen = ({ history }) => {
         </div>
         <div className='w-full my-5'>
           {/* buttons section */}
-          <div className='flex justify-between mb-5'>
+          <div className='flex justify-between'>
             <ProfileStatusChooser
               choosenStatus={choosenStatus}
               setChoosenStatus={setChoosenStatus}
@@ -105,33 +105,40 @@ const AdminProfileScreen = ({ history }) => {
           </div>
           {/* users table section */}
           <div className='w-full overflow-auto rounded-md scrollbar-thin'>
-            <div className='mb-5'>
-              {currentPage != null && (
-                <PagingButtons
-                  setCurrentPage={setCurrentPage}
-                  page={pageAllProfiles}
-                  pageTotal={pageTotalAllProfiles}
-                />
-              )}
+            <div className='my-3'>
+              {currentPage != null &&
+                allProfiles &&
+                allProfiles.length !== 0 && (
+                  <PagingButtons
+                    setCurrentPage={setCurrentPage}
+                    page={pageAllProfiles}
+                    pageTotal={pageTotalAllProfiles}
+                  />
+                )}
             </div>
             {/* users table section */}
-            <div className='w-full overflow-hidden rounded-md '>
-              <table className='w-full table-fixed overflow-x-scoll '>
-                {userInfo && loadingAllProfiles ? (
-                  <Loader
-                    className='mt-3'
-                    loader={Math.floor(Math.random() * 10 + 1)}
-                    color={Math.floor(Math.random() * 10 + 1)}
-                  />
-                ) : errorAllProfiles ? (
-                  <Alert className='mt-3'>{errorAllProfiles}</Alert>
-                ) : (
-                  <>
-                    <thead className='text-gray-100 bg-orange-600'>
-                      <tr className='border-2 border-orange-500'>
-                        <th className='w-1/12 py-7'>ID</th>
-                        <th className='w-9/12 py-7'>User Info</th>
-                        <th className='w-1/12 py-7'>Actions</th>
+            {userInfo && loadingAllProfiles ? (
+              <Loader
+                className='mt-3'
+                loader={Math.floor(Math.random() * 10 + 1)}
+                color={Math.floor(Math.random() * 10 + 1)}
+              />
+            ) : errorAllProfiles ? (
+              <Alert className='mt-3'>{errorAllProfiles}</Alert>
+            ) : (
+              <>
+                <tr className='sticky top-0 flex w-full text-gray-100 bg-orange-600 rounded-t-md'>
+                  <th className='w-1/12 py-7'>ID</th>
+                  <th className='w-9/12 py-7'>User Info</th>
+                  <th className='w-1/12 py-7'></th>
+                </tr>
+                <div className='w-full overflow-hidden rounded-md '>
+                  <table className='w-full table-fixed overflow-x-scoll '>
+                    <thead>
+                      <tr>
+                        <th className='w-1/12'></th>
+                        <th className='w-9/12'></th>
+                        <th className='w-1/12'></th>
                       </tr>
                     </thead>
                     <tbody>
@@ -152,8 +159,8 @@ const AdminProfileScreen = ({ history }) => {
                                       {profile.status === 'ACTIVE' && (
                                         <>
                                           <button
-                                            data-for="suspend"
-                                            data-tip="Suspend user"
+                                            data-for='suspend'
+                                            data-tip='Suspend user'
                                           >
                                             <i
                                               onClick={() =>
@@ -165,14 +172,14 @@ const AdminProfileScreen = ({ history }) => {
                                             />
                                           </button>
                                           <ReactTooltip
-                                            id="suspend"
-                                            place="top"
-                                            effect="float"
+                                            id='suspend'
+                                            place='top'
+                                            effect='float'
                                           />
 
                                           <button
-                                            data-for="ban"
-                                            data-tip="Ban user"
+                                            data-for='ban'
+                                            data-tip='Ban user'
                                           >
                                             <i
                                               onClick={() =>
@@ -184,17 +191,17 @@ const AdminProfileScreen = ({ history }) => {
                                             />
                                           </button>
                                           <ReactTooltip
-                                            id="ban"
-                                            place="top"
-                                            effect="float"
+                                            id='ban'
+                                            place='top'
+                                            effect='float'
                                           />
                                         </>
                                       )}
                                       {profile.status !== 'ACTIVE' && (
                                         <>
                                           <button
-                                            data-for="unlock"
-                                            data-tip="Unlock user"
+                                            data-for='unlock'
+                                            data-tip='Unlock user'
                                           >
                                             <i
                                               onClick={() =>
@@ -206,9 +213,9 @@ const AdminProfileScreen = ({ history }) => {
                                             />
                                           </button>
                                           <ReactTooltip
-                                            id="unlock"
-                                            place="top"
-                                            effect="float"
+                                            id='unlock'
+                                            place='top'
+                                            effect='float'
                                           />
                                         </>
                                       )}
@@ -234,8 +241,8 @@ const AdminProfileScreen = ({ history }) => {
                                       {profile.status === 'ACTIVE' && (
                                         <>
                                           <button
-                                            data-for="suspend"
-                                            data-tip="Suspend user"
+                                            data-for='suspend'
+                                            data-tip='Suspend user'
                                           >
                                             <i
                                               onClick={() =>
@@ -247,14 +254,14 @@ const AdminProfileScreen = ({ history }) => {
                                             />
                                           </button>
                                           <ReactTooltip
-                                            id="suspend"
-                                            place="top"
-                                            effect="float"
+                                            id='suspend'
+                                            place='top'
+                                            effect='float'
                                           />
 
                                           <button
-                                            data-for="ban"
-                                            data-tip="Ban user"
+                                            data-for='ban'
+                                            data-tip='Ban user'
                                           >
                                             <i
                                               onClick={() =>
@@ -266,17 +273,18 @@ const AdminProfileScreen = ({ history }) => {
                                             />
                                           </button>
                                           <ReactTooltip
-                                            id="suspend"
-                                            place="top"
-                                            effect="float"
+                                            id='suspend'
+                                            place='top'
+                                            effect='float'
                                           />
                                         </>
                                       )}
                                       {profile.status !== 'ACTIVE' && (
                                         <>
                                           <button
-                                            data-for="unlock"
-                                            data-tip="Unlock user">
+                                            data-for='unlock'
+                                            data-tip='Unlock user'
+                                          >
                                             <i
                                               onClick={() =>
                                                 unlockButtonClickedHandler(
@@ -287,9 +295,9 @@ const AdminProfileScreen = ({ history }) => {
                                             />
                                           </button>
                                           <ReactTooltip
-                                            id="unlock"
-                                            place="top"
-                                            effect="float"
+                                            id='unlock'
+                                            place='top'
+                                            effect='float'
                                           />
                                         </>
                                       )}
@@ -300,10 +308,10 @@ const AdminProfileScreen = ({ history }) => {
                             );
                         })}
                     </tbody>
-                  </>
-                )}
-              </table>
-            </div>
+                  </table>
+                </div>
+              </>
+            )}
             {allProfiles && allProfiles.length === 0 && (
               <Message type='info' className='w-full '>
                 No profile with these criterias found!

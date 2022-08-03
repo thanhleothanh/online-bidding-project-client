@@ -77,7 +77,9 @@ export const auctionGetOpenings =
       });
     } catch (error) {
       const errorMessage =
-        error.response.data.message + error.response.data.errors.toString();
+        error.response.data.message +
+        ' ' +
+        error.response.data.errors.toString();
       dispatch({
         type: AUCTION_GET_OPENINGS_FAIL,
         payload: errorMessage,
@@ -314,7 +316,9 @@ export const auctionAdminGetAll =
       });
     } catch (error) {
       const errorMessage =
-        error.response.data.message + error.response.data.errors.toString();
+        error.response.data.message +
+        ' ' +
+        error.response.data.errors.toString();
       dispatch({
         type: AUCTION_ADMIN_GET_ALL_FAIL,
         payload: errorMessage,

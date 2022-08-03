@@ -88,12 +88,12 @@ const ModalPostReport = ({ isShow, closeModal, userId }) => {
     <Modal show={isShow} onClose={closeModal}>
       {loadingGetProfileById ? (
         <Loader
-          className='mt-3'
+          className={'py-3'}
           loader={Math.floor(Math.random() * 10 + 1)}
           color={Math.floor(Math.random() * 10 + 1)}
         />
       ) : errorGetProfileById ? (
-        <Alert className='mt-3'>{errorGetProfileById}</Alert>
+        <Alert className={'mt-3'}>{errorGetProfileById}</Alert>
       ) : (
         getProfileById && (
           <div className='w-full pb-10 h-7/10'>
@@ -159,7 +159,7 @@ const ModalPostReport = ({ isShow, closeModal, userId }) => {
 
                 {loadingImageUpload ? (
                   <Loader
-                    className='mt-5'
+                    className={'py-3'}
                     loader={Math.floor(Math.random() * 10 + 1)}
                     color={Math.floor(Math.random() * 10 + 1)}
                   />

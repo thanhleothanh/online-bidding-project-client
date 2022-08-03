@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { Children, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import AuctionCard from '../components/WelcomeScreen/AuctionCard';
 import AuctionTopTrendingCard from '../components/WelcomeScreen/AuctionTopTrendingCard';
@@ -15,26 +15,28 @@ import CategoryChooser from '../components/AdminAuctionScreen/CategoryChooser';
 import { useTrail, a } from '@react-spring/web';
 
 const Trail = ({ open, children }) => {
-  const items = React.Children.toArray(children)
-  React.useEffect(() => {
-    console.log(open)
-  }, [open])
+  const items = Children.toArray(children);
+  useEffect(() => {}, [open]);
   const trail = useTrail(items.length, {
     config: { mass: 5, tension: 2000, friction: 200 },
     opacity: open ? 1 : 0,
-    height: open ? 320 : 0,
+    height: open ? 310 : 0,
     from: { opacity: 0, height: 0 },
-  })
+  });
   return (
     <div>
       {trail.map(({ height, ...style }, index) => (
-        <a.div key={index} className='trailsText' style={style}>
+        <a.div
+          key={index}
+          className='overflow-hidden rounded-md trailsText'
+          style={style}
+        >
           <a.div style={{ height }}>{items[index]}</a.div>
         </a.div>
       ))}
     </div>
-  )
-}
+  );
+};
 
 const WelcomeScreen = ({ history }) => {
   const dispatch = useDispatch();
@@ -68,13 +70,15 @@ const WelcomeScreen = ({ history }) => {
     dispatch(auctionGetTopTrending());
   }, []);
 
-  useEffect(() => { setOpen(true) }, []);
+  useEffect(() => {
+    setOpen(true);
+  }, []);
 
-  const myTimeout = 0
+  const myTimeout = 0;
 
   return (
-    <div className='relative flex flex-col w-full h-auto min-h-screen p-5 space-y-5 xl:space-y-0 xl:space-x-5 xl:flex-row'>
-      <div className='w-full h-full xl:w-2/3'>
+    <div className='relative flex flex-col w-full h-auto p-5 space-y-5 xl:space-y-0 xl:space-x-5 xl:flex-row'>
+      <div className='w-full h-auto xl:w-2/3'>
         <div className='flex invisible xl:visible'>
           <input
             type='search'
@@ -88,11 +92,8 @@ const WelcomeScreen = ({ history }) => {
           </button>
         </div>
         {/* buttons section */}
-        <div className='flex justify-between pt-3 xl:pt-5'>
-          <div className='inline xl:hidden genericButton'>
-            <i className='fas fa-align-justify fa-xl' />
-          </div>
-          <div className='hidden space-x-2 xl:inline'>
+        <div className='flex justify-between pt-5'>
+          <div className='space-x-2'>
             <CategoryChooser
               choosenCategory={choosenCategory}
               setChoosenCategory={setChoosenCategory}
@@ -111,46 +112,43 @@ const WelcomeScreen = ({ history }) => {
           </div>
         </div>
         {/* paging buttons */}
-        <div className='mt-3 xl:mt-5'>
-          {currentPage != null && (
-            <PagingButtons
-              setCurrentPage={setCurrentPage}
-              page={pageOpeningAuctions}
-              pageTotal={pageTotalOpeningAuctions}
-            />
-          )}
+        <div className='mt-3'>
+          {currentPage != null &&
+            openingAuctions &&
+            openingAuctions.length !== 0 && (
+              <PagingButtons
+                setCurrentPage={setCurrentPage}
+                page={pageOpeningAuctions}
+                pageTotal={pageTotalOpeningAuctions}
+              />
+            )}
         </div>
         {/* auction cards section */}
-        <div className='w-full my-3 xl:my-5'>
+        <div className='w-full my-3'>
           {loadingOpeningAuctions ? (
             <Loader
-              className='mt-3'
+              className={'py-3'}
               loader={Math.floor(Math.random() * 10 + 1)}
               color={Math.floor(Math.random() * 10 + 1)}
             />
           ) : errorOpeningAuctions ? (
-            <Alert className='mt-3'>{errorOpeningAuctions}</Alert>
+            <Alert className={'mt-3'}>{errorOpeningAuctions}</Alert>
           ) : (
             <>
               {openingAuctions && openingAuctions.length === 0 ? (
-                <Message type='info' className='mt-3'>
+                <Message type='info' className={'mt-3'}>
                   There is no auction with these criterias opening!
                 </Message>
               ) : (
                 <div className='w-full space-y-5 col lg:columns-2 columns-1'>
                   {openingAuctions &&
-                    openingAuctions.map((auction, i) => {
-                      var boo = false;
-                      setTimeout(function () {
-                        boo = true;
-                      }, i * 100);
-
+                    openingAuctions.map((auction) => {
                       return (
                         <Trail open={open}>
                           <AuctionCard
                             image={
                               auction.item.itemImages == null ||
-                                auction.item.itemImages.length === 0
+                              auction.item.itemImages.length === 0
                                 ? '/images/auction_img.jpg'
                                 : auction.item.itemImages[0].imageUrl
                             }
@@ -178,22 +176,22 @@ const WelcomeScreen = ({ history }) => {
         {/* top trending section */}
         <div className='sticky w-full py-10 space-y-5 bg-gray-800 rounded-md top-5 xl:mt-5'>
           <h1 className='text-2xl font-bold text-center text-gray-200'>
-            <i className='fas fa-fire' /> TOP TRENDING
+            <i className='fas fa-angle-double-up' /> TOP TRENDING
           </h1>
           <div className='mx-24 border-2 border-orange-500' />
 
           {loadingTopTrendingAuctions ? (
             <Loader
-              className='mt-3'
+              className={'py-3'}
               loader={Math.floor(Math.random() * 10 + 1)}
               color={Math.floor(Math.random() * 10 + 1)}
             />
           ) : errorTopTrendingAuctions ? (
-            <Alert className='mt-3'>{errorTopTrendingAuctions}</Alert>
+            <Alert className={'mt-3'}>{errorTopTrendingAuctions}</Alert>
           ) : (
             <>
               {topTrendingAuctions && topTrendingAuctions.length === 0 ? (
-                <Message type='info' className='mx-10 mt-10'>
+                <Message type='info' className={'mx-10 mt-10'}>
                   There is no auction on trending!
                 </Message>
               ) : (

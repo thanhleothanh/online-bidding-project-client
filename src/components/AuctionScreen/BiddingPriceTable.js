@@ -16,20 +16,20 @@ const BiddingPriceTable = ({ auctionId }) => {
   } = useSelector((state) => state.bidGetByAuctionId);
 
   useEffect(() => {
-    if (currentAuctionBids != null) {
+    if (currentAuctionBids != null && userInfo) {
       setAuctionBids(currentAuctionBids);
-      connect(auctionId, auctionBids, setAuctionBids);
+      connect(userInfo.username, auctionId, auctionBids, setAuctionBids);
     }
     return () => {
       disconnect();
     };
-  }, [currentAuctionBids]);
+  }, [currentAuctionBids, userInfo]);
 
   return (
-    <div className='overflow-y-auto rounded-md max-h-80 '>
+    <div className='overflow-y-auto rounded-md max-h-80 scrollbar-thin'>
       {userInfo && loadingCurrentAuctionBids ? (
         <Loader
-          className='mt-3'
+          className={'py-3'}
           loader={Math.floor(Math.random() * 10 + 1)}
           color={Math.floor(Math.random() * 10 + 1)}
         />
@@ -99,7 +99,7 @@ const BiddingPriceTable = ({ auctionId }) => {
         </>
       )}
       {auctionBids && auctionBids.length === 0 && (
-        <Message type='info' className='w-full '>
+        <Message type='info' className={'w-full'}>
           No one placed a bid yet! :(
         </Message>
       )}

@@ -41,10 +41,10 @@ const ProfileScreen = ({ history }) => {
         </div>
       </div>
       <div className='flex flex-col w-full h-auto my-5 space-y-5 xl:flex-row xl:space-x-5 xl:space-y-0 '>
-        <div className='w-full xl:w-2/3'>
+        <div className='w-full xl:w-3/4'>
           <ProfileAuctions userId={userId} />
         </div>
-        <div className='w-full xl:w-1/3'>
+        <div className='w-full xl:w-1/4'>
           <div className='sticky top-5'>
             <ProfileInfo />
             {userInfo && userInfo.role === 'USER' && (

@@ -9,6 +9,7 @@ import {
 } from '../constants/userConstants';
 import axios from 'axios';
 import { API_URL } from '../../utils/config';
+import { NOTIFICATION_GET_MY_NOTIFICATIONS_RESET } from '../constants/notificationConstants';
 
 export const login = (username, password) => async (dispatch) => {
   try {
@@ -79,10 +80,13 @@ export const logOut = () => async (dispatch) => {
         'Content-Type': 'application/json',
       },
     };
-    const { data } = await axios.post(`${API_URL}/api/v1/auth/logout`, config);
+    await axios.post(`${API_URL}/api/v1/auth/logout`, config);
     localStorage.removeItem('userInfo');
     dispatch({
       type: USER_LOGOUT,
+    });
+    dispatch({
+      type: NOTIFICATION_GET_MY_NOTIFICATIONS_RESET,
     });
   } catch (error) {
     const errorMessage =
