@@ -20,7 +20,7 @@ const Trail = ({ open, children }) => {
   const trail = useTrail(items.length, {
     config: { mass: 5, tension: 2000, friction: 200 },
     opacity: open ? 1 : 0,
-    height: open ? 310 : 0,
+    height: open ? 360 : 0,
     from: { opacity: 0, height: 0 },
   });
   return (
@@ -68,13 +68,8 @@ const WelcomeScreen = ({ history }) => {
 
   useEffect(() => {
     dispatch(auctionGetTopTrending());
-  }, []);
-
-  useEffect(() => {
     setOpen(true);
   }, []);
-
-  const myTimeout = 0;
 
   return (
     <div className='relative flex flex-col w-full h-auto p-5 space-y-5 xl:space-y-0 xl:space-x-5 xl:flex-row'>
@@ -100,9 +95,6 @@ const WelcomeScreen = ({ history }) => {
             />
           </div>
           <div className='space-x-2'>
-            <button className='font-bold bg-orange-600 genericButton hover:bg-orange-700'>
-              Filter
-            </button>
             <button
               className='genericButton'
               onClick={() => setChoosenCategory(null)}
@@ -178,7 +170,7 @@ const WelcomeScreen = ({ history }) => {
           <h1 className='text-2xl font-bold text-center text-gray-200'>
             <i className='fas fa-angle-double-up' /> TOP TRENDING
           </h1>
-          <div className='mx-24 border-2 border-orange-500' />
+          <div className='mx-24 border-t-2 border-orange-500' />
 
           {loadingTopTrendingAuctions ? (
             <Loader

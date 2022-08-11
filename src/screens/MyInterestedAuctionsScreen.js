@@ -69,9 +69,8 @@ const MyInterestedAuctionsScreen = ({ history }) => {
               <>
                 <tr className='sticky top-0 flex w-full text-gray-100 bg-orange-600 rounded-t-md'>
                   <th className='w-1/12 py-7'>ID</th>
-                  <th className='w-3/12 py-7'>User Info</th>
-                  <th className='w-4/12 py-7'>Auction Info</th>
-                  <th className='w-5/12 py-7'>Auction Item</th>
+                  <th className='w-2/12 py-7'>User Info</th>
+                  <th className='w-8/12 py-7'>Auction Info</th>
                   <th className='w-1/12 py-7'></th>
                 </tr>
                 <div className='w-full overflow-hidden rounded-md'>
@@ -79,9 +78,8 @@ const MyInterestedAuctionsScreen = ({ history }) => {
                     <thead>
                       <tr>
                         <th className='w-1/12'></th>
-                        <th className='w-3/12'></th>
-                        <th className='w-4/12'></th>
-                        <th className='w-5/12'></th>
+                        <th className='w-2/12'></th>
+                        <th className='w-8/12'></th>
                         <th className='w-1/12'></th>
                       </tr>
                     </thead>
@@ -98,26 +96,21 @@ const MyInterestedAuctionsScreen = ({ history }) => {
                               <td className='py-10 lg:px-5'>
                                 <UserInfoSection auction={auction} />
                               </td>
-                              <td className='py-10 space-y-5 lg:px-5'>
+                              <td className='flex flex-col py-10 lg:px-5'>
                                 <AuctionInfoSection auction={auction} />
+                                <br />
+                                <ItemInfoSection auction={auction} />
+                                <br />
                                 <CountdownTimer
                                   timeStart={auction.timeStart}
                                   timeEnd={auction.timeEnd}
                                 />
                               </td>
                               <td className='py-10 lg:px-5'>
-                                <ItemInfoSection auction={auction} />
-                              </td>
-                              <td className='py-10 lg:px-5'>
                                 <Link to={`/auctions/${auction.id}`}>
                                   <button data-for='join' data-tip='Join Now'>
                                     <i className='fas fa-sign-in fa-lg hover:text-orange-500' />
                                   </button>
-                                  <ReactTooltip
-                                    id='join'
-                                    place='top'
-                                    effect='float'
-                                  />
                                 </Link>
                               </td>
                             </tr>
@@ -134,6 +127,7 @@ const MyInterestedAuctionsScreen = ({ history }) => {
               </>
             )}
           </div>
+          <ReactTooltip id='join' place='top' effect='float' />
         </div>
       ) : (
         <></>

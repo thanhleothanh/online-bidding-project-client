@@ -40,16 +40,14 @@ const ProfileAuctions = ({ userId }) => {
         <>
           <tr className='sticky top-0 flex w-full text-gray-100 bg-orange-600 rounded-t-md'>
             <th className='w-3/12 py-7'>User Info</th>
-            <th className='w-4/12 py-7'>Auction Info</th>
-            <th className='w-5/12 py-7'>Auction Item</th>
+            <th className='w-9/12 py-7'>Auction Info</th>
           </tr>
           <div className='w-full overflow-hidden rounded-md'>
             <table className='w-full overflow-x-auto table-fixed'>
               <thead>
                 <tr>
                   <th className='w-3/12'></th>
-                  <th className='w-4/12'></th>
-                  <th className='w-5/12'></th>
+                  <th className='w-9/12'></th>
                 </tr>
               </thead>
               <tbody>
@@ -64,10 +62,9 @@ const ProfileAuctions = ({ userId }) => {
                         <td className='py-10 lg:px-5'>
                           <UserInfoSection auction={auction} />
                         </td>
-                        <td className='py-10 lg:px-5'>
+                        <td className='flex flex-col py-10 lg:px-5'>
                           <AuctionInfoSection auction={auction} />
-                        </td>
-                        <td className='py-10 lg:px-5'>
+                          <br />
                           <ItemInfoSection auction={auction} />
                         </td>
                       </tr>

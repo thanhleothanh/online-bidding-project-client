@@ -42,7 +42,7 @@ const AdminReportScreen = ({ history }) => {
         notify(false, 'Xoá phiếu báo cáo thành công!');
         setTimeout(() => {
           window.location.reload();
-        }, 1500);
+        }, 1000);
       } else notify(true, errorDeleteReport);
       dispatch({ type: 'REPORT_ADMIN_DELETE_RESET' });
     }
@@ -59,7 +59,7 @@ const AdminReportScreen = ({ history }) => {
         notify(false, 'Duyệt phiếu báo cáo thành công!');
         setTimeout(() => {
           window.location.reload();
-        }, 1500);
+        }, 1000);
       } else notify(true, errorJudgeReport);
       dispatch({ type: 'REPORT_ADMIN_JUDGE_RESET' });
     }
@@ -143,17 +143,15 @@ const AdminReportScreen = ({ history }) => {
             <>
               <tr className='sticky top-0 flex w-full text-gray-100 bg-orange-600 rounded-t-md'>
                 <th className='w-1/12 py-7'>ID</th>
-                <th className='w-4/12 py-7'>Users Info</th>
-                <th className='w-6/12 py-7'>Report Info</th>
-                <th className='w-1/12 py-7'>Actions</th>
+                <th className='w-10/12 py-7'>Report Info</th>
+                <th className='w-1/12 py-7'></th>
               </tr>
               <div className='w-full overflow-hidden rounded-md'>
                 <table className='w-full overflow-x-auto table-fixed '>
                   <thead>
                     <tr>
                       <th className='w-1/12'></th>
-                      <th className='w-4/12'></th>
-                      <th className='w-6/12'></th>
+                      <th className='w-10/12'></th>
                       <th className='w-1/12'></th>
                     </tr>
                   </thead>
@@ -162,12 +160,11 @@ const AdminReportScreen = ({ history }) => {
                       allReports.length !== 0 &&
                       allReports.map((report) => {
                         return (
-                          <tr className='text-center text-gray-200 bg-gray-700 border-2 border-orange-500'>
+                          <tr className='text-center text-gray-200 bg-gray-700 border-orange-500 border-y-2'>
                             <td className='py-10'>{report.id}</td>
-                            <td className='py-10 pr-1 lg:px-5'>
+                            <td className='flex flex-col py-10 lg:px-5'>
                               <ReportUsersInfo report={report} />
-                            </td>
-                            <td className='py-10 pl-1 lg:px-5'>
+                              <br />
                               <ReportDetailInfo report={report} />
                             </td>
                             <td className='py-10 space-x-1'>
@@ -181,11 +178,6 @@ const AdminReportScreen = ({ history }) => {
                                       className='fas fa-thumbs-up fa-lg hover:text-orange-500'
                                     />
                                   </button>
-                                  <ReactTooltip
-                                    id='approve'
-                                    place='top'
-                                    effect='float'
-                                  />
 
                                   <button data-for='reject' data-tip='Reject'>
                                     <i
@@ -195,11 +187,6 @@ const AdminReportScreen = ({ history }) => {
                                       className='fas fa-thumbs-down fa-lg hover:text-orange-500'
                                     />
                                   </button>
-                                  <ReactTooltip
-                                    id='reject'
-                                    place='top'
-                                    effect='float'
-                                  />
 
                                   <button data-for='delete' data-tip='Delete'>
                                     <i
@@ -209,11 +196,6 @@ const AdminReportScreen = ({ history }) => {
                                       className='fas fa-trash fa-lg hover:text-orange-500'
                                     />
                                   </button>
-                                  <ReactTooltip
-                                    id='delete'
-                                    place='top'
-                                    effect='float'
-                                  />
                                 </>
                               )}
                             </td>
@@ -223,6 +205,9 @@ const AdminReportScreen = ({ history }) => {
                   </tbody>
                 </table>
               </div>
+              <ReactTooltip id='reject' place='top' effect='float' />
+              <ReactTooltip id='approve' place='top' effect='float' />
+              <ReactTooltip id='delete' place='top' effect='float' />
             </>
           )}
           {allReports && allReports.length === 0 && (

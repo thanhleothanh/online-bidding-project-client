@@ -4,22 +4,22 @@ const ItemInfoSection = ({ auction }) => {
   return (
     <div className='flex flex-col w-full space-y-2'>
       <div className='flex justify-between space-x-10'>
-        <div className='font-semibold text-left'>Name:</div>
+        <div className='font-semibold text-left'>Item Name:</div>
         <div className='text-right'>
           {auction.item
             ? auction.item.name ?? null
             : 'You havent added an item to this auction!'}
         </div>
       </div>
-      <div className='flex justify-between'>
-        <div className='font-semibold text-left'>Description:</div>
+      <div className='flex justify-between space-x-10'>
+        <div className='font-semibold text-left'>Item Description:</div>
         <div className='text-right'>
           {auction.item
             ? auction.item.description ?? null
             : 'You havent added an item to this auction!'}
         </div>
       </div>
-      <div className='flex justify-between'>
+      <div className='flex justify-between space-x-10'>
         <div className='font-semibold text-left'>Amount:</div>
         <div className='text-right'>
           {auction.item
@@ -41,7 +41,7 @@ const ItemInfoSection = ({ auction }) => {
                       currentTarget.onerror = null;
                       currentTarget.src = '/images/auction_img.jpg';
                     }}
-                    className='object-cover rounded-md w-60 h-60'
+                    className='object-cover rounded-md w-80 h-80'
                   />
                 );
               })

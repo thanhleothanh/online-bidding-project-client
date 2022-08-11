@@ -15,7 +15,10 @@ const LoginScreen = ({ history }) => {
       if (userInfo) {
         notify(false, 'Đăng nhập thành công!');
         reset();
-      } else notify(true, error);
+      } else {
+        notify(true, error);
+        dispatch({ type: 'USER_LOGIN_RESET' });
+      }
     }
   }, [loading]);
 

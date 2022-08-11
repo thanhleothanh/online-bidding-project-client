@@ -43,7 +43,7 @@ const AdminProfileScreen = ({ history }) => {
         notify(false, 'Sửa trạng thái người dùng thành công!');
         setTimeout(() => {
           window.location.reload();
-        }, 1500);
+        }, 1000);
       } else notify(true, errorChangedStatusProfile);
       dispatch({ type: 'PROFILE_ADMIN_BAN_PROFILE' });
     }
@@ -104,220 +104,189 @@ const AdminProfileScreen = ({ history }) => {
             />
           </div>
           {/* users table section */}
-          <div className='w-full overflow-auto rounded-md scrollbar-thin'>
-            <div className='my-3'>
-              {currentPage != null &&
-                allProfiles &&
-                allProfiles.length !== 0 && (
-                  <PagingButtons
-                    setCurrentPage={setCurrentPage}
-                    page={pageAllProfiles}
-                    pageTotal={pageTotalAllProfiles}
-                  />
-                )}
-            </div>
-            {/* users table section */}
-            {userInfo && loadingAllProfiles ? (
-              <Loader
-                className='mt-3'
-                loader={Math.floor(Math.random() * 10 + 1)}
-                color={Math.floor(Math.random() * 10 + 1)}
+          <div className='my-3'>
+            {currentPage != null && allProfiles && allProfiles.length !== 0 && (
+              <PagingButtons
+                setCurrentPage={setCurrentPage}
+                page={pageAllProfiles}
+                pageTotal={pageTotalAllProfiles}
               />
-            ) : errorAllProfiles ? (
-              <Alert className='mt-3'>{errorAllProfiles}</Alert>
-            ) : (
-              <>
-                <tr className='sticky top-0 flex w-full text-gray-100 bg-orange-600 rounded-t-md'>
-                  <th className='w-1/12 py-7'>ID</th>
-                  <th className='w-9/12 py-7'>User Info</th>
-                  <th className='w-1/12 py-7'></th>
-                </tr>
-                <div className='w-full overflow-hidden rounded-md '>
-                  <table className='w-full table-fixed overflow-x-scoll '>
-                    <thead>
-                      <tr>
-                        <th className='w-1/12'></th>
-                        <th className='w-9/12'></th>
-                        <th className='w-1/12'></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {userInfo &&
-                        allProfiles &&
-                        allProfiles.length !== 0 &&
-                        allProfiles.map((profile) => {
-                          if (search === '')
-                            return (
-                              <tr className='text-center text-gray-200 bg-gray-700 border-2 border-orange-500'>
-                                <td className='py-10'>{profile.id}</td>
-                                <td className='py-10 pr-1 xl:px-5'>
-                                  <ProfileInfoSection profile={profile} />
-                                </td>
-                                <td className='py-10 space-x-1'>
-                                  {profile.id !== userInfo.id && (
-                                    <>
-                                      {profile.status === 'ACTIVE' && (
-                                        <>
-                                          <button
-                                            data-for='suspend'
-                                            data-tip='Suspend user'
-                                          >
-                                            <i
-                                              onClick={() =>
-                                                suspendButtonClickedHandler(
-                                                  profile.id
-                                                )
-                                              }
-                                              className='fas fa-user-lock fa-lg hover:text-orange-500'
-                                            />
-                                          </button>
-                                          <ReactTooltip
-                                            id='suspend'
-                                            place='top'
-                                            effect='float'
-                                          />
-
-                                          <button
-                                            data-for='ban'
-                                            data-tip='Ban user'
-                                          >
-                                            <i
-                                              onClick={() =>
-                                                banButtonClickedHandler(
-                                                  profile.id
-                                                )
-                                              }
-                                              className='fas fa-user-slash fa-lg hover:text-orange-500'
-                                            />
-                                          </button>
-                                          <ReactTooltip
-                                            id='ban'
-                                            place='top'
-                                            effect='float'
-                                          />
-                                        </>
-                                      )}
-                                      {profile.status !== 'ACTIVE' && (
-                                        <>
-                                          <button
-                                            data-for='unlock'
-                                            data-tip='Unlock user'
-                                          >
-                                            <i
-                                              onClick={() =>
-                                                unlockButtonClickedHandler(
-                                                  profile.id
-                                                )
-                                              }
-                                              className='fas fa-user-check fa-lg hover:text-orange-500'
-                                            />
-                                          </button>
-                                          <ReactTooltip
-                                            id='unlock'
-                                            place='top'
-                                            effect='float'
-                                          />
-                                        </>
-                                      )}
-                                    </>
-                                  )}
-                                </td>
-                              </tr>
-                            );
-                          else if (
-                            search !== '' &&
-                            (profile.username.includes(search) ||
-                              profile.name.includes(search))
-                          )
-                            return (
-                              <tr className='text-center text-gray-200 bg-gray-700 border-2 border-orange-500'>
-                                <td className='py-10'>{profile.id}</td>
-                                <td className='py-10 pr-1 xl:px-5'>
-                                  <ProfileInfoSection profile={profile} />
-                                </td>
-                                <td className='py-10 space-x-1'>
-                                  {profile.id !== userInfo.id && (
-                                    <>
-                                      {profile.status === 'ACTIVE' && (
-                                        <>
-                                          <button
-                                            data-for='suspend'
-                                            data-tip='Suspend user'
-                                          >
-                                            <i
-                                              onClick={() =>
-                                                suspendButtonClickedHandler(
-                                                  profile.id
-                                                )
-                                              }
-                                              className='fas fa-user-lock fa-lg hover:text-orange-500'
-                                            />
-                                          </button>
-                                          <ReactTooltip
-                                            id='suspend'
-                                            place='top'
-                                            effect='float'
-                                          />
-
-                                          <button
-                                            data-for='ban'
-                                            data-tip='Ban user'
-                                          >
-                                            <i
-                                              onClick={() =>
-                                                banButtonClickedHandler(
-                                                  profile.id
-                                                )
-                                              }
-                                              className='fas fa-user-slash fa-lg hover:text-orange-500'
-                                            />
-                                          </button>
-                                          <ReactTooltip
-                                            id='suspend'
-                                            place='top'
-                                            effect='float'
-                                          />
-                                        </>
-                                      )}
-                                      {profile.status !== 'ACTIVE' && (
-                                        <>
-                                          <button
-                                            data-for='unlock'
-                                            data-tip='Unlock user'
-                                          >
-                                            <i
-                                              onClick={() =>
-                                                unlockButtonClickedHandler(
-                                                  profile.id
-                                                )
-                                              }
-                                              className='fas fa-user-check fa-lg hover:text-orange-500'
-                                            />
-                                          </button>
-                                          <ReactTooltip
-                                            id='unlock'
-                                            place='top'
-                                            effect='float'
-                                          />
-                                        </>
-                                      )}
-                                    </>
-                                  )}
-                                </td>
-                              </tr>
-                            );
-                        })}
-                    </tbody>
-                  </table>
-                </div>
-              </>
-            )}
-            {allProfiles && allProfiles.length === 0 && (
-              <Message type='info' className='w-full '>
-                No profile with these criterias found!
-              </Message>
             )}
           </div>
+          {/* users table section */}
+          {userInfo && loadingAllProfiles ? (
+            <Loader
+              className='mt-3'
+              loader={Math.floor(Math.random() * 10 + 1)}
+              color={Math.floor(Math.random() * 10 + 1)}
+            />
+          ) : errorAllProfiles ? (
+            <Alert className='mt-3'>{errorAllProfiles}</Alert>
+          ) : (
+            <>
+              <tr className='sticky top-0 flex w-full text-gray-100 bg-orange-600 rounded-t-md'>
+                <th className='w-1/12 py-7'>ID</th>
+                <th className='w-9/12 py-7'>User Info</th>
+                <th className='w-1/12 py-7'></th>
+              </tr>
+              <div className='w-full overflow-hidden rounded-md '>
+                <table className='w-full table-fixed overflow-x-scoll '>
+                  <thead>
+                    <tr>
+                      <th className='w-1/12'></th>
+                      <th className='w-9/12'></th>
+                      <th className='w-1/12'></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {userInfo &&
+                      allProfiles &&
+                      allProfiles.length !== 0 &&
+                      allProfiles.map((profile) => {
+                        if (search === '')
+                          return (
+                            <tr className='text-center text-gray-200 bg-gray-700 border-orange-500 border-y-2'>
+                              <td className='py-10'>{profile.id}</td>
+                              <td className='py-10 pr-1 xl:px-5'>
+                                <ProfileInfoSection profile={profile} />
+                              </td>
+                              <td className='py-10 space-x-1'>
+                                {profile.id !== userInfo.id && (
+                                  <>
+                                    {profile.status === 'ACTIVE' && (
+                                      <>
+                                        <button
+                                          data-for='suspend'
+                                          data-tip='Suspend user'
+                                        >
+                                          <i
+                                            onClick={() =>
+                                              suspendButtonClickedHandler(
+                                                profile.id
+                                              )
+                                            }
+                                            className='fas fa-user-lock fa-lg hover:text-orange-500'
+                                          />
+                                        </button>
+
+                                        <button
+                                          data-for='ban'
+                                          data-tip='Ban user'
+                                        >
+                                          <i
+                                            onClick={() =>
+                                              banButtonClickedHandler(
+                                                profile.id
+                                              )
+                                            }
+                                            className='fas fa-user-slash fa-lg hover:text-orange-500'
+                                          />
+                                        </button>
+                                      </>
+                                    )}
+                                    {profile.status !== 'ACTIVE' && (
+                                      <>
+                                        <button
+                                          data-for='unlock'
+                                          data-tip='Unlock user'
+                                        >
+                                          <i
+                                            onClick={() =>
+                                              unlockButtonClickedHandler(
+                                                profile.id
+                                              )
+                                            }
+                                            className='fas fa-user-check fa-lg hover:text-orange-500'
+                                          />
+                                        </button>
+                                      </>
+                                    )}
+                                  </>
+                                )}
+                              </td>
+                            </tr>
+                          );
+                        else if (
+                          search !== '' &&
+                          (profile.username.includes(search) ||
+                            profile.name.includes(search))
+                        )
+                          return (
+                            <tr className='text-center text-gray-200 bg-gray-700 border-2 border-orange-500'>
+                              <td className='py-10'>{profile.id}</td>
+                              <td className='py-10 pr-1 xl:px-5'>
+                                <ProfileInfoSection profile={profile} />
+                              </td>
+                              <td className='py-10 space-x-1'>
+                                {profile.id !== userInfo.id && (
+                                  <>
+                                    {profile.status === 'ACTIVE' && (
+                                      <>
+                                        <button
+                                          data-for='suspend'
+                                          data-tip='Suspend user'
+                                        >
+                                          <i
+                                            onClick={() =>
+                                              suspendButtonClickedHandler(
+                                                profile.id
+                                              )
+                                            }
+                                            className='fas fa-user-lock fa-lg hover:text-orange-500'
+                                          />
+                                        </button>
+
+                                        <button
+                                          data-for='ban'
+                                          data-tip='Ban user'
+                                        >
+                                          <i
+                                            onClick={() =>
+                                              banButtonClickedHandler(
+                                                profile.id
+                                              )
+                                            }
+                                            className='fas fa-user-slash fa-lg hover:text-orange-500'
+                                          />
+                                        </button>
+                                      </>
+                                    )}
+                                    {profile.status !== 'ACTIVE' && (
+                                      <>
+                                        <button
+                                          data-for='unlock'
+                                          data-tip='Unlock user'
+                                        >
+                                          <i
+                                            onClick={() =>
+                                              unlockButtonClickedHandler(
+                                                profile.id
+                                              )
+                                            }
+                                            className='fas fa-user-check fa-lg hover:text-orange-500'
+                                          />
+                                        </button>
+                                      </>
+                                    )}
+                                  </>
+                                )}
+                              </td>
+                            </tr>
+                          );
+                      })}
+                  </tbody>
+                </table>
+              </div>
+              <ReactTooltip id='suspend' place='top' effect='float' />
+              <ReactTooltip id='ban' place='top' effect='float' />
+              <ReactTooltip id='unlock' place='top' effect='float' />
+            </>
+          )}
+          {allProfiles && allProfiles.length === 0 && (
+            <Message type='info' className='w-full '>
+              No profile with these criterias found!
+            </Message>
+          )}
         </div>
       </div>
     </>

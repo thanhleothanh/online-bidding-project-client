@@ -26,7 +26,7 @@ const BiddingPriceTable = ({ auctionId }) => {
   }, [currentAuctionBids, userInfo]);
 
   return (
-    <div className='overflow-y-auto rounded-md max-h-80 scrollbar-thin'>
+    <div className='overflow-y-auto rounded-md max-h-64'>
       {userInfo && loadingCurrentAuctionBids ? (
         <Loader
           className={'py-3'}
@@ -60,7 +60,7 @@ const BiddingPriceTable = ({ auctionId }) => {
                       <td
                         className={`py-2 text-center ${
                           index === 0
-                            ? 'text-orange-600 text-lg font-semibold'
+                            ? 'text-orange-600 font-semibold'
                             : 'text-gray-200 text-sm xl:text-base'
                         }`}
                       >
@@ -71,7 +71,7 @@ const BiddingPriceTable = ({ auctionId }) => {
                       <td
                         className={`py-2 text-center ${
                           index === 0
-                            ? 'text-orange-600 text-lg font-semibold'
+                            ? 'text-orange-600 font-semibold'
                             : 'text-gray-200 text-sm xl:text-base'
                         }`}
                       >
@@ -80,7 +80,7 @@ const BiddingPriceTable = ({ auctionId }) => {
                       <td
                         className={`py-2 text-center ${
                           index === 0
-                            ? 'text-orange-600 text-lg font-semibold'
+                            ? 'text-orange-600 font-semibold'
                             : 'text-gray-200 text-sm xl:text-base'
                         }`}
                       >

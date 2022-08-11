@@ -14,9 +14,9 @@ const generateStartAuctionNotification = (notification) => {
 
 const generateNewBidNotification = (notification) => {
   if (notification.notificationAuction.auction.highestPrice === 0) {
-    return `Your auction #${notification.notificationAuction.auction.id} has no bid yet, waiting for someone to raise the price`;
+    return `Your auction #${notification.notificationAuction.auction.id} has no bid yet, waiting for someone to raised the price`;
   } else
-    return `Someone raise the price for auction #${
+    return `Auction #${
       notification.notificationAuction.auction.id
     }. Current highest price: ${toPrice(
       notification.notificationAuction.auction.highestPrice

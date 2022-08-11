@@ -14,8 +14,6 @@ const NotificationDropdown = () => {
   const {
     seen: seenNotifications,
     notifications: notifications,
-    page: pageNotifications,
-    pageTotal: pageTotalNotifications,
     loading: loadingNotifications,
     error: errorNotifications,
   } = useSelector((state) => state.notificationGetMyNotifications);
@@ -76,7 +74,7 @@ const NotificationDropdown = () => {
           opacity: `${show ? '100%' : '0%'}`,
         }}
       >
-        <div className='absolute right-0 z-10 flex flex-col w-64 mt-1 overflow-hidden overflow-y-auto border-2 border-orange-500 rounded-md shadow-md max-h-96 lg:w-72 xl:w-80 scrollbar-thin'>
+        <div className='absolute right-0 z-10 flex flex-col w-64 mt-1 overflow-hidden overflow-y-auto border-2 border-orange-500 rounded-md shadow-md max-h-96 lg:w-72 xl:w-80  '>
           {loadingNotifications ? (
             <Loader
               className={'py-3'}
@@ -84,7 +82,7 @@ const NotificationDropdown = () => {
               color={Math.floor(Math.random() * 10 + 1)}
             />
           ) : errorNotifications ? (
-            <Alert className={'mt-3'}>{errorNotifications}</Alert>
+            <Alert>{errorNotifications}</Alert>
           ) : (
             <>
               {notifications && notifications.length === 0 ? (

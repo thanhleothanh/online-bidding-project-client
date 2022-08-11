@@ -57,6 +57,7 @@ export const auctionGetOpenings =
   (page = 0, categoryId = null) =>
   async (dispatch) => {
     try {
+      if (categoryId != null) page = 0;
       dispatch({
         type: AUCTION_GET_OPENINGS_REQUEST,
       });

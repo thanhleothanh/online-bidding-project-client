@@ -10,7 +10,7 @@ const ReportUsersInfo = ({ report }) => {
           <div className='font-semibold text-left'>Username:</div>
           <div className='text-right'>
             <Link to={`/profiles/${report.userReporter.profile.id}`}>
-              <span className='underline'>
+              <span className='underline hover:text-orange-500'>
                 {report.userReporter
                   ? report.userReporter.profile.username ?? 'n/a'
                   : 'No reporter info found!'}
@@ -33,7 +33,7 @@ const ReportUsersInfo = ({ report }) => {
           <div className='font-semibold text-left'>Username:</div>
           <div className='text-right'>
             <Link to={`/profiles/${report.userReported.profile.id}`}>
-              <span className='underline'>
+              <span className='underline hover:text-orange-500'>
                 {report.userReported
                   ? report.userReported.profile.username ?? 'n/a'
                   : 'No reported user info found!'}

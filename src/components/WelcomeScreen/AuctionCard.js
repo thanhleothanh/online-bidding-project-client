@@ -12,7 +12,7 @@ const AuctionCard = ({
   image,
 }) => {
   return (
-    <div className='flex w-full overflow-hidden text-gray-200 transition duration-300 ease-in-out bg-gray-800 rounded-md h-72 hover:-translate-y-1 hover:scale-105'>
+    <div className='flex w-full overflow-hidden text-gray-200 transition duration-300 ease-in-out bg-gray-800 rounded-md h-80 hover:-translate-y-1 hover:scale-105'>
       <div className='w-5/12 h-full'>
         <img
           src={image}

@@ -9,8 +9,8 @@ export const connect = (username, auctionId, auctionBids, setAuctionBids) => {
   stompClient.connect({ username }, () => {
     stompClient.subscribe(`/topic/auctions/${auctionId}/bids`, (payload) => {
       const newBid = JSON.parse(payload.body);
-      console.log(newBid);
-      console.log(auctionBids);
+      // console.log(newBid);
+      // console.log(auctionBids);
       setAuctionBids((auctionBids) => [{ ...newBid }, ...auctionBids]);
     });
   });

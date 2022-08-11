@@ -10,7 +10,7 @@ export const connect = (username, getNewNotifications) => {
   stompClient.connect({ username }, () => {
     stompClient.subscribe(`/user/queue/notifications`, (payload) => {
       const notifying = JSON.parse(payload.body);
-      console.log(notifying);
+      // console.log(notifying);
       if (notifying) {
         notifyNotification();
       }

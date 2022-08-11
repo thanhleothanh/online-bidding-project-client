@@ -49,7 +49,9 @@ const CountdownTimer = ({ timeStart, timeEnd }) => {
           </span>
         </div>
         <div className='text-right'>
-          <span className={`text-lg font-semibold inline-block text-orange-50`}>
+          <span
+            className={`text-base font-semibold inline-block text-orange-50`}
+          >
             {minutes === 0 && seconds === 0 ? (
               '00:00:00'
             ) : (
