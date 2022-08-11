@@ -45,7 +45,7 @@ const AdminAuctionScreen = ({ history }) => {
         notify(false, 'Duyệt bài đấu giá thành công!');
         setTimeout(() => {
           window.location.reload();
-        }, 1500);
+        }, 1000);
       } else notify(true, errorApprovedAuction);
       dispatch({ type: 'AUCTION_ADMIN_APPROVE_RESET' });
     }
@@ -122,8 +122,7 @@ const AdminAuctionScreen = ({ history }) => {
               <tr className='sticky top-0 flex w-full text-gray-100 bg-orange-600 rounded-t-md'>
                 <th className='w-1/12 py-7'>ID</th>
                 <th className='w-2/12 py-7'>User Info</th>
-                <th className='w-4/12 py-7'>Auction Info</th>
-                <th className='w-5/12 py-7'>Auction Item</th>
+                <th className='w-8/12 py-7'>Auction Info</th>
                 <th className='w-1/12 py-7'></th>
               </tr>
               <div className='w-full overflow-hidden rounded-md'>
@@ -132,8 +131,7 @@ const AdminAuctionScreen = ({ history }) => {
                     <tr>
                       <th className='w-1/12'></th>
                       <th className='w-2/12'></th>
-                      <th className='w-4/12'></th>
-                      <th className='w-5/12'></th>
+                      <th className='w-8/12'></th>
                       <th className='w-1/12'></th>
                     </tr>
                   </thead>
@@ -150,10 +148,9 @@ const AdminAuctionScreen = ({ history }) => {
                             <td className='py-10 pr-1 xl:pr-5'>
                               <UserInfoSection auction={auction} />
                             </td>
-                            <td className='py-10 pr-1 lg:px-5'>
+                            <td className='flex flex-col py-10 lg:px-5'>
                               <AuctionInfoSection auction={auction} />
-                            </td>
-                            <td className='py-10 pl-1 lg:px-5'>
+                              <br />
                               <ItemInfoSection auction={auction} />
                             </td>
                             <td className='py-10 space-x-1'>
@@ -167,11 +164,6 @@ const AdminAuctionScreen = ({ history }) => {
                                       className='fas fa-thumbs-up fa-lg hover:text-orange-500'
                                     />
                                   </button>
-                                  <ReactTooltip
-                                    id='approve'
-                                    place='top'
-                                    effect='float'
-                                  />
                                   <button data-for='reject' data-tip='Reject'>
                                     <i
                                       onClick={() =>
@@ -180,11 +172,6 @@ const AdminAuctionScreen = ({ history }) => {
                                       className='fas fa-thumbs-down fa-lg hover:text-orange-500'
                                     />
                                   </button>
-                                  <ReactTooltip
-                                    id='reject'
-                                    place='top'
-                                    effect='float'
-                                  />
                                 </>
                               )}
                             </td>
@@ -194,6 +181,9 @@ const AdminAuctionScreen = ({ history }) => {
                   </tbody>
                 </table>
               </div>
+              <ReactTooltip id='reject' place='top' effect='float' />
+              <ReactTooltip id='approve' place='top' effect='float' />
+              <ReactTooltip id='reject' place='top' effect='float' />
             </>
           )}
           {allAuctions && allAuctions.length === 0 && (

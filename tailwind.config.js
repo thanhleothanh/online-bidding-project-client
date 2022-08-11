@@ -7,11 +7,11 @@ module.exports = {
       },
       keyframes: {
         leftToRight: {
-          from: { transform: 'translateX(-50%)', opacity: '0' },
+          from: { transform: 'translateX(-10%)', opacity: '0' },
           to: { transform: 'translateX(0%)', opacity: '1' },
         },
         bottomToTop: {
-          from: { transform: 'translateY(-50%)', opacity: '0' },
+          from: { transform: 'translateY(-10%)', opacity: '0' },
           to: { transform: 'translateY(0%)', opacity: '1' },
         },
         fadeIn: {

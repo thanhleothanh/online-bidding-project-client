@@ -48,6 +48,7 @@ const DropdownMenu = () => {
         {userInfo &&
           userInfo.name &&
           userInfo.name[0].toUpperCase() + userInfo.name.slice(1)}{' '}
+        <i className='fas fa-caret-down' />
       </button>
 
       <div

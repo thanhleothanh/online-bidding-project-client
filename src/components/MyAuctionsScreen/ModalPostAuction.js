@@ -27,7 +27,7 @@ const ModalPostAuction = ({ isShow, closeModal }) => {
         setItemImages([]);
         setTimeout(() => {
           window.location.reload();
-        }, 1500);
+        }, 1000);
       } else notify(true, errorPostAuction);
       dispatch({ type: 'AUCTION_POST_RESET' });
     }
@@ -101,7 +101,7 @@ const ModalPostAuction = ({ isShow, closeModal }) => {
             {...register('description')}
           />
 
-          <div className='flex w-full mt-2 space-x-5'>
+          <div className='flex w-full mt-2 space-x-5 overflow-hidden'>
             <div className='flex flex-col w-1/2'>
               <label className='modalFormLabel'>Time Start</label>
               <input
@@ -232,7 +232,7 @@ const ModalPostAuction = ({ isShow, closeModal }) => {
               color={Math.floor(Math.random() * 10 + 1)}
             />
           ) : (
-            <div className='flex mt-2 space-x-3 overflow-x-auto text-gray-200 '>
+            <div className='flex mt-2 space-x-3 overflow-x-auto text-gray-200'>
               {itemImages &&
                 itemImages.length !== 0 &&
                 itemImages.map((itemImage) => {

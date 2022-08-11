@@ -91,6 +91,6 @@ export const logOut = () => async (dispatch) => {
   } catch (error) {
     const errorMessage =
       error.response.data.message + ' ' + error.response.data.errors.toString();
-    console.log(errorMessage);
+    // console.log(errorMessage);
   }
 };

@@ -117,6 +117,7 @@ export const itemUploadImage = (files) => async (dispatch) => {
       `https://api.cloudinary.com/v1_1/metanoia/image/upload`,
       formData
     );
+    console.log(data);
     dispatch({
       type: ITEM_UPLOAD_IMAGE_SUCCESS,
       payload: data,

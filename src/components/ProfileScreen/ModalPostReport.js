@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Modal from '../Modal';
 import { useForm } from 'react-hook-form';
@@ -98,7 +98,7 @@ const ModalPostReport = ({ isShow, closeModal, userId }) => {
         getProfileById && (
           <div className='w-full pb-10 h-7/10'>
             <div className='flex flex-col xl:flex-row'>
-              <div className='flex flex-col w-full pr-2 bg-gray-700 xl:w-1/2'>
+              <div className='flex flex-col w-full bg-gray-700 xl:pr-2 xl:w-1/2'>
                 <div className='text-xl font-bold text-left text-gray-200 lg:text-2xl'>
                   This person's info
                 </div>
@@ -120,7 +120,7 @@ const ModalPostReport = ({ isShow, closeModal, userId }) => {
               </div>
 
               <form
-                className='flex flex-col w-full pl-2 bg-gray-700 xl:w-1/2'
+                className='flex flex-col w-full bg-gray-700 xl:pl-2 xl:w-1/2'
                 onSubmit={handleSubmit(postReportHandler)}
               >
                 <div className='mt-5 text-xl font-bold text-left text-gray-200 xl:mt-0 lg:text-2xl'>
@@ -164,7 +164,7 @@ const ModalPostReport = ({ isShow, closeModal, userId }) => {
                     color={Math.floor(Math.random() * 10 + 1)}
                   />
                 ) : (
-                  <div className='flex mt-2 space-x-3 overflow-x-auto text-gray-200 '>
+                  <div className='flex mt-2 space-x-3 overflow-x-auto text-gray-200 scrollbar-thin'>
                     {reportImages &&
                       reportImages.length !== 0 &&
                       reportImages.map((itemImage) => {

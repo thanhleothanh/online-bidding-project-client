@@ -9,6 +9,7 @@ import Loader from './../components/Loader';
 import ItemInfoSection from '../components/AdminAuctionScreen/ItemInfoSection';
 import AuctionInfoSection from '../components/AdminAuctionScreen/AuctionInfoSection';
 import UserInfoSection from '../components/AdminAuctionScreen/UserInfoSection';
+import { profileGetMyProfile } from '../redux/actions/profileActions';
 
 const MyProfileScreen = ({ history }) => {
   const dispatch = useDispatch();
@@ -21,8 +22,10 @@ const MyProfileScreen = ({ history }) => {
 
   useEffect(() => {
     if (!userInfo) history.push('/login');
-    // if (userInfo && userInfo.role === 'ADMIN') history.push('/admin/auctions');
-    if (userInfo) dispatch(auctionGetMyWins());
+    if (userInfo) dispatch(profileGetMyProfile());
+    if (userInfo && userInfo.role === 'USER') {
+      dispatch(auctionGetMyWins());
+    }
   }, [userInfo]);
 
   return (
@@ -44,7 +47,11 @@ const MyProfileScreen = ({ history }) => {
             </div>
           </div>
           <div className='flex flex-col w-full h-auto my-5 space-y-5 xl:flex-row xl:space-x-5 xl:space-y-0'>
-            <div className='w-full xl:w-3/4'>
+            <div
+              className={`${
+                userInfo.role === 'ADMIN' ? 'w-none' : 'w-full xl:w-3/4'
+              }`}
+            >
               {userInfo && userInfo.role === 'USER' && (
                 <div className='w-full bg-gray-800 rounded-md'>
                   <h1 className='py-5 text-lg font-bold text-left text-gray-200 pl-7 xl:text-xl'>
@@ -62,18 +69,16 @@ const MyProfileScreen = ({ history }) => {
                     <>
                       <tr className='sticky top-0 flex w-full text-gray-100 bg-orange-600 rounded-t-md'>
                         <th className='w-1/12 py-7'>ID</th>
-                        <th className='w-3/12 py-7'>User Info</th>
-                        <th className='w-5/12 py-7'>Auction Info</th>
-                        <th className='w-4/12 py-7'>Auction Item</th>
+                        <th className='w-2/12 py-7'>User Info</th>
+                        <th className='w-9/12 py-7'>Auction Info</th>
                       </tr>
                       <div className='w-full overflow-hidden rounded-md'>
                         <table className='w-full overflow-x-auto table-fixed'>
                           <thead>
                             <tr>
                               <th className='w-1/12'></th>
-                              <th className='w-3/12'></th>
-                              <th className='w-5/12'></th>
-                              <th className='w-4/12'></th>
+                              <th className='w-2/12'></th>
+                              <th className='w-9/12'></th>
                             </tr>
                           </thead>
                           <tbody>
@@ -89,10 +94,9 @@ const MyProfileScreen = ({ history }) => {
                                     <td className='py-10 lg:px-5'>
                                       <UserInfoSection auction={auction} />
                                     </td>
-                                    <td className='py-10 lg:px-5'>
+                                    <td className='flex flex-col py-10 lg:px-5'>
                                       <AuctionInfoSection auction={auction} />
-                                    </td>
-                                    <td className='py-10 lg:px-5'>
+                                      <br />
                                       <ItemInfoSection auction={auction} />
                                     </td>
                                   </tr>
@@ -111,7 +115,11 @@ const MyProfileScreen = ({ history }) => {
                 </div>
               )}
             </div>
-            <div className='w-full xl:w-1/4'>
+            <div
+              className={`${
+                userInfo.role === 'ADMIN' ? 'w-full' : 'w-full xl:w-1/4'
+              }`}
+            >
               <MyProfileInfo />
             </div>
           </div>

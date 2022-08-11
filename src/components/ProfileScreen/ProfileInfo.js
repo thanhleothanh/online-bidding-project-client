@@ -27,6 +27,17 @@ const ProfileForm = () => {
         getProfileById && (
           <form className='flex flex-col w-full px-8 pt-6 pb-8 mb-3 bg-gray-800 shadow-sm rounded-b-md'>
             <div>
+              <label className='labelField'>Bio</label>
+              <input
+                className='bg-opacity-25 inputField'
+                id='username'
+                value={getProfileById.bio ?? 'n/a'}
+                type='text'
+                disabled
+                readOnly
+              />
+            </div>
+            <div className='mt-2'>
               <label className='labelField'>Username</label>
               <input
                 className='bg-opacity-25 inputField'
@@ -66,6 +77,17 @@ const ProfileForm = () => {
                 id='status'
                 value={getProfileById.status}
                 type='text'
+                disabled
+                readOnly
+              />
+            </div>
+            <div className='mt-2'>
+              <label className='labelField'>Legitimate Score</label>
+              <input
+                className='bg-opacity-25 inputField'
+                id='status'
+                value={getProfileById.legitimateScore}
+                type='number'
                 disabled
                 readOnly
               />

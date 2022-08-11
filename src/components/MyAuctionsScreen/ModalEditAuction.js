@@ -45,7 +45,7 @@ const ModalEditAuction = ({ isShow, closeModal, auctionId }) => {
         category.current = null;
         setTimeout(() => {
           window.location.reload();
-        }, 1500);
+        }, 1000);
       } else notify(true, errorPutAuction);
       dispatch({ type: 'AUCTION_PUT_RESET' });
     }
@@ -64,7 +64,7 @@ const ModalEditAuction = ({ isShow, closeModal, auctionId }) => {
         closeModal();
         setTimeout(() => {
           window.location.reload();
-        }, 1500);
+        }, 1000);
       } else notify(true, errorPutItem);
       dispatch({ type: 'ITEM_PUT_RESET' });
     }
@@ -198,40 +198,6 @@ const ModalEditAuction = ({ isShow, closeModal, auctionId }) => {
                   {...register('description')}
                 />
 
-                {/* <div classname='flex w-full mt-2'>
-                  <div classname='flex flex-col w-1/2 pr-2'>
-                    <label classname='modalformlabel'>time start</label>
-                    <input
-                      classname='modalformfield'
-                      type='datetime-local'
-                      defaultvalue={
-                        currentauction.timestart
-                          ? currentauction.timestart.substring(0, 16) ?? null
-                          : null
-                      }
-                      autocomplete='off'
-                      required
-                      {...register('timestart')}
-                    />
-                  </div>
-
-                  <div classname='flex flex-col w-1/2 pl-2'>
-                    <label classname='modalformlabel'>time end</label>
-                    <input
-                      classname=' modalformfield'
-                      type='datetime-local'
-                      defaultvalue={
-                        currentauction.timeend
-                          ? currentauction.timestart.substring(0, 16) ?? null
-                          : null
-                      }
-                      autocomplete='off'
-                      required
-                      {...register('timeend')}
-                    />
-                  </div>
-                </div> */}
-
                 <div className='flex w-full mt-2'>
                   <div className='flex flex-col w-1/2 pr-2'>
                     <label className='modalFormLabel'>Start Price</label>
@@ -287,13 +253,13 @@ const ModalEditAuction = ({ isShow, closeModal, auctionId }) => {
 
                 {loadingPutAuction ? (
                   <button
-                    className='mt-5 opacity-50 modalFormButton hover:bg-orange-600'
+                    className='my-5 opacity-50 modalFormButton hover:bg-orange-600'
                     disabled
                   >
                     Loading...
                   </button>
                 ) : (
-                  <button className='mt-5 modalFormButton' type='submit'>
+                  <button className='my-5 modalFormButton' type='submit'>
                     Update Auction
                   </button>
                 )}
@@ -372,7 +338,7 @@ const ModalEditAuction = ({ isShow, closeModal, auctionId }) => {
                     color={Math.floor(Math.random() * 10 + 1)}
                   />
                 ) : (
-                  <div className='flex mt-2 space-x-3 overflow-x-auto text-gray-200 '>
+                  <div className='flex mt-2 space-x-3 overflow-x-auto text-gray-200 scrollbar-thin'>
                     {itemImages
                       ? itemImages.length !== 0 &&
                         itemImages.map((itemImage) => {
@@ -399,13 +365,13 @@ const ModalEditAuction = ({ isShow, closeModal, auctionId }) => {
                 )}
                 {loadingPutItem ? (
                   <button
-                    className='mt-5 opacity-50 modalFormButton hover:bg-orange-600'
+                    className='my-5 opacity-50 modalFormButton hover:bg-orange-600'
                     disabled
                   >
                     Loading...
                   </button>
                 ) : (
-                  <button className='mt-5 modalFormButton' type='submit'>
+                  <button className='my-5 modalFormButton' type='submit'>
                     Update Item
                   </button>
                 )}

@@ -36,7 +36,9 @@ import {
   itemUploadImageReducer,
 } from './redux/reducers/itemReducers';
 import {
+  profileGetMyProfileReducer,
   profileGetByIdReducer,
+  profileUpdateInfoReducer,
   profileChangePasswordReducer,
   //admin
   profileAdminGetAllReducer,
@@ -87,7 +89,9 @@ const reducer = combineReducers({
   itemUploadImage: itemUploadImageReducer,
 
   //profile related
+  profileGetMyProfile: profileGetMyProfileReducer,
   profileGetById: profileGetByIdReducer,
+  profileUpdateInfo: profileUpdateInfoReducer,
   profileChangePassword: profileChangePasswordReducer,
   /////////////profile admin
   profileAdminGetAll: profileAdminGetAllReducer,

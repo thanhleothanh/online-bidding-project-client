@@ -18,7 +18,7 @@ import 'react-toastify/dist/ReactToastify.css';
 function App() {
   return (
     <BrowserRouter>
-      <main className='flex flex-row h-auto min-h-screen bg-gray-900 '>
+      <main className='relative flex flex-row h-auto min-h-screen bg-gray-900 '>
         <NavigationBar />
         <Route path='/myAuctions' component={MyAuctionsScreen} />
         <Route
@@ -42,7 +42,6 @@ function App() {
           closeOnClick
           rtl={false}
           pauseOnFocusLoss={false}
-          draggable
           pauseOnHover={false}
         />
         <ToastContainer
@@ -53,7 +52,6 @@ function App() {
           closeOnClick
           rtl={false}
           pauseOnFocusLoss={false}
-          draggable
           pauseOnHover={false}
         />
       </main>

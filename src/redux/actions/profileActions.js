@@ -1,7 +1,13 @@
 import {
+  PROFILE_GET_MY_PROFILE_FAIL,
+  PROFILE_GET_MY_PROFILE_REQUEST,
+  PROFILE_GET_MY_PROFILE_SUCCESS,
   PROFILE_GET_BY_ID_FAIL,
   PROFILE_GET_BY_ID_REQUEST,
   PROFILE_GET_BY_ID_SUCCESS,
+  PROFILE_UPDATE_INFO_FAIL,
+  PROFILE_UPDATE_INFO_REQUEST,
+  PROFILE_UPDATE_INFO_SUCCESS,
   PROFILE_CHANGE_PASSWORD_FAIL,
   PROFILE_CHANGE_PASSWORD_REQUEST,
   PROFILE_CHANGE_PASSWORD_SUCCESS,
@@ -15,6 +21,35 @@ import {
 } from '../constants/profileConstants';
 import axios from 'axios';
 import { API_URL } from '../../utils/config';
+
+export const profileGetMyProfile = () => async (dispatch) => {
+  try {
+    dispatch({
+      type: PROFILE_GET_MY_PROFILE_REQUEST,
+    });
+    const config = {
+      withCredentials: true,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    const { data } = await axios.get(
+      `${API_URL}/api/v1/profiles/myProfile`,
+      config
+    );
+    dispatch({
+      type: PROFILE_GET_MY_PROFILE_SUCCESS,
+      payload: data.data,
+    });
+  } catch (error) {
+    const errorMessage =
+      error.response.data.message + ' ' + error.response.data.errors.toString();
+    dispatch({
+      type: PROFILE_GET_MY_PROFILE_FAIL,
+      payload: errorMessage,
+    });
+  }
+};
 
 export const profileGetById = (profileId) => async (dispatch) => {
   try {
@@ -45,6 +80,36 @@ export const profileGetById = (profileId) => async (dispatch) => {
   }
 };
 
+export const profileUpdateInfo = (payload) => async (dispatch) => {
+  try {
+    dispatch({
+      type: PROFILE_UPDATE_INFO_REQUEST,
+    });
+    const config = {
+      withCredentials: true,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    const { data } = await axios.put(
+      `${API_URL}/api/v1/profiles/myProfile`,
+      payload,
+      config
+    );
+    dispatch({
+      type: PROFILE_UPDATE_INFO_SUCCESS,
+      payload: data.data,
+    });
+  } catch (error) {
+    const errorMessage =
+      error.response.data.message + ' ' + error.response.data.errors.toString();
+    dispatch({
+      type: PROFILE_UPDATE_INFO_FAIL,
+      payload: errorMessage,
+    });
+  }
+};
+
 export const profileChangePassword = (payload) => async (dispatch) => {
   try {
     dispatch({
@@ -58,7 +123,6 @@ export const profileChangePassword = (payload) => async (dispatch) => {
     };
     const { data } = await axios.put(
       `${API_URL}/api/v1/profiles/myProfile/changePassword`,
-
       payload,
       config
     );

@@ -25,7 +25,7 @@ const NavigationBar = () => {
   };
 
   return (
-    <nav className='sticky top-0 z-10 flex flex-col items-center justify-center w-16 h-screen text-gray-200 bg-gray-800'>
+    <nav className='sticky top-0 z-10 flex flex-col items-center justify-center w-12 h-screen text-gray-200 bg-gray-800'>
       {userInfo && userInfo.role === 'ADMIN' ? (
         <>
           <Link
@@ -44,7 +44,6 @@ const NavigationBar = () => {
               <i className='fas fa-user-edit fa-lg' />
             </button>
           </Link>
-          <ReactTooltip id='users' place='right' type='dark' effect='float' />
 
           <Link
             to={'/admin/auctions'}
@@ -62,12 +61,6 @@ const NavigationBar = () => {
               <i className='fas fa-coins fa-lg' />
             </button>
           </Link>
-          <ReactTooltip
-            id='auctions'
-            place='right'
-            type='dark'
-            effect='float'
-          />
 
           <Link
             to={'/admin/reports'}
@@ -85,7 +78,6 @@ const NavigationBar = () => {
               <i className='fas fa-balance-scale-right fa-lg'></i>
             </button>
           </Link>
-          <ReactTooltip id='reports' place='right' type='dark' effect='float' />
         </>
       ) : (
         <>
@@ -105,12 +97,6 @@ const NavigationBar = () => {
               <i className='fas fa-home fa-lg' />
             </button>
           </Link>
-          <ReactTooltip
-            id='homescreen'
-            place='right'
-            type='dark'
-            effect='float'
-          />
 
           <Link
             to={'/myAuctions'}
@@ -128,12 +114,6 @@ const NavigationBar = () => {
               <i className='fas fa-piggy-bank fa-lg' />
             </button>
           </Link>
-          <ReactTooltip
-            id='myAuctions'
-            place='right'
-            type='dark'
-            effect='float'
-          />
 
           <Link
             to={'/interestedAuctions'}
@@ -151,14 +131,19 @@ const NavigationBar = () => {
               <i className='fas fa-hourglass-end fa-lg'></i>
             </button>
           </Link>
-          <ReactTooltip
-            id='interestedAuctions'
-            place='right'
-            type='dark'
-            effect='float'
-          />
         </>
       )}
+      <ReactTooltip id='auctions' place='right' type='dark' effect='float' />
+      <ReactTooltip id='users' place='right' type='dark' effect='float' />
+      <ReactTooltip id='reports' place='right' type='dark' effect='float' />
+      <ReactTooltip id='homescreen' place='right' type='dark' effect='float' />
+      <ReactTooltip id='myAuctions' place='right' type='dark' effect='float' />
+      <ReactTooltip
+        id='interestedAuctions'
+        place='right'
+        type='dark'
+        effect='float'
+      />
     </nav>
   );
 };

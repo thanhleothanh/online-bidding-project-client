@@ -8,7 +8,7 @@ const UserInfoSection = ({ auction }) => {
         <div className='font-semibold text-left'>Username:</div>
         <div className='text-right'>
           <Link to={`/profiles/${auction.user.profile.id}`}>
-            <span className='underline'>
+            <span className='underline hover:text-orange-500'>
               {auction.user
                 ? auction.user.profile.username ?? 'n/a'
                 : 'No user info found!'}
