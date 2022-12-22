@@ -8,16 +8,20 @@ import { API_URL } from '../../utils/config';
 
 export const notificationGetMyNotifications =
   (page = 0) =>
-  async (dispatch) => {
+  async (dispatch, getState) => {
     try {
       dispatch({
         type: NOTIFICATION_GET_MY_NOTIFICATIONS_REQUEST,
       });
+      const {
+        userLogin: { userInfo },
+      } = getState();
       const config = {
-        withCredentials: true,
         headers: {
           page,
           page_size: 7,
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${userInfo.token}`,
         },
       };
       const { data } = await axios.get(

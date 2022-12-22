@@ -85,12 +85,6 @@ const StatusChooser = ({ choosenStatus, setChoosenStatus }) => {
           >
             ENDED
           </button>
-          <button
-            className='w-full rounded-none genericButton'
-            onClick={() => setChoosenStatus('SUCCESSFUL')}
-          >
-            SUCCESSFUL
-          </button>
         </div>
       </div>
     </span>
