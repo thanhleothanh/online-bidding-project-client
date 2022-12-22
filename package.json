@@ -1,6 +1,6 @@
 {
   "name": "masterdev-online_bidding_project_client",
-  "proxy": "http://localhost:8080",
+  "proxy": "http://20.24.86.38:8080",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

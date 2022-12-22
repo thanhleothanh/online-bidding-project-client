@@ -55,21 +55,17 @@ import { API_URL } from '../../utils/config';
 
 export const auctionGetOpenings =
   (page = 0, categoryId = null) =>
-  async (dispatch, getState) => {
+  async (dispatch) => {
     try {
       if (categoryId != null) page = 0;
       dispatch({
         type: AUCTION_GET_OPENINGS_REQUEST,
       });
-      const {
-        userLogin: { userInfo },
-      } = getState();
       const config = {
         headers: {
           page,
           page_size: 4,
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${userInfo.token}`,
         },
       };
       const { data } = await axios.get(
@@ -92,18 +88,14 @@ export const auctionGetOpenings =
     }
   };
 
-export const auctionGetTopTrending = () => async (dispatch, getState) => {
+export const auctionGetTopTrending = () => async (dispatch) => {
   try {
     dispatch({
       type: AUCTION_GET_TOP_TRENDING_REQUEST,
     });
-    const {
-      userLogin: { userInfo },
-    } = getState();
     const config = {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${userInfo.token}`,
       },
     };
     const { data } = await axios.get(
