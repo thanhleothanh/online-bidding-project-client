@@ -15,15 +15,18 @@ import {
 import axios from 'axios';
 import { API_URL } from '../../utils/config';
 
-export const itemPut = (itemId, payload) => async (dispatch) => {
+export const itemPut = (itemId, payload) => async (dispatch, getState) => {
   try {
     dispatch({
       type: ITEM_PUT_REQUEST,
     });
+    const {
+      userLogin: { userInfo },
+    } = getState();
     const config = {
-      withCredentials: true,
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
       },
     };
     const { data } = await axios.put(
@@ -45,64 +48,76 @@ export const itemPut = (itemId, payload) => async (dispatch) => {
   }
 };
 
-export const itemPostImage = (itemId, payload) => async (dispatch) => {
-  try {
-    dispatch({
-      type: ITEM_POST_IMAGE_REQUEST,
-    });
-    const config = {
-      withCredentials: true,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
-    const { data } = await axios.post(
-      `${API_URL}/api/v1/items/${itemId}/itemImages`,
-      payload,
-      config
-    );
-    dispatch({
-      type: ITEM_POST_IMAGE_SUCCESS,
-      payload: data.data,
-    });
-  } catch (error) {
-    const errorMessage =
-      error.response.data.message + ' ' + error.response.data.errors.toString();
-    dispatch({
-      type: ITEM_POST_IMAGE_FAIL,
-      payload: errorMessage,
-    });
-  }
-};
+export const itemPostImage =
+  (itemId, payload) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: ITEM_POST_IMAGE_REQUEST,
+      });
+      const {
+        userLogin: { userInfo },
+      } = getState();
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+      const { data } = await axios.post(
+        `${API_URL}/api/v1/items/${itemId}/itemImages`,
+        payload,
+        config
+      );
+      dispatch({
+        type: ITEM_POST_IMAGE_SUCCESS,
+        payload: data.data,
+      });
+    } catch (error) {
+      const errorMessage =
+        error.response.data.message +
+        ' ' +
+        error.response.data.errors.toString();
+      dispatch({
+        type: ITEM_POST_IMAGE_FAIL,
+        payload: errorMessage,
+      });
+    }
+  };
 
-export const itemDeleteImage = (itemId, imageId) => async (dispatch) => {
-  try {
-    dispatch({
-      type: ITEM_DELETE_IMAGE_REQUEST,
-    });
-    const config = {
-      withCredentials: true,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
-    await axios.delete(
-      `${API_URL}/api/v1/items/${itemId}/itemImages/${imageId}`,
-      config
-    );
-    dispatch({
-      type: ITEM_DELETE_IMAGE_SUCCESS,
-      payload: true,
-    });
-  } catch (error) {
-    const errorMessage =
-      error.response.data.message + ' ' + error.response.data.errors.toString();
-    dispatch({
-      type: ITEM_DELETE_IMAGE_FAIL,
-      payload: errorMessage,
-    });
-  }
-};
+export const itemDeleteImage =
+  (itemId, imageId) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: ITEM_DELETE_IMAGE_REQUEST,
+      });
+      const {
+        userLogin: { userInfo },
+      } = getState();
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+      await axios.delete(
+        `${API_URL}/api/v1/items/${itemId}/itemImages/${imageId}`,
+        config
+      );
+      dispatch({
+        type: ITEM_DELETE_IMAGE_SUCCESS,
+        payload: true,
+      });
+    } catch (error) {
+      const errorMessage =
+        error.response.data.message +
+        ' ' +
+        error.response.data.errors.toString();
+      dispatch({
+        type: ITEM_DELETE_IMAGE_FAIL,
+        payload: errorMessage,
+      });
+    }
+  };
 
 export const itemUploadImage = (files) => async (dispatch) => {
   try {

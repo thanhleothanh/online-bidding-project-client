@@ -20,7 +20,7 @@ const SignupScreen = ({ history }) => {
       if (userSignup) {
         notify(
           false,
-          `Đăng kí thành công tài khoản: ${userSignup.username}! Bạn hãy đăng nhập với tài khoản này!`
+          `Đăng kí thành công tài khoản: ${userSignup.username}! Vui long xac nhan tai khoan qua mail da dang ky!!`
         );
         reset();
         history.push('/login');
@@ -78,7 +78,7 @@ const SignupScreen = ({ history }) => {
           <div className='mt-3'>
             <label className='labelField'>Username</label>
             <input
-              className='inputField'
+              className='text-gray-200 bg-gray-700 modalFormField'
               type='text'
               {...register('username')}
               required
@@ -88,7 +88,7 @@ const SignupScreen = ({ history }) => {
           <div className='mt-3'>
             <label className='labelField'>Email</label>
             <input
-              className='inputField'
+              className='text-gray-200 bg-gray-700 modalFormField'
               type='email'
               {...register('email')}
               required
@@ -98,7 +98,7 @@ const SignupScreen = ({ history }) => {
           <div className='mt-3'>
             <label className='labelField'>Name</label>
             <input
-              className='inputField'
+              className='text-gray-200 bg-gray-700 modalFormField'
               type='text'
               {...register('name')}
               required
@@ -108,7 +108,7 @@ const SignupScreen = ({ history }) => {
           <div className='mt-3'>
             <label className='labelField'>Password</label>
             <input
-              className='inputField'
+              className='text-gray-200 bg-gray-700 modalFormField'
               type='password'
               {...register('password')}
               placeholder='Your password'
@@ -118,7 +118,7 @@ const SignupScreen = ({ history }) => {
           <div className='mt-3 mb-5'>
             <label className='labelField'>Confirm Password</label>
             <input
-              className='inputField'
+              className='text-gray-200 bg-gray-700 modalFormField'
               type='password'
               {...register('confirmPassword')}
               placeholder='Confirm your password'

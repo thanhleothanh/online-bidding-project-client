@@ -18,7 +18,7 @@ const Trail = ({ open, children }) => {
   const items = Children.toArray(children);
   useEffect(() => {}, [open]);
   const trail = useTrail(items.length, {
-    config: { mass: 5, tension: 2000, friction: 200 },
+    config: { mass: 10, tension: 1500, friction: 250 },
     opacity: open ? 1 : 0,
     height: open ? 360 : 0,
     from: { opacity: 0, height: 0 },
@@ -72,7 +72,7 @@ const WelcomeScreen = ({ history }) => {
   }, []);
 
   return (
-    <div className='relative flex flex-col w-full h-auto p-5 space-y-5 xl:space-y-0 xl:space-x-5 xl:flex-row'>
+    <div className='relative flex flex-col w-full h-auto p-5 space-y-1 xl:space-y-0 xl:space-x-5 xl:flex-row'>
       <div className='w-full h-auto xl:w-2/3'>
         <div className='flex invisible xl:visible'>
           <input

@@ -62,10 +62,10 @@ export const auctionGetOpenings =
         type: AUCTION_GET_OPENINGS_REQUEST,
       });
       const config = {
-        withCredentials: true,
         headers: {
           page,
           page_size: 4,
+          'Content-Type': 'application/json',
         },
       };
       const { data } = await axios.get(
@@ -94,7 +94,6 @@ export const auctionGetTopTrending = () => async (dispatch) => {
       type: AUCTION_GET_TOP_TRENDING_REQUEST,
     });
     const config = {
-      withCredentials: true,
       headers: {
         'Content-Type': 'application/json',
       },
@@ -117,15 +116,18 @@ export const auctionGetTopTrending = () => async (dispatch) => {
   }
 };
 
-export const auctionGetById = (auctionId) => async (dispatch) => {
+export const auctionGetById = (auctionId) => async (dispatch, getState) => {
   try {
     dispatch({
       type: AUCTION_GET_BY_ID_REQUEST,
     });
+    const {
+      userLogin: { userInfo },
+    } = getState();
     const config = {
-      withCredentials: true,
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
       },
     };
     const { data } = await axios.get(
@@ -146,15 +148,18 @@ export const auctionGetById = (auctionId) => async (dispatch) => {
   }
 };
 
-export const auctionGetMyAuctions = () => async (dispatch) => {
+export const auctionGetMyAuctions = () => async (dispatch, getState) => {
   try {
     dispatch({
       type: AUCTION_GET_MY_AUCTIONS_REQUEST,
     });
+    const {
+      userLogin: { userInfo },
+    } = getState();
     const config = {
-      withCredentials: true,
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
       },
     };
     const { data } = await axios.get(
@@ -175,15 +180,18 @@ export const auctionGetMyAuctions = () => async (dispatch) => {
   }
 };
 
-export const auctionPost = (payload) => async (dispatch) => {
+export const auctionPost = (payload) => async (dispatch, getState) => {
   try {
     dispatch({
       type: AUCTION_POST_REQUEST,
     });
+    const {
+      userLogin: { userInfo },
+    } = getState();
     const config = {
-      withCredentials: true,
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
       },
     };
     const { data } = await axios.post(
@@ -205,45 +213,54 @@ export const auctionPost = (payload) => async (dispatch) => {
   }
 };
 
-export const auctionPut = (auctionId, payload) => async (dispatch) => {
-  try {
-    dispatch({
-      type: AUCTION_PUT_REQUEST,
-    });
-    const config = {
-      withCredentials: true,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
-    const { data } = await axios.put(
-      `${API_URL}/api/v1/auctions/${auctionId}`,
-      payload,
-      config
-    );
-    dispatch({
-      type: AUCTION_PUT_SUCCESS,
-      payload: data.data,
-    });
-  } catch (error) {
-    const errorMessage =
-      error.response.data.message + ' ' + error.response.data.errors.toString();
-    dispatch({
-      type: AUCTION_PUT_FAIL,
-      payload: errorMessage,
-    });
-  }
-};
+export const auctionPut =
+  (auctionId, payload) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: AUCTION_PUT_REQUEST,
+      });
+      const {
+        userLogin: { userInfo },
+      } = getState();
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+      const { data } = await axios.put(
+        `${API_URL}/api/v1/auctions/${auctionId}`,
+        payload,
+        config
+      );
+      dispatch({
+        type: AUCTION_PUT_SUCCESS,
+        payload: data.data,
+      });
+    } catch (error) {
+      const errorMessage =
+        error.response.data.message +
+        ' ' +
+        error.response.data.errors.toString();
+      dispatch({
+        type: AUCTION_PUT_FAIL,
+        payload: errorMessage,
+      });
+    }
+  };
 
-export const auctionDelete = (auctionId) => async (dispatch) => {
+export const auctionDelete = (auctionId) => async (dispatch, getState) => {
   try {
     dispatch({
       type: AUCTION_DELETE_REQUEST,
     });
+    const {
+      userLogin: { userInfo },
+    } = getState();
     const config = {
-      withCredentials: true,
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
       },
     };
     await axios.delete(`${API_URL}/api/v1/auctions/${auctionId}`, config);
@@ -261,15 +278,18 @@ export const auctionDelete = (auctionId) => async (dispatch) => {
   }
 };
 
-export const auctionSubmit = (auctionId) => async (dispatch) => {
+export const auctionSubmit = (auctionId) => async (dispatch, getState) => {
   try {
     dispatch({
       type: AUCTION_SUBMIT_REQUEST,
     });
+    const {
+      userLogin: { userInfo },
+    } = getState();
     const config = {
-      withCredentials: true,
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
       },
     };
     const { data } = await axios.put(
@@ -295,16 +315,20 @@ export const auctionSubmit = (auctionId) => async (dispatch) => {
 
 export const auctionAdminGetAll =
   (page = 0, status = null) =>
-  async (dispatch) => {
+  async (dispatch, getState) => {
     try {
       dispatch({
         type: AUCTION_ADMIN_GET_ALL_REQUEST,
       });
+      const {
+        userLogin: { userInfo },
+      } = getState();
       const config = {
-        withCredentials: true,
         headers: {
           page,
           page_size: 5,
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${userInfo.token}`,
         },
       };
       const { data } = await axios.get(
@@ -327,76 +351,91 @@ export const auctionAdminGetAll =
     }
   };
 
-export const auctionAdminApprove = (auctionId, payload) => async (dispatch) => {
-  try {
-    dispatch({
-      type: AUCTION_ADMIN_APPROVE_REQUEST,
-    });
-    const config = {
-      withCredentials: true,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
-    const { data } = await axios.put(
-      `${API_URL}/api/v1/admin/auctions/${auctionId}/approve`,
-      payload,
-      config
-    );
-    dispatch({
-      type: AUCTION_ADMIN_APPROVE_SUCCESS,
-      payload: data.data,
-    });
-  } catch (error) {
-    const errorMessage =
-      error.response.data.message + ' ' + error.response.data.errors.toString();
-    dispatch({
-      type: AUCTION_ADMIN_APPROVE_FAIL,
-      payload: errorMessage,
-    });
-  }
-};
+export const auctionAdminApprove =
+  (auctionId, payload) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: AUCTION_ADMIN_APPROVE_REQUEST,
+      });
+      const {
+        userLogin: { userInfo },
+      } = getState();
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+      const { data } = await axios.put(
+        `${API_URL}/api/v1/admin/auctions/${auctionId}/approve`,
+        payload,
+        config
+      );
+      dispatch({
+        type: AUCTION_ADMIN_APPROVE_SUCCESS,
+        payload: data.data,
+      });
+    } catch (error) {
+      const errorMessage =
+        error.response.data.message +
+        ' ' +
+        error.response.data.errors.toString();
+      dispatch({
+        type: AUCTION_ADMIN_APPROVE_FAIL,
+        payload: errorMessage,
+      });
+    }
+  };
 
 //auction phase 2
 
-export const auctionGetUsersAuctions = (userId) => async (dispatch) => {
-  try {
-    dispatch({
-      type: AUCTION_GET_USERS_AUCTIONS_REQUEST,
-    });
-    const config = {
-      withCredentials: true,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
-    const { data } = await axios.get(
-      `${API_URL}/api/v1/profiles/${userId}/auctions`,
-      config
-    );
-    dispatch({
-      type: AUCTION_GET_USERS_AUCTIONS_SUCCESS,
-      payload: data.data,
-    });
-  } catch (error) {
-    const errorMessage =
-      error.response.data.message + ' ' + error.response.data.errors.toString();
-    dispatch({
-      type: AUCTION_GET_USERS_AUCTIONS_FAIL,
-      payload: errorMessage,
-    });
-  }
-};
+export const auctionGetUsersAuctions =
+  (userId) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: AUCTION_GET_USERS_AUCTIONS_REQUEST,
+      });
+      const {
+        userLogin: { userInfo },
+      } = getState();
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+      const { data } = await axios.get(
+        `${API_URL}/api/v1/profiles/${userId}/auctions`,
+        config
+      );
+      dispatch({
+        type: AUCTION_GET_USERS_AUCTIONS_SUCCESS,
+        payload: data.data,
+      });
+    } catch (error) {
+      const errorMessage =
+        error.response.data.message +
+        ' ' +
+        error.response.data.errors.toString();
+      dispatch({
+        type: AUCTION_GET_USERS_AUCTIONS_FAIL,
+        payload: errorMessage,
+      });
+    }
+  };
 
-export const auctionGetInterested = () => async (dispatch) => {
+export const auctionGetInterested = () => async (dispatch, getState) => {
   try {
     dispatch({
       type: AUCTION_GET_INTERESTED_REQUEST,
     });
+    const {
+      userLogin: { userInfo },
+    } = getState();
     const config = {
-      withCredentials: true,
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
       },
     };
     const { data } = await axios.get(
@@ -417,108 +456,126 @@ export const auctionGetInterested = () => async (dispatch) => {
   }
 };
 
-export const auctionCheckInterested = (auctionId) => async (dispatch) => {
-  try {
-    dispatch({
-      type: AUCTION_CHECK_INTERESTED_REQUEST,
-    });
-    const config = {
-      withCredentials: true,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
-    const { data } = await axios.get(
-      `${API_URL}/api/v1/profiles/myInterestedAuctions/${auctionId}`,
-      config
-    );
-    dispatch({
-      type: AUCTION_CHECK_INTERESTED_SUCCESS,
-      payload: true,
-    });
-  } catch (error) {
-    const errorMessage =
-      error.response.data.message + ' ' + error.response.data.errors.toString();
-    dispatch({
-      type: AUCTION_CHECK_INTERESTED_FAIL,
-      payload: errorMessage,
-    });
-  }
-};
+export const auctionCheckInterested =
+  (auctionId) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: AUCTION_CHECK_INTERESTED_REQUEST,
+      });
+      const {
+        userLogin: { userInfo },
+      } = getState();
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+      const { data } = await axios.get(
+        `${API_URL}/api/v1/profiles/myInterestedAuctions/${auctionId}`,
+        config
+      );
+      dispatch({
+        type: AUCTION_CHECK_INTERESTED_SUCCESS,
+        payload: true,
+      });
+    } catch (error) {
+      const errorMessage =
+        error.response.data.message +
+        ' ' +
+        error.response.data.errors.toString();
+      dispatch({
+        type: AUCTION_CHECK_INTERESTED_FAIL,
+        payload: errorMessage,
+      });
+    }
+  };
 
-export const auctionDeleteInterested = (auctionId) => async (dispatch) => {
-  try {
-    dispatch({
-      type: AUCTION_DELETE_INTERESTED_REQUEST,
-    });
-    const config = {
-      withCredentials: true,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
-    const { data } = await axios.delete(
-      `${API_URL}/api/v1/profiles/myInterestedAuctions/${auctionId}`,
-      config
-    );
-    dispatch({
-      type: AUCTION_DELETE_INTERESTED_SUCCESS,
-      payload: true,
-    });
-  } catch (error) {
-    const errorMessage =
-      error.response.data.message + ' ' + error.response.data.errors.toString();
-    dispatch({
-      type: AUCTION_DELETE_INTERESTED_FAIL,
-      payload: errorMessage,
-    });
-  }
-};
+export const auctionDeleteInterested =
+  (auctionId) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: AUCTION_DELETE_INTERESTED_REQUEST,
+      });
+      const {
+        userLogin: { userInfo },
+      } = getState();
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+      const { data } = await axios.delete(
+        `${API_URL}/api/v1/profiles/myInterestedAuctions/${auctionId}`,
+        config
+      );
+      dispatch({
+        type: AUCTION_DELETE_INTERESTED_SUCCESS,
+        payload: true,
+      });
+    } catch (error) {
+      const errorMessage =
+        error.response.data.message +
+        ' ' +
+        error.response.data.errors.toString();
+      dispatch({
+        type: AUCTION_DELETE_INTERESTED_FAIL,
+        payload: errorMessage,
+      });
+    }
+  };
 
-export const auctionSaveInterested = (payload) => async (dispatch) => {
-  try {
-    dispatch({
-      type: AUCTION_SAVE_INTERESTED_REQUEST,
-    });
-    const config = {
-      withCredentials: true,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
-    const { data } = await axios.post(
-      `${API_URL}/api/v1/profiles/myInterestedAuctions/`,
-      payload,
-      config
-    );
-    dispatch({
-      type: AUCTION_SAVE_INTERESTED_SUCCESS,
-      payload: true,
-    });
-  } catch (error) {
-    const errorMessage =
-      error.response.data.message + ' ' + error.response.data.errors.toString();
-    dispatch({
-      type: AUCTION_SAVE_INTERESTED_FAIL,
-      payload: errorMessage,
-    });
-  }
-};
+export const auctionSaveInterested =
+  (payload) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: AUCTION_SAVE_INTERESTED_REQUEST,
+      });
+      const {
+        userLogin: { userInfo },
+      } = getState();
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+      const { data } = await axios.post(
+        `${API_URL}/api/v1/profiles/myInterestedAuctions/`,
+        payload,
+        config
+      );
+      dispatch({
+        type: AUCTION_SAVE_INTERESTED_SUCCESS,
+        payload: true,
+      });
+    } catch (error) {
+      const errorMessage =
+        error.response.data.message +
+        ' ' +
+        error.response.data.errors.toString();
+      dispatch({
+        type: AUCTION_SAVE_INTERESTED_FAIL,
+        payload: errorMessage,
+      });
+    }
+  };
 
 export const auctionGetMyWins = () => async (dispatch, getState) => {
   try {
     dispatch({
       type: AUCTION_GET_MY_WINS_REQUEST,
     });
-    const config = {
-      withCredentials: true,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
     const {
       userLogin: { userInfo },
     } = getState();
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
     const { data } = await axios.get(
       `${API_URL}/api/v1/profiles/${userInfo.id}/wonAuctions`,
       config

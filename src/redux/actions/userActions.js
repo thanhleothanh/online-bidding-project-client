@@ -17,7 +17,6 @@ export const login = (username, password) => async (dispatch) => {
       type: USER_LOGIN_REQUEST,
     });
     const config = {
-      withCredentials: true,
       headers: {
         'Content-Type': 'application/json',
       },
@@ -48,7 +47,6 @@ export const signup = (payload) => async (dispatch) => {
       type: USER_SIGNUP_REQUEST,
     });
     const config = {
-      withCredentials: true,
       headers: {
         'Content-Type': 'application/json',
       },
@@ -72,15 +70,18 @@ export const signup = (payload) => async (dispatch) => {
   }
 };
 
-export const logOut = () => async (dispatch) => {
+export const logOut = () => async (dispatch, getState) => {
   try {
-    const config = {
-      withCredentials: true,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
-    await axios.post(`${API_URL}/api/v1/auth/logout`, config);
+    // const {
+    //   userLogin: { userInfo },
+    // } = getState();
+    // const config = {
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     Authorization: `Bearer ${userInfo.token}`,
+    //   },
+    // };
+    // await axios.post(`${API_URL}/api/v1/auth/logout`, config);
     localStorage.removeItem('userInfo');
     dispatch({
       type: USER_LOGOUT,
@@ -91,6 +92,6 @@ export const logOut = () => async (dispatch) => {
   } catch (error) {
     const errorMessage =
       error.response.data.message + ' ' + error.response.data.errors.toString();
-    // console.log(errorMessage);
+    console.log(errorMessage);
   }
 };
