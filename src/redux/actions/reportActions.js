@@ -15,15 +15,19 @@ import {
 import axios from 'axios';
 import { API_URL } from '../../utils/config';
 
-export const reportPost = (payload) => async (dispatch) => {
+export const reportPost = (payload) => async (dispatch, getState) => {
   try {
     dispatch({
       type: REPORT_POST_REQUEST,
     });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
     const config = {
-      withCredentials: true,
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
       },
     };
     const { data } = await axios.post(
@@ -49,16 +53,20 @@ export const reportPost = (payload) => async (dispatch) => {
 
 export const reportAdminGetAll =
   (page = 0, result = '') =>
-  async (dispatch) => {
+  async (dispatch, getState) => {
     try {
       dispatch({
         type: REPORT_ADMIN_GET_ALL_REQUEST,
       });
+      const {
+        userLogin: { userInfo },
+      } = getState();
       const config = {
-        withCredentials: true,
         headers: {
           page,
           page_size: 5,
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${userInfo.token}`,
         },
       };
       const { data } = await axios.get(
@@ -79,45 +87,55 @@ export const reportAdminGetAll =
     }
   };
 
-export const reportAdminJudge = (reportId, payload) => async (dispatch) => {
-  try {
-    dispatch({
-      type: REPORT_ADMIN_JUDGE_REQUEST,
-    });
-    const config = {
-      withCredentials: true,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
-    const { data } = await axios.post(
-      `${API_URL}/api/v1/admin/reports/${reportId}/results`,
-      payload,
-      config
-    );
-    dispatch({
-      type: REPORT_ADMIN_JUDGE_SUCCESS,
-      payload: data.data,
-    });
-  } catch (error) {
-    const errorMessage =
-      error.response.data.message + ' ' + error.response.data.errors.toString();
-    dispatch({
-      type: REPORT_ADMIN_JUDGE_FAIL,
-      payload: errorMessage,
-    });
-  }
-};
+export const reportAdminJudge =
+  (reportId, payload) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: REPORT_ADMIN_JUDGE_REQUEST,
+      });
+      const {
+        userLogin: { userInfo },
+      } = getState();
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+      const { data } = await axios.post(
+        `${API_URL}/api/v1/admin/reports/${reportId}/results`,
+        payload,
+        config
+      );
+      dispatch({
+        type: REPORT_ADMIN_JUDGE_SUCCESS,
+        payload: data.data,
+      });
+    } catch (error) {
+      const errorMessage =
+        error.response.data.message +
+        ' ' +
+        error.response.data.errors.toString();
+      dispatch({
+        type: REPORT_ADMIN_JUDGE_FAIL,
+        payload: errorMessage,
+      });
+    }
+  };
 
-export const reportAdminDelete = (reportId) => async (dispatch) => {
+export const reportAdminDelete = (reportId) => async (dispatch, getState) => {
   try {
     dispatch({
       type: REPORT_ADMIN_DELETE_REQUEST,
     });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
     const config = {
-      withCredentials: true,
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
       },
     };
     await axios.delete(`${API_URL}/api/v1/admin/reports/${reportId}`, config);

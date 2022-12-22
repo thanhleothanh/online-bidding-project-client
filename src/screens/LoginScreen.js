@@ -44,7 +44,7 @@ const LoginScreen = ({ history }) => {
           <div className='mt-3'>
             <label className='labelField'>Username</label>
             <input
-              className='inputField'
+              className='text-gray-200 bg-gray-700 modalFormField'
               type='text'
               {...register('username')}
               required
@@ -54,7 +54,7 @@ const LoginScreen = ({ history }) => {
           <div className='mt-3 mb-5'>
             <label className='labelField'>Password</label>
             <input
-              className='inputField'
+              className='text-gray-200 bg-gray-700 modalFormField'
               type='password'
               {...register('password')}
               placeholder='Your password'
