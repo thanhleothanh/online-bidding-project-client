@@ -1,6 +1,6 @@
 {
   "name": "masterdev-online_bidding_project_client",
-  "proxy": "https://20.172.145.151:8443",
+  "proxy": "http://20.172.145.151:8080",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
