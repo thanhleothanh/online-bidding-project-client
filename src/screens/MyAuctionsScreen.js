@@ -175,9 +175,9 @@ const MyAuctionsScreen = ({ history }) => {
                                     <ItemInfoSection auction={auction} />
                                   </td>
                                   <td className='py-10 space-x-1'>
-                                    {(auction.status === 'PENDING' ||
-                                      auction.status === 'DRAFT') && (
-                                      <>
+                                    <>
+                                      {(auction.status === 'PENDING' ||
+                                        auction.status === 'DRAFT') && (
                                         <button data-for='edit' data-tip='Edit'>
                                           <i
                                             onClick={() =>
@@ -188,7 +188,11 @@ const MyAuctionsScreen = ({ history }) => {
                                             className='fas fa-edit fa-lg hover:text-orange-500'
                                           />
                                         </button>
+                                      )}
+                                    </>
 
+                                    <>
+                                      {auction.status === 'DRAFT' && (
                                         <button
                                           data-for='submit'
                                           data-tip='Submit'
@@ -202,7 +206,12 @@ const MyAuctionsScreen = ({ history }) => {
                                             }
                                           />
                                         </button>
+                                      )}
+                                    </>
 
+                                    <>
+                                      {(auction.status === 'PENDING' ||
+                                        auction.status === 'DRAFT') && (
                                         <button
                                           data-for='delete'
                                           data-tip='Delete'
@@ -216,8 +225,8 @@ const MyAuctionsScreen = ({ history }) => {
                                             }
                                           />
                                         </button>
-                                      </>
-                                    )}
+                                      )}
+                                    </>
                                   </td>
                                 </tr>
                               );
@@ -235,9 +244,9 @@ const MyAuctionsScreen = ({ history }) => {
                                       <ItemInfoSection auction={auction} />
                                     </td>
                                     <td className='py-10 space-x-1'>
-                                      {(auction.status === 'PENDING' ||
-                                        auction.status === 'DRAFT') && (
-                                        <>
+                                      <>
+                                        {(auction.status === 'PENDING' ||
+                                          auction.status === 'DRAFT') && (
                                           <button
                                             data-for='edit'
                                             data-tip='Edit'
@@ -251,24 +260,30 @@ const MyAuctionsScreen = ({ history }) => {
                                               className='fas fa-edit fa-lg hover:text-orange-500'
                                             />
                                           </button>
+                                        )}
+                                      </>
 
-                                          {auction.status === 'DRAFT' && (
-                                            <>
-                                              <button
-                                                data-for='submit'
-                                                data-tip='Submit'
-                                              >
-                                                <i
-                                                  className='fas fa-cloud-upload fa-lg hover:text-orange-500'
-                                                  onClick={() =>
-                                                    submitButtonClickedHandler(
-                                                      auction.id
-                                                    )
-                                                  }
-                                                />
-                                              </button>
-                                            </>
-                                          )}
+                                      <>
+                                        {auction.status === 'DRAFT' && (
+                                          <button
+                                            data-for='submit'
+                                            data-tip='Submit'
+                                          >
+                                            <i
+                                              className='fas fa-cloud-upload fa-lg hover:text-orange-500'
+                                              onClick={() =>
+                                                submitButtonClickedHandler(
+                                                  auction.id
+                                                )
+                                              }
+                                            />
+                                          </button>
+                                        )}
+                                      </>
+
+                                      <>
+                                        {(auction.status === 'PENDING' ||
+                                          auction.status === 'DRAFT') && (
                                           <button
                                             data-for='delete'
                                             data-tip='Delete'
@@ -282,8 +297,8 @@ const MyAuctionsScreen = ({ history }) => {
                                               }
                                             />
                                           </button>
-                                        </>
-                                      )}
+                                        )}
+                                      </>
                                     </td>
                                   </tr>
                                 );
